@@ -14,10 +14,11 @@ PROGNAME=Demineur
 #
 # Set a list of files you want to compile
 #
-OFILES +=main.o	\
-		mines.o	\
-		view.o	\
-
+OFILES +=main.o	    \
+		mines.o	    \
+		view.o	    \
+		controls.o	\
+		menu.o	    \
 #
 # Set a list of libraries you want to link
 #

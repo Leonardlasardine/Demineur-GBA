@@ -1,16 +1,20 @@
 #include <mygba.h>
 #include "mines.h"
-#include "main.h"
+#include "menu.h"
 
 //Grille vide
-unsigned char g[SIZE_X+2][SIZE_Y+2];
+unsigned char g[99][99];
 
 void grid(unsigned int seed) {
 
+	unsigned char sizeX = getSizeX();
+	unsigned char sizeY = getSizeY();
+	unsigned char mines = getMines();
+
 	//Reset
 	unsigned char posY, posX;
-	for (posX = 0; posX < 16; posX++) {
-		for (posY = 0; posY < 16; posY++) {
+	for (posX = 0; posX < sizeX; posX++) {
+		for (posY = 0; posY < sizeY; posY++) {
 			g[posX][posY] = 0;
 		}
 	}
@@ -19,14 +23,14 @@ void grid(unsigned int seed) {
 	srand(seed);
 
 	//Mines
-	unsigned char mines = 0;
-	while (mines != MINES) {
-		unsigned char mX = rand() % SIZE_Y;
-		unsigned char mY = rand() % SIZE_X;
+	unsigned char minesPlaced = 0;
+	while (minesPlaced != mines) {
+		unsigned char mX = rand() % sizeX;
+		unsigned char mY = rand() % sizeY;
 
 		if (g[mX][mY] != 1) {
 			g[mX][mY] = 1;
-			mines++;
+			minesPlaced++;
 		}
 	}
 }
@@ -43,7 +47,7 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 		n = 9;
 	}
 	
-	else {
+	else {//PROBLEME PREMIERE LIGNE ET COLONE
 		unsigned char i, j;
 
 		for (i = x - 1; i < x + 2; i++) {
@@ -60,9 +64,13 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 
 //Révéler tout
 void reveal () {
+	
+	unsigned char sizeX = getSizeX();
+	unsigned char sizeY = getSizeY();
+
 	unsigned char posY, posX;
-	for (posX = 0; posX < 16; posX++) {
-		for (posY = 0; posY < 16; posY++) {
+	for (posX = 0; posX < sizeX; posX++) {
+		for (posY = 0; posY < sizeY; posY++) {
 			drawCase(posX, posY);
 		}
 	}

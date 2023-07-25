@@ -42,3 +42,4 @@ mines.o
 main.s
 mines.s
 crt0.o
+*.s

@@ -1,4 +1,5 @@
-#include "mines.h"
+int control();
+int menu();
 
 //Video buffer
 #define MODE_3 0x3
@@ -6,14 +7,8 @@
 
 typedef enum Sens Sens;
 enum Sens {
-    HAUT, BAS, GAUCHE, DROITE
+    HAUT, BAS, GAUCHE, DROITE, SUPER_GAUCHE, SUPER_DROITE
 };
-
-void move(Sens sens, unsigned char *x, unsigned char *y);
-
-void grid(unsigned int seed);
-void cursor (unsigned char x, unsigned char y, unsigned short c);
-void drawCase(unsigned char x, unsigned char y);
 
 //Timer
 #define TIMER_FREQUENCY_SYSTEM 0x0
