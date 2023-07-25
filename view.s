@@ -169,44 +169,98 @@ drawCase:
 	sub	fp, ip, #4
 	sub	sp, sp, #4
 	mov	r1, r4	@  y
-	ldr	r3, .L31
 	mov	r0, r5	@  x
+	ldr	r3, .L35
 	mov	lr, pc
 	bx	r3
+	and	r0, r0, #255	@  n,  x
+	cmp	r0, #9	@  n
+	ldrls	pc, [pc, r0, asl #2]	@  n
+	b	.L24
+	.p2align 2
+.L32:
+	.word	.L26
+	.word	.L27
+	.word	.L28
+	.word	.L29
+	.word	.L30
+	.word	.L24
+	.word	.L24
+	.word	.L24
+	.word	.L24
+	.word	.L31
+.L26:
 	add	r1, r4, r4, asl #2	@  y,  y
-	mov	ip, r0	@  x
-	mov	r1, r1, asl #1
 	rsb	r0, r5, r5, asl #4	@  x,  x
-	mov	lr, #32000
-	ands	ip, ip, #255	@  a,  x
-	and	r0, r0, #255	@  x
-	and	r1, r1, #255	@  y
-	add	lr, lr, #134
+	mov	ip, #32000
+	mov	r1, r1, asl #1
 	mov	r2, #15
 	mov	r3, #10
-	beq	.L26
-	add	r1, r4, r4, asl #2	@  y,  y
-	rsb	r0, r5, r5, asl #4	@  x,  x
-	mov	r1, r1, asl #1
-	cmp	ip, #9	@  a
 	and	r0, r0, #255	@  x
 	and	r1, r1, #255	@  y
-	beq	.L27
+	add	ip, ip, #134
+.L34:
+	str	ip, [sp, #0]
+	bl	drawLine
 .L24:
 	ldmea	fp, {r4, r5, fp, sp, lr}
 	bx	lr
 .L27:
-	mov	ip, #31
-	str	ip, [sp, #0]
+	add	r1, r4, r4, asl #2	@  y,  y
+	rsb	r0, r5, r5, asl #4	@  x,  x
+	mov	r1, r1, asl #1
+	mov	r2, #15
+	mov	r3, #10
+	and	r0, r0, #255	@  x
+	and	r1, r1, #255	@  y
+	mov	ip, #12672
+	b	.L34
+.L28:
+	add	r1, r4, r4, asl #2	@  y,  y
+	rsb	r0, r5, r5, asl #4	@  x,  x
+	mov	ip, #32512
+	mov	r1, r1, asl #1
+	mov	r2, #15
+	mov	r3, #10
+	and	r0, r0, #255	@  x
+	and	r1, r1, #255	@  y
+	add	ip, ip, #224
+	b	.L34
+.L29:
+	add	r1, r4, r4, asl #2	@  y,  y
+	rsb	r0, r5, r5, asl #4	@  x,  x
+	mov	ip, #31744
+	mov	r1, r1, asl #1
+	mov	r2, #15
+	mov	r3, #10
+	and	r0, r0, #255	@  x
+	and	r1, r1, #255	@  y
+	add	ip, ip, #25
+	b	.L34
 .L30:
-	bl	drawLine
-	b	.L24
-.L26:
-	str	lr, [sp, #0]
-	b	.L30
-.L32:
-	.align	2
+	add	r1, r4, r4, asl #2	@  y,  y
+	rsb	r0, r5, r5, asl #4	@  x,  x
+	mov	ip, #6528
+	mov	r1, r1, asl #1
+	mov	r2, #15
+	mov	r3, #10
+	and	r0, r0, #255	@  x
+	and	r1, r1, #255	@  y
+	add	ip, ip, #31
+	b	.L34
 .L31:
+	add	r1, r4, r4, asl #2	@  y,  y
+	rsb	r0, r5, r5, asl #4	@  x,  x
+	mov	r1, r1, asl #1
+	mov	r2, #15
+	mov	r3, #10
+	and	r0, r0, #255	@  x
+	and	r1, r1, #255	@  y
+	mov	ip, #31
+	b	.L34
+.L36:
+	.align	2
+.L35:
 	.word	checkMines
 .Lfe4:
 	.size	drawCase,.Lfe4-drawCase

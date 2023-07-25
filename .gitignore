@@ -35,3 +35,10 @@ Demineur.sln
 Demineur.vcxproj
 Demineur.vcxproj.filters
 readme.txt
+main.i
+mines.i
+main.o
+mines.o
+main.s
+mines.s
+crt0.o

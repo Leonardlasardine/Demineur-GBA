@@ -3,3 +3,4 @@
 #define MINES	20
 
 unsigned char checkMines(unsigned char x, unsigned char y);
+void reveal();

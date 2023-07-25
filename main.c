@@ -4,13 +4,8 @@
 int main(void) {
 	ham_Init();
 
-	if (TEXT_MODE) {
-		ham_SetBgMode(0);
-		ham_InitText(0);
-	} else {
-		//Video Mode 3
-		REG_DISPCNT = (MODE_3 | BG2_ENABLE);
-	}
+	//Video Mode 3
+	REG_DISPCNT = (MODE_3 | BG2_ENABLE);
 
 	unsigned char upPressed = 0;
 	unsigned char downPressed = 0;
@@ -22,29 +17,23 @@ int main(void) {
 	unsigned char y = 0;
 	
 	//Démarage
-	grid();
-
-
+	int timers;
+	REG_TM0CNT = TIMER_FREQUENCY_SYSTEM | TIMER_ENABLE;
+	//grid();
 	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
 
+	
 
-
-	unsigned char posY, posX;
-	for (posX = 0; posX < 16; posX++) {
-		for (posY = 0; posY < 16; posY++) {
-			drawCase(posX, posY);
-		}
-	}
-
-
-
-   while(1) {
+	while(1) {
 	   if(F_CTRLINPUT_UP_PRESSED) {
 		   upPressed = 1;
 	   } else {
 		   if (upPressed) {
 			   move(HAUT, &x, &y);
 			   upPressed = 0;
+
+			   timers = REG_TM0D / (65536 / 1000);
+			   grid(timers);
 		   }
 	   }
 
@@ -83,6 +72,9 @@ int main(void) {
 			   aPressed = 0;
 		   }
 	   }
+	   if(F_CTRLINPUT_B_PRESSED) {
+		   reveal();
+	   }
    }
 
    return 0;
@@ -105,5 +97,4 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 			break;
 	}
 	cursor(*x, *y, RGB(*y*10 + *x*10, *y*10, (150 - *x*5)));
-	//ham_DrawText(*x, *y, "X");
 }

@@ -25,14 +25,25 @@ void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h
 }
 
 void drawCase(unsigned char x, unsigned char y) {
-	unsigned char a = checkMines(x, y);
-	switch (a) {
+	unsigned char n = checkMines(x, y);
+	switch (n) {
 		case 0 :
 			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(50,100,255));
+			break;
+		case 1 :
+			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(0,100,100));
+			break;
+		case 2 :
+			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(0,255,255));
+			break;
+		case 3 :
+			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(200,0,255));
+			break;
+		case 4 :
+			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(255,100,50));
 			break;
 		case 9 :
 			drawLine(x*PIXEL_X, y*PIXEL_Y, PIXEL_X, PIXEL_Y, RGB(255,0,0));
 			break;
 	}
-	//ham_DrawText(17, 6, "%u", a);
 }
