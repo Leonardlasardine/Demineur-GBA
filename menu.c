@@ -2,9 +2,9 @@
 
 int timers;
 
-unsigned char Xsize = 16;
-unsigned char Ysize = 16;
-unsigned char mines = 20;
+unsigned char Xsize = 10;
+unsigned char Ysize = 10;
+unsigned char mines = 8;
 
 int menu() {
 	//Touches
@@ -19,7 +19,6 @@ int menu() {
 	int choose = 1;
 	unsigned char line = 0;
 
-
 	ham_DrawText(11, 3, "DEMINEUR");
 	ham_DrawText(12, 15, "JOUER");
 
@@ -27,9 +26,9 @@ int menu() {
 	ham_DrawText(3, 9, "Nombre de colones :");
 	ham_DrawText(3, 11, "Nombre de mines   :");
 	
-	ham_DrawText(23, 7, "%u", Xsize);
-	ham_DrawText(23, 9, "%u", Ysize);
-	ham_DrawText(23, 11, "%u", mines);
+	changeX(HAUT);
+	changeY(HAUT);
+	changeMines(HAUT);
 
 	ham_DrawText(1, 7, "-");
 	ham_DrawText(26, 7, "-");
@@ -94,7 +93,11 @@ int menu() {
 	   } else {
 		   if (aMenu) {
 			   if (line == 3) {
-				   choose = 0;
+				   if (mines < (Xsize * Ysize)) {
+					   choose = 0;
+				   } else {
+					   ham_DrawText(7, 18, "TROP DE MINES !");
+				   }
 			   }
 			   aMenu = 0;
 		   }
@@ -136,44 +139,35 @@ unsigned char moveLine(Sens sens, unsigned char *l) {
 				*l += 1;
 			}
 			break;
+		default :
+			break;
 	}
+
+	ham_DrawText(1, 7, " ");
+	ham_DrawText(26, 7, " ");
+	ham_DrawText(1, 9, " ");
+	ham_DrawText(26, 9, " ");
+	ham_DrawText(1, 11, " ");
+	ham_DrawText(26, 11, " ");
+	ham_DrawText(10, 15, " ");
+	ham_DrawText(18, 15, " ");
 
 	switch (*l) {
 		case 0 :
 			ham_DrawText(1, 7, "-");
 			ham_DrawText(26, 7, "-");
-
-			ham_DrawText(1, 9, " ");
-			ham_DrawText(26, 9, " ");
-			ham_DrawText(10, 15, " ");
-			ham_DrawText(18, 15, " ");
 			break;
 		case 1 :
 			ham_DrawText(1, 9, "-");
 			ham_DrawText(26, 9, "-");
-
-			ham_DrawText(1, 7, " ");
-			ham_DrawText(26, 7, " ");
-			ham_DrawText(1, 11, " ");
-			ham_DrawText(26, 11, " ");
 			break;
 		case 2 :
 			ham_DrawText(1, 11, "-");
 			ham_DrawText(26, 11, "-");
-			
-			ham_DrawText(1, 9, " ");
-			ham_DrawText(26, 9, " ");
-			ham_DrawText(10, 15, " ");
-			ham_DrawText(18, 15, " ");
 			break;
 		case 3 :
 			ham_DrawText(10, 15, "-");
 			ham_DrawText(18, 15, "-");
-			
-			ham_DrawText(1, 11, " ");
-			ham_DrawText(26, 11, " ");
-			ham_DrawText(1, 7, " ");
-			ham_DrawText(26, 7, " ");
 			break;
 	}
 	return *l;
@@ -196,32 +190,34 @@ void changeValue(Sens sens, unsigned char *l) {
 void changeX(Sens sens) { //CHANGER TAILLE MAX
 	switch (sens) {
 		case GAUCHE :
-			if (Xsize == 0) {
-				Xsize = 99;
+			if (Xsize == 1) {
+				Xsize = 30;
 			} else {
 				Xsize -= 1;
 			}
 			break;
 		case DROITE :
-			if (Xsize == 99) {
-				Xsize = 0;
+			if (Xsize == 30) {
+				Xsize = 1;
 			} else {
 				Xsize += 1;
 			}
 			break;
 		case SUPER_GAUCHE :
-			if (Xsize < 5) {
-				Xsize = 99;
+			if (Xsize < 6) {
+				Xsize = 30;
 			} else {
 				Xsize -= 5;
 			}
 			break;
 		case SUPER_DROITE :
-			if (Xsize > 94) {
-				Xsize = 0;
+			if (Xsize > 25) {
+				Xsize = 1;
 			} else {
 				Xsize += 5;
 			}
+			break;
+		default :
 			break;
 	}
 
@@ -236,32 +232,34 @@ void changeX(Sens sens) { //CHANGER TAILLE MAX
 void changeY(Sens sens) {
 	switch (sens) {
 		case GAUCHE :
-			if (Ysize == 0) {
-				Ysize = 99;
+			if (Ysize == 1) {
+				Ysize = 20;
 			} else {
 				Ysize -= 1;
 			}
 			break;
 		case DROITE :
-			if (Ysize == 99) {
-				Ysize = 0;
+			if (Ysize == 20) {
+				Ysize = 1;
 			} else {
 				Ysize += 1;
 			}
 			break;
 		case SUPER_GAUCHE :
-			if (Ysize < 5) {
-				Ysize = 99;
+			if (Ysize < 6) {
+				Ysize = 20;
 			} else {
 				Ysize -= 5;
 			}
 			break;
 		case SUPER_DROITE :
-			if (Ysize > 94) {
-				Ysize = 0;
+			if (Ysize > 15) {
+				Ysize = 1;
 			} else {
 				Ysize += 5;
 			}
+			break;
+		default :
 			break;
 	}
 
@@ -273,7 +271,7 @@ void changeY(Sens sens) {
 	}
 }
 
-void changeMines(Sens sens) { //VERIFIER SI PAS TROP DE MINES
+void changeMines(Sens sens) {
 	switch (sens) {
 		case GAUCHE :
 			if (mines == 0) {
@@ -284,7 +282,7 @@ void changeMines(Sens sens) { //VERIFIER SI PAS TROP DE MINES
 			break;
 		case DROITE :
 			if (mines == 99) {
-				mines = 0;
+				mines = 1;
 			} else {
 				mines += 1;
 			}
@@ -298,10 +296,12 @@ void changeMines(Sens sens) { //VERIFIER SI PAS TROP DE MINES
 			break;
 		case SUPER_DROITE :
 			if (mines > 94) {
-				mines = 0;
+				mines = 1;
 			} else {
 				mines += 5;
 			}
+			break;
+		default :
 			break;
 	}
 

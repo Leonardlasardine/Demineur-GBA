@@ -4,7 +4,7 @@
 int main(void) {
 	ham_Init();
 
-	int showMenu = 1;
+	unsigned char showMenu = 1;
 
 	//Démarage
 	REG_TM0CNT = TIMER_FREQUENCY_SYSTEM | TIMER_ENABLE;

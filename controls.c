@@ -7,13 +7,15 @@ unsigned char leftPressed = 0;
 unsigned char rightPressed = 0;
 unsigned char aPressed = 0;
 
-unsigned char x = 0;
-unsigned char y = 0;
+unsigned char x;
+unsigned char y;
 
 
 int control() {
 	
-	int alive = 1;
+	unsigned char alive = 1;
+	x = 0;
+	y = 0;
 	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
 
 	while(alive) {
@@ -62,12 +64,15 @@ int control() {
 		   }
 	   }
 	   if(F_CTRLINPUT_B_PRESSED) {
-		   reveal();
+		   
 	   }
 
 	   if (F_CTRLINPUT_L_PRESSED) {
 		   if (F_CTRLINPUT_R_PRESSED) {
 			   alive = 0;
+		   }
+		   if(F_CTRLINPUT_B_PRESSED) {
+			   reveal();
 		   }
 	   }
    }
@@ -75,19 +80,36 @@ int control() {
 }
 
 void move(Sens sens, unsigned char *x, unsigned char *y) {
-	cursor(*x, *y, RGB(0, 0, 0));
+	
+	unsigned char sizeX = getSizeX();
+	unsigned char sizeY = getSizeY();
+	
+	unsigned char pixelX = 240/sizeX;
+	unsigned char pixelY = 160/sizeY;
+
+	cursor(*x, *y, checkPixel(*x*pixelX + 2, *y*pixelY + 2));
 	switch (sens) {
 		case HAUT :
-			*y -= 1;
+			if (*y > 0) {
+				*y -= 1;
+			}
 			break;
 		case BAS :
-			*y += 1;
+			if (*y < sizeY - 1) {
+				*y += 1;
+			}
 			break;
 		case GAUCHE :
-			*x -= 1;
+			if (*x > 0) {
+				*x -= 1;
+			}
 			break;
 		case DROITE :
-			*x += 1;
+			if (*x < sizeX - 1) {
+				*x += 1;
+			}
+			break;
+		default :
 			break;
 	}
 	cursor(*x, *y, RGB(*y*10 + *x*10, *y*10, (150 - *x*5)));

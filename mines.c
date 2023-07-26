@@ -3,12 +3,12 @@
 #include "menu.h"
 
 //Grille vide
-unsigned char g[99][99];
+unsigned char g[30][20];
 
 void grid(unsigned int seed) {
 
-	unsigned char sizeX = getSizeX();
-	unsigned char sizeY = getSizeY();
+	unsigned char sizeX = getSizeX() + 1;
+	unsigned char sizeY = getSizeY() + 1;
 	unsigned char mines = getMines();
 
 	//Reset
@@ -25,12 +25,14 @@ void grid(unsigned int seed) {
 	//Mines
 	unsigned char minesPlaced = 0;
 	while (minesPlaced != mines) {
-		unsigned char mX = rand() % sizeX;
-		unsigned char mY = rand() % sizeY;
+		unsigned char mX = 1 + rand() % (sizeX - 1);
+		unsigned char mY = 1 + rand() % (sizeY - 1);
 
 		if (g[mX][mY] != 1) {
-			g[mX][mY] = 1;
-			minesPlaced++;
+			if (mX + mY != 2) { //Pas la première case
+				g[mX][mY] = 1;
+				minesPlaced++;
+			}
 		}
 	}
 }
@@ -47,10 +49,10 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 		n = 9;
 	}
 	
-	else {//PROBLEME PREMIERE LIGNE ET COLONE
+	else {
 		unsigned char i, j;
 
-		for (i = x - 1; i < x + 2; i++) {
+		for (i = x - 1; i < x + 2; i++) { //Au bord fait le tour de l'écran ???
 			for (j = y - 1; j < y + 2; j++) {
 				if (g[i][j] == 1) {
 					n++;
