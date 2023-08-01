@@ -52,7 +52,7 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 	else {
 		unsigned char i, j;
 
-		for (i = x - 1; i < x + 2; i++) { //Au bord fait le tour de l'écran ???
+		for (i = x - 1; i < x + 2; i++) {
 			for (j = y - 1; j < y + 2; j++) {
 				if (g[i][j] == 1) {
 					n++;

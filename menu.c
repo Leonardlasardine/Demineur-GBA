@@ -2,9 +2,8 @@
 
 int timers;
 
-unsigned char Xsize = 10;
-unsigned char Ysize = 10;
-unsigned char mines = 8;
+unsigned char difficulty = 0;
+unsigned char mines = 20;
 
 int menu() {
 	//Touches
@@ -22,16 +21,12 @@ int menu() {
 	ham_DrawText(11, 3, "DEMINEUR");
 	ham_DrawText(12, 15, "JOUER");
 
-	ham_DrawText(3, 7, "Nombre de lignes  :");
-	ham_DrawText(3, 9, "Nombre de colones :");
-	ham_DrawText(3, 11, "Nombre de mines   :");
+	ham_DrawText(3, 7,  "Difficulte      :");
+	ham_DrawText(3, 11, "Nombre de mines :");
 	
-	changeX(HAUT);
-	changeY(HAUT);
+	changeDifficulty(HAUT);
 	changeMines(HAUT);
-
-	ham_DrawText(1, 7, "-");
-	ham_DrawText(26, 7, "-");
+	moveLine(DROITE, &line);
 
 	while (choose) {
 		if(F_CTRLINPUT_UP_PRESSED) {
@@ -92,11 +87,11 @@ int menu() {
 		   aMenu = 1;
 	   } else {
 		   if (aMenu) {
-			   if (line == 3) {
-				   if (mines < (Xsize * Ysize)) {
+			   if (line == 2) {
+				   if (mines < (getSizeX() * getSizeX())) {
 					   choose = 0;
 				   } else {
-					   ham_DrawText(7, 18, "TROP DE MINES !");
+					   ham_DrawText(7, 18, "TROP DE MINES !"); //MARCHE PLUS
 				   }
 			   }
 			   aMenu = 0;
@@ -111,29 +106,67 @@ int menu() {
 	return 0;
 }
 
-unsigned char getSizeX(){
-	return Xsize;
+unsigned char getSizeX() {
+	switch (difficulty) {
+		case 0:
+			return 6;
+			break;
+		case 1:
+			return 12;
+			break;
+		case 2:
+			return 15;
+			break;
+		case 3:
+			return 24;
+			break;
+		case 4:
+			return 30;
+			break;
+	}
+	return 1;
 }
 
-unsigned char getSizeY(){
-	return Ysize;
+unsigned char getSizeY() {
+	switch (difficulty) {
+		case 0:
+			return 4;
+			break;
+		case 1:
+			return 8;
+			break;
+		case 2:
+			return 10;
+			break;
+		case 3:
+			return 16;
+			break;
+		case 4:
+			return 20;
+			break;
+	}
+	return 1;
 }
 
-unsigned char getMines(){
+unsigned char getMines() {
 	return mines;
+}
+
+unsigned char getDifficulty() {
+	return difficulty;
 }
 
 unsigned char moveLine(Sens sens, unsigned char *l) {
 	switch (sens) {
 		case HAUT :
 			if (*l == 0) {
-				*l = 3;
+				*l = 2;
 			} else {
 				*l -= 1;
 			}
 			break;
 		case BAS :
-			if (*l == 3) {
+			if (*l == 2) {
 				*l = 0;
 			} else {
 				*l += 1;
@@ -144,28 +177,22 @@ unsigned char moveLine(Sens sens, unsigned char *l) {
 	}
 
 	ham_DrawText(1, 7, " ");
-	ham_DrawText(26, 7, " ");
-	ham_DrawText(1, 9, " ");
-	ham_DrawText(26, 9, " ");
+	ham_DrawText(27, 7, " ");
 	ham_DrawText(1, 11, " ");
-	ham_DrawText(26, 11, " ");
+	ham_DrawText(27, 11, " ");
 	ham_DrawText(10, 15, " ");
 	ham_DrawText(18, 15, " ");
 
 	switch (*l) {
 		case 0 :
 			ham_DrawText(1, 7, "-");
-			ham_DrawText(26, 7, "-");
+			ham_DrawText(27, 7, "-");
 			break;
 		case 1 :
-			ham_DrawText(1, 9, "-");
-			ham_DrawText(26, 9, "-");
+			ham_DrawText(1, 11, "-");
+			ham_DrawText(27, 11, "-");
 			break;
 		case 2 :
-			ham_DrawText(1, 11, "-");
-			ham_DrawText(26, 11, "-");
-			break;
-		case 3 :
 			ham_DrawText(10, 15, "-");
 			ham_DrawText(18, 15, "-");
 			break;
@@ -176,99 +203,36 @@ unsigned char moveLine(Sens sens, unsigned char *l) {
 void changeValue(Sens sens, unsigned char *l) {
 	switch (*l) {
 		case 0 :
-			changeX(sens);
+			changeDifficulty(sens);
 			break;
 		case 1 :
-			changeY(sens);
-			break;
-		case 2 :
 			changeMines(sens);
 			break;
 	}
 }
 
-void changeX(Sens sens) { //CHANGER TAILLE MAX
+void changeDifficulty(Sens sens) {
 	switch (sens) {
 		case GAUCHE :
-			if (Xsize == 1) {
-				Xsize = 30;
+			if (difficulty == 0) {
+				difficulty = 4;
 			} else {
-				Xsize -= 1;
+				difficulty -= 1;
 			}
 			break;
 		case DROITE :
-			if (Xsize == 30) {
-				Xsize = 1;
+			if (difficulty == 4) {
+				difficulty = 0;
 			} else {
-				Xsize += 1;
-			}
-			break;
-		case SUPER_GAUCHE :
-			if (Xsize < 6) {
-				Xsize = 30;
-			} else {
-				Xsize -= 5;
-			}
-			break;
-		case SUPER_DROITE :
-			if (Xsize > 25) {
-				Xsize = 1;
-			} else {
-				Xsize += 5;
+				difficulty += 1;
 			}
 			break;
 		default :
 			break;
 	}
-
-	if (Xsize < 10 ) {
-		ham_DrawText(23, 7, " ", Xsize);
-		ham_DrawText(24, 7, "%u", Xsize);
-	} else {
-		ham_DrawText(23, 7, "%u", Xsize);
-	}
-}
-
-void changeY(Sens sens) {
-	switch (sens) {
-		case GAUCHE :
-			if (Ysize == 1) {
-				Ysize = 20;
-			} else {
-				Ysize -= 1;
-			}
-			break;
-		case DROITE :
-			if (Ysize == 20) {
-				Ysize = 1;
-			} else {
-				Ysize += 1;
-			}
-			break;
-		case SUPER_GAUCHE :
-			if (Ysize < 6) {
-				Ysize = 20;
-			} else {
-				Ysize -= 5;
-			}
-			break;
-		case SUPER_DROITE :
-			if (Ysize > 15) {
-				Ysize = 1;
-			} else {
-				Ysize += 5;
-			}
-			break;
-		default :
-			break;
-	}
-
-	if (Ysize < 10 ) {
-		ham_DrawText(23, 9, " ", Ysize);
-		ham_DrawText(24, 9, "%u", Ysize);
-	} else {
-		ham_DrawText(23, 9, "%u", Ysize);
-	}
+	
+	ham_DrawText(21, 7, "     ");
+	ham_DrawText(21, 7, "%ux%u", getSizeX(), getSizeY());
 }
 
 void changeMines(Sens sens) {
@@ -306,9 +270,9 @@ void changeMines(Sens sens) {
 	}
 
 	if (mines < 10 ) {
-		ham_DrawText(23, 11, " ", mines);
-		ham_DrawText(24, 11, "%u", mines);
+		ham_DrawText(21, 11, " ", mines);
+		ham_DrawText(22, 11, "%u", mines);
 	} else {
-		ham_DrawText(23, 11, "%u", mines);
+		ham_DrawText(21, 11, "%u", mines);
 	}
 }

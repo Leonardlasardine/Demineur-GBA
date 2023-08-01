@@ -17,6 +17,7 @@ int control() {
 	x = 0;
 	y = 0;
 	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
+	drawGrid();
 
 	while(alive) {
 		if(F_CTRLINPUT_UP_PRESSED) {

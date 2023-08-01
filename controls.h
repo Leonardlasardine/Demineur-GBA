@@ -7,6 +7,7 @@ void move(Sens sens, unsigned char *x, unsigned char *y);
 
 void cursor (unsigned char x, unsigned char y, unsigned short c);
 void drawCase(unsigned char x, unsigned char y);
+void drawGrid();
 
 unsigned char getSizeX();
 unsigned char getSizeY();
