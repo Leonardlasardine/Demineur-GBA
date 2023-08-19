@@ -29,31 +29,17 @@ void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h
 }
 
 void drawCase(unsigned char x, unsigned char y) {
-	
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
 	unsigned char n = checkMines(x+1, y+1);
-	switch (n) {
-		case 0 :
-			drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(50,100,255));
-			break;
-		case 1 :
-			drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(0,100,100));
-			break;
-		case 2 :
-			drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(0,255,255));
-			break;
-		case 3 :
-			drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(200,0,255));
-			break;
-		case 4 :
-			drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(255,100,50));
-			break;
-		case 9 :
-			//drawLine(x*pixelX, y*pixelY, pixelX, pixelY, RGB(255,0,0));
-			drawMine(x*pixelX, y*pixelY);
-			break;
+	
+	if (n == 0) {
+		drawEmptyCase(x, y);
+	} else if (n < 9) {
+		drawNumber(x*pixelX, y*pixelY, n);
+	} else {
+		drawMine(x*pixelX, y*pixelY);
 	}
 }
 
@@ -62,42 +48,32 @@ unsigned short checkPixel(int x, int y) {
 }
 
 void drawMine(unsigned char x, unsigned char y) {
-	unsigned short flag_Bitmap[1600] = {};
-	unsigned char size = 0;
-	
 	switch (getDifficulty()) {
 		case 0 :
-			memcpy(flag_Bitmap, flag_40_Bitmap, sizeof(flag_40_Bitmap));
-			size = 40;
+			drawBitmap(x, y, mine_40_Bitmap, 40);
 			break;
 		case 1 :
-			memcpy(flag_Bitmap, flag_20_Bitmap, sizeof(flag_20_Bitmap));
-			size = 20;
+			drawBitmap(x, y, mine_20_Bitmap, 20);
 			break;
 		case 2 :
-			memcpy(flag_Bitmap, flag_16_Bitmap, sizeof(flag_16_Bitmap));
-			size = 16;
+			drawBitmap(x, y, mine_16_Bitmap, 16);
 			break;
 		case 3 :
-			memcpy(flag_Bitmap, flag_10_Bitmap, sizeof(flag_10_Bitmap));//PK
-			size = 10;
+			drawBitmap(x, y, mine_10_Bitmap, 10);
 			break;
 		case 4 :
-			memcpy(flag_Bitmap, flag_8_Bitmap, sizeof(flag_8_Bitmap));
-			size = 8;
+			drawBitmap(x, y, mine_8_Bitmap, 8);
 			break;
 	}
-	drawBitmap(x, y, flag_Bitmap, size);
 }
 
-void drawBitmap(unsigned char x, unsigned char y, unsigned short bitmap[1600], unsigned char size) {
-	
+void drawBitmap(unsigned char x, unsigned char y, const unsigned short bitmap[1600], unsigned char size) {
 	unsigned char i, j;
 	for (i = y; i < size + y; i++) {
 		for (j = x; j < size + x; j++) {
-			if (bitmap[(i - y) * size + (j - x)] != 0x0000) {
+			//if (bitmap[(i - y) * size + (j - x)] != 0x0000) {
 				drawPixel(j, i, bitmap[(i - y) * size + (j - x)]);
-			}
+			//}
 		}
 	}
 }
@@ -111,23 +87,23 @@ void drawGrid() {
 	
 	switch (getDifficulty()) {
 		case 0 :
-			memcpy(case_Bitmap, case_40_Bitmap, sizeof(case_40_Bitmap));
+			memcpy(case_Bitmap, case_40_Bitmap, ARRAY_40);
 			size = 40;
 			break;
 		case 1 :
-			memcpy(case_Bitmap, case_20_Bitmap, sizeof(case_20_Bitmap));
+			memcpy(case_Bitmap, case_20_Bitmap, ARRAY_20);
 			size = 20;
 			break;
 		case 2 :
-			memcpy(case_Bitmap, case_16_Bitmap, sizeof(case_16_Bitmap));
+			memcpy(case_Bitmap, case_16_Bitmap, ARRAY_16);
 			size = 16;
 			break;
 		case 3 :
-			memcpy(case_Bitmap, case_10_Bitmap, sizeof(case_10_Bitmap));//PK
+			memcpy(case_Bitmap, case_10_Bitmap, ARRAY_10);//PK
 			size = 10;
 			break;
 		case 4 :
-			memcpy(case_Bitmap, case_8_Bitmap, sizeof(case_8_Bitmap));
+			memcpy(case_Bitmap, case_8_Bitmap, ARRAY_8);
 			size = 8;
 			break;
 	}
@@ -138,4 +114,106 @@ void drawGrid() {
 			drawBitmap(i*pixelX, j*pixelY, case_Bitmap, size);
 		}
 	}
+}
+
+void drawFlag(unsigned char x, unsigned char y) {
+	unsigned char pixelX = 240/getSizeX();
+	unsigned char pixelY = 160/getSizeY();
+
+	x = x * pixelX;
+	y = y * pixelY;
+
+	switch (getDifficulty()) {
+		case 0 :
+			drawBitmap(x, y, flag_40_Bitmap, 40);
+			break;
+		case 1 :
+			drawBitmap(x, y, flag_20_Bitmap, 20);
+			break;
+		case 2 :
+			drawBitmap(x, y, flag_16_Bitmap, 16);
+			break;
+		case 3 :
+			drawBitmap(x, y, flag_10_Bitmap, 10);
+			break;
+		case 4 :
+			drawBitmap(x, y, flag_8_Bitmap, 8);
+			break;
+	}
+}
+
+void drawNumber(unsigned char x, unsigned char y, unsigned char n) {
+
+	unsigned char i, j;
+
+	switch (getDifficulty()) {
+		case 0 :
+			for(i = y; i < y + 40; i++) {
+				for(j = x; j < x + 40; j++) {
+					drawPixel(j, i, numbers_40_Bitmap[(i - y) * 320 + (j - x + (40*(n-1)))]);
+				}
+			}
+			break;
+		case 1 :
+			for(i = y; i < y + 20; i++) {
+				for(j = x; j < x + 20; j++) {
+					drawPixel(j, i, numbers_20_Bitmap[(i - y) * 160 + (j - x+ (20*(n-1)))]);
+				}
+			}
+			break;
+		case 2 :
+			for(i = y; i < y + 16; i++) {
+				for(j = x; j < x + 16; j++) {
+					drawPixel(j, i, numbers_16_Bitmap[(i - y) * 128 + (j - x+ (16*(n-1)))]);
+				}
+			}
+			break;
+		case 3 :
+			for(i = y; i < y + 10; i++) {
+				for(j = x; j < x + 10; j++) {
+					drawPixel(j, i, numbers_10_Bitmap[(i - y) * 80 + (j - x+ (10*(n-1)))]);
+				}
+			}
+			break;
+		case 4 :
+			for(i = y; i < y + 8; i++) {
+				for(j = x; j < x + 8; j++) {
+					drawPixel(j, i, numbers_8_Bitmap[(i - y) * 64 + (j - x+ (8*(n-1)))]);
+				}
+			}
+			break;
+	}
+}
+
+void drawEmptyCase(unsigned char x, unsigned char y) {
+	
+	unsigned char pixelX = 240/getSizeX();
+	unsigned char pixelY = 160/getSizeY();
+
+	unsigned char size = 0;
+	unsigned char i, j;
+
+	switch (getDifficulty()) {
+		case 0 :
+			size = 40;
+			break;
+		case 1 :
+			size = 20;
+			break;
+		case 2 :
+			size = 16;
+			break;
+		case 3 :
+			size = 10;
+			break;
+		case 4 :
+			size = 8;
+			break;
+	}
+	for(i = y*pixelY; i < y*pixelY + size; i++) {
+		for(j = x*pixelX; j < x*pixelX + size; j++) {
+			drawPixel(j, i, RGB(192, 192, 192));
+		}
+	}
+	cursor(x, y, RGB(115, 115, 115));
 }

@@ -21,6 +21,8 @@ OFILES +=main.o	      \
 		menu.o	      \
 		flags.raw.o   \
 		cases.raw.o   \
+		mines.raw.o   \
+		numbers.raw.o \
 #
 # Set a list of libraries you want to link
 #

@@ -6,6 +6,7 @@ unsigned char downPressed = 0;
 unsigned char leftPressed = 0;
 unsigned char rightPressed = 0;
 unsigned char aPressed = 0;
+unsigned char bPressed = 0;
 
 unsigned char x;
 unsigned char y;
@@ -65,7 +66,12 @@ int control() {
 		   }
 	   }
 	   if(F_CTRLINPUT_B_PRESSED) {
-		   
+		   bPressed = 1;
+	   } else {
+		   if (bPressed) {
+			   drawFlag(x, y);
+			   bPressed = 0;
+		   }
 	   }
 
 	   if (F_CTRLINPUT_L_PRESSED) {
@@ -85,10 +91,7 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 	unsigned char sizeX = getSizeX();
 	unsigned char sizeY = getSizeY();
 	
-	unsigned char pixelX = 240/sizeX;
-	unsigned char pixelY = 160/sizeY;
-
-	cursor(*x, *y, checkPixel(*x*pixelX + 2, *y*pixelY + 2));
+	cursor(*x, *y, RGB(115, 115, 115));
 	switch (sens) {
 		case HAUT :
 			if (*y > 0) {
