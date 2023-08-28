@@ -1,5 +1,6 @@
-int control();
-int menu();
+void control();
+void menu();
+unsigned char selectionMenu();
 
 //Video buffer
 #define MODE_3 0x3

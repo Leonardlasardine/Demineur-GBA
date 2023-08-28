@@ -2,7 +2,7 @@
 #include "mines.h"
 #include "main.h"
 
-int control();
+void control();
 void move(Sens sens, unsigned char *x, unsigned char *y);
 
 void cursor (unsigned char x, unsigned char y, unsigned short c);

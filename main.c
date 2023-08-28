@@ -6,31 +6,40 @@
 int main(void) {
 	ham_Init();
 
-	unsigned char showMenu = 1;
-
 	//Démarage
 	REG_TM0CNT = TIMER_FREQUENCY_SYSTEM | TIMER_ENABLE;
 
 	while(1) {
-		if(showMenu) {
-			//Video Mode 0
-			setVideoMode0();
+		//Video Mode 0
+		setVideoMode0();
 
-			menu();
-			
-			endVideoMode0();
+		/*
+		 * 0	==>		Nouvelle partie
+		 * 1	==>		Charger
+		 * 2	==>		Scores
+		*/
+		unsigned char gamemode = selectionMenu();
 
-			showMenu = 0;
-		} else {
-			//Video Mode 3
-			setVideoMode3();
+		switch (gamemode) {
+			case 0:
+				endVideoMode0();
+				setVideoMode0();
 
-			control();
+				menu();
 
-			showMenu = 1;
+				endVideoMode0();
+				setVideoMode3();
+
+				control();
+				break;
+			case 1:
+
+				break;
+			case 2:
+
+				break;
 		}
-   }
-
+	}
    return 0;
 }
 

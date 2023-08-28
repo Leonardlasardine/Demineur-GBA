@@ -1,20 +1,18 @@
 #include "controls.h"
 #include "pause.h"
 
-//Touches
-unsigned char upPressed = 0;
-unsigned char downPressed = 0;
-unsigned char leftPressed = 0;
-unsigned char rightPressed = 0;
-unsigned char aPressed = 0;
-unsigned char bPressed = 0;
-unsigned char startPressed = 0;
-
 unsigned char x;
 unsigned char y;
 
-
-int control() {
+void control() {
+	//Touches
+	unsigned char upPressed = 0;
+	unsigned char downPressed = 0;
+	unsigned char leftPressed = 0;
+	unsigned char rightPressed = 0;
+	unsigned char aPressed = 0;
+	unsigned char bPressed = 0;
+	unsigned char startPressed = 0;
 	
 	unsigned char alive = 1;
 	x = 0;
@@ -105,7 +103,6 @@ int control() {
 		   }
 	   }
    }
-	return 0;
 }
 
 void move(Sens sens, unsigned char *x, unsigned char *y) {

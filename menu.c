@@ -7,7 +7,7 @@ int timers;
 unsigned char difficulty = 0;
 unsigned char mines = 20;
 
-int menu() {
+void menu() {
 	//Touches
 	unsigned char upMenu = 0;
 	unsigned char downMenu = 0;
@@ -18,7 +18,7 @@ int menu() {
 	unsigned char aMenu = 0;
 	unsigned char startMenu = 0;
 
-	int choose = 1;
+	unsigned char choose = 1;
 	unsigned char line = 0;
 
 	ham_DrawText(11, 3, "DEMINEUR");
@@ -114,7 +114,6 @@ int menu() {
 	timers = REG_TM0D / (65536 / 1000);
 	grid(timers);
 	startTimer3();
-	return 0;
 }
 
 unsigned char getSizeX() {
