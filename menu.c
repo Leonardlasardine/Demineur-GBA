@@ -1,4 +1,6 @@
 #include "menu.h"
+#include "main.h"
+#include "timers.h"
 
 int timers;
 
@@ -14,15 +16,15 @@ int menu() {
 	unsigned char LMenu = 0;
 	unsigned char RMenu = 0;
 	unsigned char aMenu = 0;
+	unsigned char startMenu = 0;
 
 	int choose = 1;
 	unsigned char line = 0;
 
 	ham_DrawText(11, 3, "DEMINEUR");
-	ham_DrawText(12, 15, "JOUER");
-
 	ham_DrawText(3, 7,  "Difficulte      :");
 	ham_DrawText(3, 11, "Nombre de mines :");
+	ham_DrawText(12, 15, "JOUER");
 	
 	changeDifficulty(HAUT);
 	changeMines(HAUT);
@@ -97,12 +99,21 @@ int menu() {
 			   aMenu = 0;
 		   }
 	   }
-	}
 
+	   if (F_CTRLINPUT_START_PRESSED) {
+		   startMenu = 1;
+	   } else {
+		   if (startMenu) {
+			   //Comme le bouton A
+			   aMenu = 1;
+			   startMenu = 0;
+		   }
+	   }
+	}
 
 	timers = REG_TM0D / (65536 / 1000);
 	grid(timers);
-
+	startTimer3();
 	return 0;
 }
 

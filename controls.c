@@ -82,6 +82,7 @@ int control() {
 	   if (F_CTRLINPUT_L_PRESSED) {
 		   if (F_CTRLINPUT_R_PRESSED) {
 			   alive = 0;
+			   endVideoMode3();
 		   }
 		   if(F_CTRLINPUT_B_PRESSED) {
 			   drawSave();

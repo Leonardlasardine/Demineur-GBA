@@ -5,4 +5,5 @@ void reveal();
 void drawSave();
 
 void drawCase(unsigned char x, unsigned char y);
+void drawGrid();
 void drawCaseFromSave(unsigned char x, unsigned char y);

@@ -1,4 +1,11 @@
+#include <mygba.h>
+#include "main.h"
+#include "videoModes.h"
+
 unsigned short checkPixel (int x, int y);
 
+unsigned char getMines();
+
 unsigned char pauseGame();
-void save_screen();
+unsigned char moveLinePause(Sens sens, unsigned char *l);
+void aPressedAction(unsigned char *l);

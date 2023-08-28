@@ -92,6 +92,7 @@ void reveal() {
 }
 
 void drawSave() {
+	drawGrid();//A CHANGER
 	unsigned char sizeX = getSizeX();
 	unsigned char sizeY = getSizeY();
 
