@@ -32,14 +32,46 @@ void drawCase(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	unsigned char n = checkMines(x+1, y+1);
 	
-	if (n == 0) {
-		drawEmptyCase(x, y);
-	} else if (n < 9) {
-		drawNumber(x*pixelX, y*pixelY, n);
-	} else {
-		drawMine(x*pixelX, y*pixelY);
+	//Enlever drapeau
+	/*unsigned char value = getGridValue(x+1, y+1);
+	if (value > 19) {
+		setGridValue(x+1, y+1, value - 20);
+	}*/
+
+	//Case non révélée
+	if (getGridValue(x+1, y+1) < 10) {
+		
+		unsigned char n = checkMines(x+1, y+1);
+	
+		if (n == 0) {
+			drawEmptyCase(x, y);
+		} else if (n < 9) {
+			drawNumber(x*pixelX, y*pixelY, n);
+		} else {
+			drawMine(x*pixelX, y*pixelY);
+		}
+	}
+}
+
+void drawCaseFromSave(unsigned char x, unsigned char y) {
+	unsigned char pixelX = 240/getSizeX();
+	unsigned char pixelY = 160/getSizeY();
+
+	//Case révélée
+	if (getGridValue(x+1, y+1) > 9) {
+
+		unsigned char n = getGridValue(x+1, y+1);
+	
+		if (n == 10) {
+			drawEmptyCase(x, y);
+		} else if (n < 19) {
+			drawNumber(x*pixelX, y*pixelY, n - 10);
+		} else if (n == 19) {
+			drawMine(x*pixelX, y*pixelY);
+		} else if (n > 20) {
+			drawFlag(x, y);
+		}
 	}
 }
 
@@ -120,25 +152,26 @@ void drawFlag(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	x = x * pixelX;
-	y = y * pixelY;
-
-	switch (getDifficulty()) {
-		case 0 :
-			drawBitmap(x, y, flag_40_Bitmap, 40);
-			break;
-		case 1 :
-			drawBitmap(x, y, flag_20_Bitmap, 20);
-			break;
-		case 2 :
-			drawBitmap(x, y, flag_16_Bitmap, 16);
-			break;
-		case 3 :
-			drawBitmap(x, y, flag_10_Bitmap, 10);
-			break;
-		case 4 :
-			drawBitmap(x, y, flag_8_Bitmap, 8);
-			break;
+	//Case pas révélée
+	if (getGridValue(x+1, y+1) < 10) {
+		switch (getDifficulty()) {
+			case 0 :
+				drawBitmap(x*pixelX, y*pixelY, flag_40_Bitmap, 40);
+				break;
+			case 1 :
+				drawBitmap(x*pixelX, y*pixelY, flag_20_Bitmap, 20);
+				break;
+			case 2 :
+				drawBitmap(x*pixelX, y*pixelY, flag_16_Bitmap, 16);
+				break;
+			case 3 :
+				drawBitmap(x*pixelX, y*pixelY, flag_10_Bitmap, 10);
+				break;
+			case 4 :
+				drawBitmap(x*pixelX, y*pixelY, flag_8_Bitmap, 8);
+				break;
+		}
+		//setGridValue(x+1, y+1, 20 + getGridValue(x+1, y+1));
 	}
 }
 

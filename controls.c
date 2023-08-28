@@ -1,4 +1,5 @@
 #include "controls.h"
+#include "pause.h"
 
 //Touches
 unsigned char upPressed = 0;
@@ -7,6 +8,7 @@ unsigned char leftPressed = 0;
 unsigned char rightPressed = 0;
 unsigned char aPressed = 0;
 unsigned char bPressed = 0;
+unsigned char startPressed = 0;
 
 unsigned char x;
 unsigned char y;
@@ -21,6 +23,7 @@ int control() {
 	drawGrid();
 
 	while(alive) {
+		//Directions
 		if(F_CTRLINPUT_UP_PRESSED) {
 		   upPressed = 1;
 	   } else {
@@ -57,6 +60,7 @@ int control() {
 		   }
 	   }
 
+	   //Révéler
 	   if(F_CTRLINPUT_A_PRESSED) {
 		   aPressed = 1;
 	   } else {
@@ -74,12 +78,29 @@ int control() {
 		   }
 	   }
 
+	   //Triche
 	   if (F_CTRLINPUT_L_PRESSED) {
 		   if (F_CTRLINPUT_R_PRESSED) {
 			   alive = 0;
 		   }
 		   if(F_CTRLINPUT_B_PRESSED) {
+			   drawSave();
+		   }
+		   if(F_CTRLINPUT_A_PRESSED) {
 			   reveal();
+		   }
+	   }
+
+	   //Pause
+	   if(F_CTRLINPUT_START_PRESSED) {
+		   startPressed = 1;
+	   } else {
+		   if (startPressed) {
+			   unsigned char quitGame = pauseGame();
+			   if (quitGame) {
+				   alive = 0;
+			   }
+			   startPressed = 0;
 		   }
 	   }
    }

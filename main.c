@@ -9,9 +9,9 @@ int main(void) {
 	//Démarage
 	REG_TM0CNT = TIMER_FREQUENCY_SYSTEM | TIMER_ENABLE;
 
-
 	while(1) {
 		if(showMenu) {
+			//Video Mode 0
 			ham_SetBgMode(0);
 			ham_InitText(0);
 

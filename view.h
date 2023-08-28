@@ -12,3 +12,4 @@ void drawGrid();
 void drawFlag(unsigned char x, unsigned char y);
 void drawNumber(unsigned char x, unsigned char y, unsigned char n);
 void drawEmptyCase(unsigned char x, unsigned char y);
+void drawCaseFromSave(unsigned char x, unsigned char y);

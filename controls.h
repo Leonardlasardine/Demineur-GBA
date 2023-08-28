@@ -12,5 +12,3 @@ void drawFlag(unsigned char x, unsigned char y);
 
 unsigned char getSizeX();
 unsigned char getSizeY();
-
-unsigned short checkPixel (int x, int y);

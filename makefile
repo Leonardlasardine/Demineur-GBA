@@ -19,6 +19,7 @@ OFILES +=main.o	      \
 		view.o	      \
 		controls.o	  \
 		menu.o	      \
+		pause.o	      \
 		flags.raw.o   \
 		cases.raw.o   \
 		mines.raw.o   \
