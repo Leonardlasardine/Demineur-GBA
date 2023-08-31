@@ -4,20 +4,26 @@
 
 //Grille vide
 unsigned char g[30][20];
+//Le nombre de mines placées moins les drapeaux (même si mals placés)
+unsigned char minesLeft;
 
-void grid(unsigned int seed) {
-
-	unsigned char sizeX = getSizeX() + 1;
-	unsigned char sizeY = getSizeY() + 1;
-	unsigned char mines = getMines();
-
-	//Reset
+void resetGrid() {//Pourrait faire moins
 	unsigned char posY, posX;
-	for (posX = 0; posX < sizeX; posX++) {
-		for (posY = 0; posY < sizeY; posY++) {
+	for (posX = 0; posX < 30; posX++) {
+		for (posY = 0; posY < 20; posY++) {
 			g[posX][posY] = 0;
 		}
 	}
+}
+
+void grid(unsigned int seed) {
+	unsigned char sizeX = getSizeX() + 1;
+	unsigned char sizeY = getSizeY() + 1;
+	unsigned char mines = getMines();
+	minesLeft = mines;
+
+	//Reset
+	resetGrid();
 
 	//Aléatoire
 	srand(seed);
@@ -39,17 +45,17 @@ void grid(unsigned int seed) {
 
 /*
  * 0			==>		Vide
- * 1 - 8		==>		Nombre de mines autour
  * 9			==>		Mine ici-même
  * 10			==>		Case vide révélée
  * 11 - 18		==>		Nombre révélé
  * 19			==>		Mine révélée
- * 20 + valeur	==>		Drapeau
+ * 21			==>		Drapeau sur une mine
+ * 22			==>		Drapeau sur une case pas révélée
 */
 unsigned char checkMines(unsigned char x, unsigned char y) {
 	unsigned char n = 0;
 
-	if (g[x][y] == 9) {
+	if (g[x][y] == 9 || g[x][y] == 21) {
 		n = 9;
 		g[x][y] = 19;
 	}
@@ -59,7 +65,7 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 
 		for (i = x - 1; i < x + 2; i++) {
 			for (j = y - 1; j < y + 2; j++) {
-				if (g[i][j] == 9 || g[i][j] == 19) {
+				if (g[i][j] == 9 || g[i][j] == 19 || g[i][j] == 21) {
 					n++;
 				}
 			}
@@ -102,4 +108,12 @@ void drawSave() {
 			drawCaseFromSave(posX, posY);
 		}
 	}
+}
+
+unsigned char getMinesLeft() {
+	return minesLeft;
+}
+
+void setMinesLeft(unsigned char value) {
+	minesLeft = value;
 }

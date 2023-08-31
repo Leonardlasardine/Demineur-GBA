@@ -2,6 +2,7 @@
 #include "main.h"
 #include "videoModes.h"
 #include "timers.h"
+#include "save.h"
 
 int main(void) {
 	ham_Init();
@@ -30,10 +31,10 @@ int main(void) {
 				endVideoMode0();
 				setVideoMode3();
 
-				control();
+				control(1);
 				break;
 			case 1:
-
+				
 				break;
 			case 2:
 

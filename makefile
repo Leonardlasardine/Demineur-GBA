@@ -20,11 +20,14 @@ OFILES +=main.o			\
 		controls.o		\
 		menu.o			\
 		pause.o			\
+		save.o			\
 		selectionMenu.o	\
+		numbersStr.o	\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
 		numbers.raw.o	\
+
 #
 # Set a list of libraries you want to link
 #

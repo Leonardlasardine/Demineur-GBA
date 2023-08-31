@@ -1,7 +1,8 @@
 #include "selectionMenu.h"
 
-
-unsigned char gameMode = 0;
+unsigned char gameMode;
+unsigned char chooseMode;
+unsigned char line;
 
 unsigned char selectionMenu() {
 	//Touches
@@ -10,8 +11,9 @@ unsigned char selectionMenu() {
 	unsigned char aMenu = 0;
 	unsigned char startMenu = 0;
 
-	unsigned char chooseMode = 1;
-	unsigned char line = 0;
+	gameMode = 0;
+	chooseMode = 1;
+	line = 0;
 
 	ham_DrawText(8, 5,  "NOUVELLE PARTIE");
 	ham_DrawText(12, 10, "CHARGER");
@@ -43,7 +45,7 @@ unsigned char selectionMenu() {
 	   } else {
 		   if (aMenu) {
 			   aPressedSelection(&line);
-			   chooseMode = 0;
+			   //chooseMode = 0;
 			   aMenu = 0;
 		   }
 	   }
@@ -109,12 +111,22 @@ void aPressedSelection(unsigned char *l) {
 	switch (*l) {
 		case 0 :
 			gameMode = 0;
+			chooseMode = 0;
 			break;
 		case 1 :
-			gameMode = 1;
+			if(load()) {
+					endVideoMode0();
+					setVideoMode3();
+
+
+					control(0);
+					gameMode = 1;
+					chooseMode = 0;
+				}
 			break;
 		case 2 :
 			gameMode = 2;
+			//startMenu = 0;
 			break;
 	}
 }

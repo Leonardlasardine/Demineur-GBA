@@ -134,7 +134,7 @@ unsigned char getSizeX() {
 			return 30;
 			break;
 	}
-	return 1;
+	return 0;
 }
 
 unsigned char getSizeY() {
@@ -155,15 +155,22 @@ unsigned char getSizeY() {
 			return 20;
 			break;
 	}
-	return 1;
+	return 0;
 }
 
 unsigned char getMines() {
 	return mines;
 }
 
+void setMines(unsigned char minesSave) {
+	mines = mines;
+}
 unsigned char getDifficulty() {
 	return difficulty;
+}
+
+void setDifficulty(unsigned char difSave) {
+	difficulty = difSave;
 }
 
 unsigned char moveLine(Sens sens, unsigned char *l) {

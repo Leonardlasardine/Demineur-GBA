@@ -2,6 +2,55 @@
 #include "mines.h"
 #include "menu.h"
 
+unsigned char size = 0;
+unsigned short case_Bitmap[1600] = {};
+
+unsigned char getBitmapSize() {
+	switch(getDifficulty()) {
+		case 0:
+			return 40;
+			break;
+		case 1:
+			return 20;
+			break;
+		case 2:
+			return 16;
+			break;
+		case 3:
+			return 10;
+			break;
+		case 4:
+			return 8;
+			break;
+	}
+	return 40;
+}
+
+void setBitmaps() {
+	size = getBitmapSize();
+	setCaseBitmap();
+}
+
+void setCaseBitmap() {
+	switch (getDifficulty()) {
+		case 0 :
+			memcpy(case_Bitmap, case_40_Bitmap, ARRAY_40);
+			break;
+		case 1 :
+			memcpy(case_Bitmap, case_20_Bitmap, ARRAY_20);
+			break;
+		case 2 :
+			memcpy(case_Bitmap, case_16_Bitmap, ARRAY_16);
+			break;
+		case 3 :
+			memcpy(case_Bitmap, case_10_Bitmap, ARRAY_10);//PK
+			break;
+		case 4 :
+			memcpy(case_Bitmap, case_8_Bitmap, ARRAY_8);
+			break;
+	}
+}
+
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	
 	unsigned char pixelX = 240/getSizeX();
@@ -13,11 +62,9 @@ void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY-1, c);
 }
 
-
 void drawPixel(unsigned char x, unsigned char y, unsigned short c) {
 	videoBuffer[y * 240 + x] = c;
 }
-
 
 void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned short c) {
 	unsigned char i, j;
@@ -32,13 +79,6 @@ void drawCase(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	
-	//Enlever drapeau
-	/*unsigned char value = getGridValue(x+1, y+1);
-	if (value > 19) {
-		setGridValue(x+1, y+1, value - 20);
-	}*/
-
 	//Case non révélée
 	if (getGridValue(x+1, y+1) < 10) {
 		
@@ -50,7 +90,23 @@ void drawCase(unsigned char x, unsigned char y) {
 			drawNumber(x*pixelX, y*pixelY, n);
 		} else {
 			drawMine(x*pixelX, y*pixelY);
+			setMinesLeft(0);//PERDU
 		}
+	//Révéler case avec drapeau
+	} else if (getGridValue(x+1, y+1) == 21) {
+		setGridValue(x+1, y+1, 19);
+		drawMine(x*pixelX, y*pixelY);
+		setMinesLeft(0);
+	} else if (getGridValue(x+1, y+1) == 22) {
+		unsigned char n = checkMines(x+1, y+1);
+	
+		if (n == 0) {
+			drawEmptyCase(x, y);
+		} else  {
+			drawNumber(x*pixelX, y*pixelY, n);
+		}
+
+		setMinesLeft(getMinesLeft() + 1);
 	}
 }
 
@@ -114,32 +170,6 @@ void drawGrid() {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	unsigned short case_Bitmap[1600] = {};
-	unsigned char size = 0;
-	
-	switch (getDifficulty()) {
-		case 0 :
-			memcpy(case_Bitmap, case_40_Bitmap, ARRAY_40);
-			size = 40;
-			break;
-		case 1 :
-			memcpy(case_Bitmap, case_20_Bitmap, ARRAY_20);
-			size = 20;
-			break;
-		case 2 :
-			memcpy(case_Bitmap, case_16_Bitmap, ARRAY_16);
-			size = 16;
-			break;
-		case 3 :
-			memcpy(case_Bitmap, case_10_Bitmap, ARRAY_10);//PK
-			size = 10;
-			break;
-		case 4 :
-			memcpy(case_Bitmap, case_8_Bitmap, ARRAY_8);
-			size = 8;
-			break;
-	}
-
 	unsigned char i, j;
 	for (i = 0; i < getSizeX(); i++) {
 		for (j = 0; j < getSizeY(); j++) {
@@ -148,30 +178,34 @@ void drawGrid() {
 	}
 }
 
+//CHANGER TEXTURE DRAPEAU EN CASE PAS REVELEE
 void drawFlag(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	//Case pas révélée
-	if (getGridValue(x+1, y+1) < 10) {
-		switch (getDifficulty()) {
-			case 0 :
-				drawBitmap(x*pixelX, y*pixelY, flag_40_Bitmap, 40);
-				break;
-			case 1 :
-				drawBitmap(x*pixelX, y*pixelY, flag_20_Bitmap, 20);
-				break;
-			case 2 :
-				drawBitmap(x*pixelX, y*pixelY, flag_16_Bitmap, 16);
-				break;
-			case 3 :
-				drawBitmap(x*pixelX, y*pixelY, flag_10_Bitmap, 10);
-				break;
-			case 4 :
-				drawBitmap(x*pixelX, y*pixelY, flag_8_Bitmap, 8);
-				break;
-		}
-		//setGridValue(x+1, y+1, 20 + getGridValue(x+1, y+1));
+
+	switch (getDifficulty()) {
+		case 0 :
+			drawBitmap(x*pixelX, y*pixelY, flag_40_Bitmap, 40);
+			break;
+		case 1 :
+			drawBitmap(x*pixelX, y*pixelY, flag_20_Bitmap, 20);
+			break;
+		case 2 :
+			drawBitmap(x*pixelX, y*pixelY, flag_16_Bitmap, 16);
+			break;
+		case 3 :
+			drawBitmap(x*pixelX, y*pixelY, flag_10_Bitmap, 10);
+			break;
+		case 4 :
+			drawBitmap(x*pixelX, y*pixelY, flag_8_Bitmap, 8);
+			break;
+	}
+
+	if (checkMines(x+1, y+1) == 9) {
+		setGridValue(x+1, y+1, 21);
+	} else {
+		setGridValue(x+1, y+1, 22);
 	}
 }
 
@@ -223,26 +257,8 @@ void drawEmptyCase(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	unsigned char size = 0;
 	unsigned char i, j;
 
-	switch (getDifficulty()) {
-		case 0 :
-			size = 40;
-			break;
-		case 1 :
-			size = 20;
-			break;
-		case 2 :
-			size = 16;
-			break;
-		case 3 :
-			size = 10;
-			break;
-		case 4 :
-			size = 8;
-			break;
-	}
 	for(i = y*pixelY; i < y*pixelY + size; i++) {
 		for(j = x*pixelX; j < x*pixelX + size; j++) {
 			drawPixel(j, i, RGB(192, 192, 192));

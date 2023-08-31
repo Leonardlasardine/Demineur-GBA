@@ -1,5 +1,6 @@
 set HAMDIR=D:\HAM
 cd "D:\Documents and Settings\Administrator\My Documents\Gameboy\HAM\Demineur\Demineur"
+rm -f Demineur.sav
 
 make
 cd "D:\Program Files\vgba"

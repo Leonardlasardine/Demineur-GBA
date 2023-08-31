@@ -1,9 +1,11 @@
 #include "pause.h"
 #include "mines.h"
 #include "timers.h"
+#include "save.h"
 
 unsigned char pauseMenu;
 unsigned char quitPlaying;
+unsigned char line;
 
 u8 s_H=0, s_M=0, s_S=0;
 
@@ -15,22 +17,15 @@ unsigned char pauseGame() {
 	
 	pauseMenu = 1;
 	quitPlaying = 1;
-	unsigned char line = 0;
+	line = 0;
 
 	unsigned char upPause = 0;
 	unsigned char downPause = 0;
 	unsigned char aPause = 0;
 	unsigned char bPause = 0;
 	unsigned char startPause = 0;
-	
-	ham_DrawText(13, 2, "PAUSE");
-	ham_DrawText(5, 5,  "Temps     :");
-	ham_DrawText(5, 7, "Mines restantes : %u", getMines());
-	ham_DrawText(10, 12, " CONTINUER");
-	ham_DrawText(10, 14, "SAUVEGARDER");
-	ham_DrawText(10, 16, "  QUITTER");
-	
-	moveLinePause(DROITE, &line);
+
+	writePauseText();
 	Timer3Function();
 
 	while (pauseMenu) {
@@ -76,7 +71,6 @@ unsigned char pauseGame() {
 		   startPause = 1;
 	   } else {
 		   if (startPause) {
-			   //Continuer
 			   line = 0;
 			   aPressedAction(&line);
 			   startPause = 0;
@@ -85,6 +79,17 @@ unsigned char pauseGame() {
 	}
 
 	return quitPlaying;
+}
+
+void writePauseText() {
+	ham_DrawText(13, 2, "PAUSE");
+	ham_DrawText(5, 5,  "Temps     :");
+	ham_DrawText(5, 7, "Mines restantes : %u", getMinesLeft());
+	ham_DrawText(10, 12, " CONTINUER");
+	ham_DrawText(10, 14, "SAUVEGARDER");
+	ham_DrawText(10, 16, "  QUITTER");
+	
+	moveLinePause(DROITE, &line);
 }
 
 unsigned char moveLinePause(Sens sens, unsigned char *l) {
@@ -134,6 +139,7 @@ unsigned char moveLinePause(Sens sens, unsigned char *l) {
 void aPressedAction(unsigned char *l) {
 	switch (*l) {
 		case 0 :
+			  //Continuer
 			endVideoMode0();
 			setVideoMode3();
 
@@ -145,8 +151,16 @@ void aPressedAction(unsigned char *l) {
 			break;
 		case 1 :
 			//Sauvegarder
+			if (getDifficulty() < 3) {//Sinon pas assez de place
+				save();
+				ham_DrawText(6, 14, "PARTIE SAUVEGARDEE");
+				//Apres sauvegarde plus le temps
+			} else {
+				ham_DrawText(5, 14, "SAUVEGARDE IMPOSSIBLE");
+			}
 			break;
 		case 2 :
+			//Quitter
 			s_H=0;
 			s_M=0;
 			s_S=0;

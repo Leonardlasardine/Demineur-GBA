@@ -14,3 +14,5 @@ unsigned char getSizeX();
 unsigned char getSizeY();
 unsigned char getMines();
 unsigned char getDifficulty();
+void setDifficulty(unsigned char difSave);
+void setMines(unsigned char minesSave);

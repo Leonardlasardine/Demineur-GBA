@@ -1,4 +1,4 @@
-void control();
+void control(unsigned char newGame);
 void menu();
 unsigned char selectionMenu();
 

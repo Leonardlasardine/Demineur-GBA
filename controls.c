@@ -4,7 +4,7 @@
 unsigned char x;
 unsigned char y;
 
-void control() {
+void control(unsigned char newGame) {
 	//Touches
 	unsigned char upPressed = 0;
 	unsigned char downPressed = 0;
@@ -18,7 +18,13 @@ void control() {
 	x = 0;
 	y = 0;
 	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
-	drawGrid();
+	setBitmaps();
+
+	if(newGame) {
+		drawGrid();
+	} else {
+		drawSave();
+	}
 
 	while(alive) {
 		//Directions
@@ -71,7 +77,11 @@ void control() {
 		   bPressed = 1;
 	   } else {
 		   if (bPressed) {
-			   drawFlag(x, y);
+			   //Case pas révélée
+			   if (getGridValue(x+1, y+1) < 10) {
+				   drawFlag(x, y);
+				   setMinesLeft(getMinesLeft() - 1);
+			   }
 			   bPressed = 0;
 		   }
 	   }
