@@ -4,8 +4,8 @@
 
 int timers;
 
-unsigned char difficulty = 0;
-unsigned char mines = 20;
+unsigned char difficulty;
+unsigned char mines;
 
 void menu() {
 	//Touches
@@ -163,7 +163,7 @@ unsigned char getMines() {
 }
 
 void setMines(unsigned char minesSave) {
-	mines = mines;
+	mines = minesSave;
 }
 unsigned char getDifficulty() {
 	return difficulty;

@@ -154,7 +154,8 @@ void aPressedAction(unsigned char *l) {
 			if (getDifficulty() < 3) {//Sinon pas assez de place
 				save();
 				ham_DrawText(6, 14, "PARTIE SAUVEGARDEE");
-				//Apres sauvegarde plus le temps
+				//Re afficher le temps
+				Timer3Function();
 			} else {
 				ham_DrawText(5, 14, "SAUVEGARDE IMPOSSIBLE");
 			}

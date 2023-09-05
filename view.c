@@ -29,6 +29,7 @@ unsigned char getBitmapSize() {
 void setBitmaps() {
 	size = getBitmapSize();
 	setCaseBitmap();
+	//Set pixelX and Y
 }
 
 void setCaseBitmap() {
@@ -51,15 +52,25 @@ void setCaseBitmap() {
 	}
 }
 
+//Pas assez visible
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	drawLine(x*pixelX, y*pixelY, pixelX, 1, c);
+	/*drawLine(x*pixelX, y*pixelY, pixelX, 1, c);
 	drawLine(x*pixelX, y*pixelY, 1, pixelY, c);
 	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX, 1, c);
+	drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY-1, c);*/
+	drawLine(x*pixelX, y*pixelY, pixelX, 1, c);
+	drawLine(x*pixelX, y*pixelY, 1, pixelY, c);
+
+	
+	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX, 1, c);
 	drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY-1, c);
+
+	//drawLine(x*pixelX, y*pixelY + pixelY, pixelX+1, 1, c);
+	//drawLine(x*pixelX + pixelX, y*pixelY, 1, pixelY, c);
 }
 
 void drawPixel(unsigned char x, unsigned char y, unsigned short c) {

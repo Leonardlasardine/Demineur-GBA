@@ -80,6 +80,7 @@ void control(unsigned char newGame) {
 			   //Case pas révélée
 			   if (getGridValue(x+1, y+1) < 10) {
 				   drawFlag(x, y);
+				   //AFAIRE nomnbre max de drapeaux
 				   setMinesLeft(getMinesLeft() - 1);
 			   }
 			   bPressed = 0;
