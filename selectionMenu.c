@@ -120,6 +120,9 @@ void aPressedSelection(unsigned char *l) {
 
 
 					control(0);
+
+					endVideoMode3();
+
 					gameMode = 1;
 					chooseMode = 0;
 				}

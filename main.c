@@ -6,9 +6,15 @@
 
 int main(void) {
 	ham_Init();
+	
+	//Video Mode 0
+	setVideoMode0();
 
 	//Démarage
 	REG_TM0CNT = TIMER_FREQUENCY_SYSTEM | TIMER_ENABLE;
+
+	initSave();
+	endVideoMode0();
 
 	while(1) {
 		//Video Mode 0
@@ -26,12 +32,18 @@ int main(void) {
 				endVideoMode0();
 				setVideoMode0();
 
-				menu();
+				unsigned char newGame = menu();
+				saveMenu();
 
-				endVideoMode0();
-				setVideoMode3();
+				if(newGame) {
+					endVideoMode0();
+					setVideoMode3();
 
-				control(1);
+					control(1);
+
+					endVideoMode3();
+				}
+				//Sinon retour menu principal
 				break;
 			case 1:
 				

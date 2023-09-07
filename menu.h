@@ -1,7 +1,7 @@
 #include <mygba.h>
 #include "main.h"
 
-void menu();
+unsigned char menu();
 
 void grid(unsigned int seed);
 

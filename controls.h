@@ -4,6 +4,10 @@
 
 void control(unsigned char newGame);
 void move(Sens sens, unsigned char *x, unsigned char *y);
+unsigned char getX();
+unsigned char getY();
+void setX(unsigned char newX);
+void setY(unsigned char newY);
 
 void cursor (unsigned char x, unsigned char y, unsigned short c);
 void drawCase(unsigned char x, unsigned char y);

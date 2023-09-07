@@ -7,7 +7,7 @@ unsigned char pauseMenu;
 unsigned char quitPlaying;
 unsigned char line;
 
-u8 s_H=0, s_M=0, s_S=0;
+unsigned char s_H=0, s_M=0, s_S=0;
 
 unsigned char pauseGame() {
 	endVideoMode3();
@@ -139,11 +139,12 @@ unsigned char moveLinePause(Sens sens, unsigned char *l) {
 void aPressedAction(unsigned char *l) {
 	switch (*l) {
 		case 0 :
-			  //Continuer
+			//Continuer
 			endVideoMode0();
 			setVideoMode3();
 
 			drawSave();
+			//drawCursor
 			restartTimer3();
 
 			quitPlaying = 0;
@@ -207,4 +208,23 @@ void stopTimer3() {
 
 void restartTimer3() {
 	M_TIM3CNT_TIMER_START
+}
+
+unsigned char getHours() {
+	return s_H;
+}
+
+unsigned char getMinutes() {
+	return s_M;
+}
+
+unsigned char getSeconds() {
+	return s_S;
+}
+
+
+void setTime(unsigned char hours, unsigned char minutes, unsigned char seconds) {
+	s_H = hours;
+	s_M = minutes;
+	s_S = seconds;
 }

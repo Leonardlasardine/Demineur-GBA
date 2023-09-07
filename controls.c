@@ -15,16 +15,18 @@ void control(unsigned char newGame) {
 	unsigned char startPressed = 0;
 	
 	unsigned char alive = 1;
-	x = 0;
-	y = 0;
-	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
+
 	setBitmaps();
 
 	if(newGame) {
+		x = 0;
+		y = 0;
 		drawGrid();
 	} else {
 		drawSave();
 	}
+
+	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
 
 	while(alive) {
 		//Directions
@@ -91,7 +93,6 @@ void control(unsigned char newGame) {
 	   if (F_CTRLINPUT_L_PRESSED) {
 		   if (F_CTRLINPUT_R_PRESSED) {
 			   alive = 0;
-			   endVideoMode3();
 		   }
 		   if(F_CTRLINPUT_B_PRESSED) {
 			   drawSave();
@@ -110,6 +111,7 @@ void control(unsigned char newGame) {
 			   if (quitGame) {
 				   alive = 0;
 			   }
+			   cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
 			   startPressed = 0;
 		   }
 	   }
@@ -147,4 +149,20 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 			break;
 	}
 	cursor(*x, *y, RGB(*y*10 + *x*10, *y*10, (150 - *x*5)));
+}
+
+unsigned char getX() {
+	return x;
+}
+
+unsigned char getY() {
+	return y;
+}
+
+void setX(unsigned char newX) {
+	x = newX;
+}
+
+void setY(unsigned char newY) {
+	y = newY;
 }

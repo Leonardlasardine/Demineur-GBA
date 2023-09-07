@@ -2,36 +2,49 @@
 #include "videoModes.h"
 
 unsigned char initSave() {
-	TSRAMDataBlock SRAMBlock;
+	SRAM_GAME GameBlock;
+	SRAM_MENU MenuBlock;
 	unsigned char exist = ham_InitRAM(RAM_TYPE_SRAM_256K);
 
 	//Si pas de sauvegarde, initialiser
 	if (!exist) {
-		SRAMBlock.gameExist = 0;
-		SRAMBlock.difficulty = 2;
-		SRAMBlock.mines = 20;
-		SRAMBlock.minesLeft = 20;
+		GameBlock.gameExist = 0;
+		GameBlock.difficulty = 2;
+		GameBlock.mines = 20;
+		GameBlock.minesLeft = 20;
+		GameBlock.x = 0;
+		GameBlock.y = 0;
+		GameBlock.s_H = 0;
+		GameBlock.s_M = 0;
+		GameBlock.s_S = 0;
 
 		//Save custom structure into SRAM
-		ham_SaveRawToRAM(IDENTIFIER_STRING,			//Emplacement
-						(void*)&SRAMBlock,			//Données
-						sizeof(TSRAMDataBlock));	//Taille
+		ham_SaveRawToRAM(IDENTIFIER_STRING_GAME,	//Emplacement
+						(void*)&GameBlock,			//Données
+						sizeof(SRAM_GAME));			//Taille
+		
+		MenuBlock.difficulty = 0;
+		MenuBlock.mines = 20;
+
+		ham_SaveRawToRAM(IDENTIFIER_STRING_MENU,
+						(void*)&MenuBlock,
+						sizeof(SRAM_MENU));
 
 		//Sauvegarde vide 
 		ham_DrawText(1, 1, "PREMIER LANCEMENT");
 		ham_DrawText(4, 10, "INITIALISATION   /16");
 
-		resetGrid();//?
+		resetGrid();
 		setDifficulty(2);
 
 		saveGrid(19, 10);
 
 		setDifficulty(0);
 		setMines(20);
-	} else {//Aussi charger les valeurs du menu sans sauvegarde
-		ham_LoadRawFromRAM(IDENTIFIER_STRING, (void*)&SRAMBlock);
-		setDifficulty(SRAMBlock.difficulty);
-		setMines(SRAMBlock.mines);
+	} else {//Charger les valeurs du menu
+		ham_LoadRawFromRAM(IDENTIFIER_STRING_MENU, (void*)&MenuBlock);
+		setDifficulty(MenuBlock.difficulty);
+		setMines(MenuBlock.mines);
 	}
 	return exist;
 }
@@ -56,27 +69,31 @@ void save() {
 	endVideoMode0();
 	setVideoMode0();
 
-	TSRAMDataBlock SRAMBlock;
-	ham_LoadRawFromRAM(IDENTIFIER_STRING, (void*)&SRAMBlock);
+	SRAM_GAME GameBlock;
+	ham_LoadRawFromRAM(IDENTIFIER_STRING_GAME, (void*)&GameBlock);
 
-	if(SRAMBlock.gameExist) {
+	if(GameBlock.gameExist) {
 		ham_DrawText(1, 1, "DEJA UNE SAUVEGARDE");
 		ham_DrawText(1, 2, "ECRASER");//Faire oui/non
 	}
 
-	SRAMBlock.gameExist = 1;
-	SRAMBlock.difficulty = getDifficulty();
-	SRAMBlock.mines = getMines();
-	SRAMBlock.minesLeft = getMinesLeft();
+	GameBlock.gameExist = 1;
+	GameBlock.difficulty = getDifficulty();
+	GameBlock.mines = getMines();
+	GameBlock.minesLeft = getMinesLeft();
+	GameBlock.x = getX();
+	GameBlock.y = getY();
+	GameBlock.s_H = getHours();
+	GameBlock.s_M = getMinutes();
+	GameBlock.s_S = getSeconds();
 	
-	
-	ham_SaveRawToRAM(IDENTIFIER_STRING,
-					(void*)&SRAMBlock,
-					sizeof(TSRAMDataBlock));
+	ham_SaveRawToRAM(IDENTIFIER_STRING_GAME,
+					(void*)&GameBlock,
+					sizeof(SRAM_GAME));
 
-	ham_DrawText(1, 5, "Difficultee %u", SRAMBlock.difficulty);
-	ham_DrawText(1, 6, "Mines %u", SRAMBlock.mines);
-	ham_DrawText(1, 7, "Mines restatntes %u", SRAMBlock.minesLeft);
+	ham_DrawText(1, 5, "Difficultee %u", GameBlock.difficulty);
+	ham_DrawText(1, 6, "Mines %u", GameBlock.mines);
+	ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);
 	
 	unsigned char sizeX = getSizeX()+1;
 	ham_DrawText(1, 3, "SAUVEGARDE   /%u", sizeX);
@@ -91,11 +108,11 @@ void save() {
 }
 
 unsigned char load() {
-	TSRAMDataBlock SRAMBlock;
+	SRAM_GAME GameBlock;
 
-	ham_LoadRawFromRAM(IDENTIFIER_STRING, (void*)&SRAMBlock);
+	ham_LoadRawFromRAM(IDENTIFIER_STRING_GAME, (void*)&GameBlock);
 	
-	unsigned char saveFound = SRAMBlock.gameExist;
+	unsigned char saveFound = GameBlock.gameExist;
 
 	if(!saveFound) {//A changer
 		ham_DrawText(3, 10, "Aucune sauvegarde trouvee");
@@ -104,13 +121,16 @@ unsigned char load() {
 		setVideoMode0();
 
 		ham_DrawText(1, 1, "SRAM inited ok");
-		ham_DrawText(1, 5, "Difficultee %u", SRAMBlock.difficulty);
-		ham_DrawText(1, 6, "Mines %u", SRAMBlock.mines);
-		ham_DrawText(1, 7, "Mines restatntes %u", SRAMBlock.minesLeft);
+		ham_DrawText(1, 5, "Difficultee %u", GameBlock.difficulty);
+		ham_DrawText(1, 6, "Mines %u", GameBlock.mines);
+		ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);
 		
-		setDifficulty(SRAMBlock.difficulty);
-		setMines(SRAMBlock.mines);
-		setMinesLeft(SRAMBlock.minesLeft);
+		setDifficulty(GameBlock.difficulty);
+		setMines(GameBlock.mines);
+		setMinesLeft(GameBlock.minesLeft);
+		setX(GameBlock.x);
+		setY(GameBlock.y);//Ou les deux en même temps
+		setTime(GameBlock.s_H, GameBlock.s_M, GameBlock.s_S);
 		
 		resetGrid();
 		unsigned char n = 0;
@@ -136,4 +156,15 @@ unsigned char load() {
 		ham_DrawText(1, 1, "SAUVEGARDER CHARGEE");
 	}
 	return saveFound;
+}
+
+void saveMenu() {
+	SRAM_MENU MenuBlock;
+
+	MenuBlock.difficulty = getDifficulty();
+	MenuBlock.mines = getMines();
+
+	ham_SaveRawToRAM(IDENTIFIER_STRING_MENU,
+					(void*)&MenuBlock,
+					sizeof(SRAM_MENU));
 }

@@ -27,3 +27,5 @@ const unsigned short numbers_20_Bitmap[3200];
 const unsigned short numbers_16_Bitmap[2048];
 const unsigned short numbers_10_Bitmap[800];
 const unsigned short numbers_8_Bitmap[512];
+
+//CHANGER LES TEXTURES

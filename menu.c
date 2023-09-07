@@ -7,7 +7,7 @@ int timers;
 unsigned char difficulty;
 unsigned char mines;
 
-void menu() {
+unsigned char menu() {
 	//Touches
 	unsigned char upMenu = 0;
 	unsigned char downMenu = 0;
@@ -19,6 +19,7 @@ void menu() {
 	unsigned char startMenu = 0;
 
 	unsigned char choose = 1;
+	unsigned char newGame = 0;
 	unsigned char line = 0;
 
 	ham_DrawText(11, 3, "DEMINEUR");
@@ -69,6 +70,11 @@ void menu() {
 
 	   if (F_CTRLINPUT_L_PRESSED) {
 		   LMenu = 1;
+		   //Quitter Menu
+		   if (F_CTRLINPUT_R_PRESSED) {
+			   choose = 0;
+			   newGame = 0;
+		   }
 	   } else {
 		   if (LMenu) {
 			   changeValue(SUPER_GAUCHE, &line);
@@ -92,6 +98,7 @@ void menu() {
 			   if (line == 2) {
 				   if (mines < (getSizeX() * getSizeX())) {
 					   choose = 0;
+					   newGame = 1;
 				   } else {
 					   ham_DrawText(7, 18, "TROP DE MINES !"); //MARCHE PLUS
 				   }
@@ -114,6 +121,8 @@ void menu() {
 	timers = REG_TM0D / (65536 / 1000);
 	grid(timers);
 	startTimer3();
+
+	return newGame;
 }
 
 unsigned char getSizeX() {

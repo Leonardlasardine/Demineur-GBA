@@ -1,5 +1,5 @@
 void control(unsigned char newGame);
-void menu();
+unsigned char menu();
 unsigned char selectionMenu();
 
 //Video buffer
