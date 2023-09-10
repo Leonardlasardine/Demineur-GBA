@@ -27,6 +27,8 @@ OFILES +=main.o			\
 		cases.raw.o		\
 		mines.raw.o		\
 		numbers.raw.o	\
+		save.raw.o		\
+		load.raw.o		\
 
 #
 # Set a list of libraries you want to link

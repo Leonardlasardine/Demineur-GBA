@@ -16,3 +16,4 @@ void drawCaseFromSave(unsigned char x, unsigned char y);
 unsigned char getBitmapSize();
 void setCaseBitmap();
 void setBitmaps();
+void drawScreen(const unsigned short screen[38400]);

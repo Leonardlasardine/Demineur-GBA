@@ -1,5 +1,7 @@
 #include "save.h"
 #include "videoModes.h"
+#include "bitmaps.h"
+#include <math.h>
 
 unsigned char initSave() {
 	SRAM_GAME GameBlock;
@@ -36,45 +38,69 @@ unsigned char initSave() {
 
 		resetGrid();
 		setDifficulty(2);
+		
+		endVideoMode0();
+		setVideoMode3();
+	
+		//Fond
+		drawScreen(load_Bitmap);//Changer
 
 		saveGrid(19, 10);
+		
+		endVideoMode3();
+		setVideoMode0();
 
 		setDifficulty(0);
 		setMines(20);
 	} else {//Charger les valeurs du menu
-		ham_LoadRawFromRAM(IDENTIFIER_STRING_MENU, (void*)&MenuBlock);
-		setDifficulty(MenuBlock.difficulty);
-		setMines(MenuBlock.mines);
-	}
+		//ham_LoadRawFromRAM(IDENTIFIER_STRING_MENU, (void*)&MenuBlock);
+		//setDifficulty(MenuBlock.difficulty);
+		//setMines(MenuBlock.mines);
+	}																			//CRASH
 	return exist;
 }
 
-void saveGrid(unsigned char textX, unsigned char textY) {
-	unsigned char n = 0;
+//Video mode 3
+void saveGrid(unsigned char textX, unsigned char textY) { //Moins que 188 cases
+	unsigned char n = 0;//Mettre short mais bloque quand même à 250
+	unsigned char bar = 0; //TOTAL 188
 	unsigned char sizeX = getSizeX()+1;
 	unsigned char sizeY = getSizeY()+1;
+
+	float barSize = (float)188 / (sizeX * sizeY);
 	
 	unsigned char posY, posX;
 	for (posX = 0; posX < sizeX; posX++) {
 		for (posY = 0; posY < sizeY; posY++) {
 			unsigned char value = getGridValue(posX, posY);
 			ham_SaveRawToRAM(numbersStr[n], (void*)&value, sizeof(value));
+			
+			//Barre de chargement
+			do {
+				drawLine(26 + bar, 120, 1, 20, RGB(130, 226, 65));
+				bar++;
+			}
+			while (bar < floor(barSize*(n+1)));
+
 			n++;
 		}
-		ham_DrawText(textX, textY, "%u", posX+1);
+		//ham_DrawText(textX, textY, "%u", posX+1);
 	}
 }
 
 void save() {
 	endVideoMode0();
-	setVideoMode0();
+	setVideoMode3();
+	
+	//Fond
+	drawScreen(save_Bitmap);
 
 	SRAM_GAME GameBlock;
 	ham_LoadRawFromRAM(IDENTIFIER_STRING_GAME, (void*)&GameBlock);
 
 	if(GameBlock.gameExist) {
-		ham_DrawText(1, 1, "DEJA UNE SAUVEGARDE");
-		ham_DrawText(1, 2, "ECRASER");//Faire oui/non
+		//ham_DrawText(1, 1, "DEJA UNE SAUVEGARDE");
+		//ham_DrawText(1, 2, "ECRASER");					//Faire oui/non
 	}
 
 	GameBlock.gameExist = 1;
@@ -91,18 +117,17 @@ void save() {
 					(void*)&GameBlock,
 					sizeof(SRAM_GAME));
 
-	ham_DrawText(1, 5, "Difficultee %u", GameBlock.difficulty);
+	/*ham_DrawText(1, 5, "Difficultee %u", GameBlock.difficulty);
 	ham_DrawText(1, 6, "Mines %u", GameBlock.mines);
-	ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);
+	ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);*/
 	
 	unsigned char sizeX = getSizeX()+1;
-	ham_DrawText(1, 3, "SAUVEGARDE   /%u", sizeX);
+	//ham_DrawText(1, 3, "SAUVEGARDE   /%u", sizeX);
 
 	//Sauvegarde de la grille
 	saveGrid(12, 3);
 
-	ham_DrawText(1, 1, "Created new DATA block");
-	endVideoMode0();
+	endVideoMode3();
 	setVideoMode0();
 	writePauseText();
 }
@@ -118,12 +143,15 @@ unsigned char load() {
 		ham_DrawText(3, 10, "Aucune sauvegarde trouvee");
 	} else {
 		endVideoMode0();
-		setVideoMode0();
+		setVideoMode3();
+	
+		//Fond
+		drawScreen(load_Bitmap);
 
-		ham_DrawText(1, 1, "SRAM inited ok");
+		/*ham_DrawText(1, 1, "SRAM inited ok");
 		ham_DrawText(1, 5, "Difficultee %u", GameBlock.difficulty);
 		ham_DrawText(1, 6, "Mines %u", GameBlock.mines);
-		ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);
+		ham_DrawText(1, 7, "Mines restatntes %u", GameBlock.minesLeft);*/
 		
 		setDifficulty(GameBlock.difficulty);
 		setMines(GameBlock.mines);
@@ -134,11 +162,14 @@ unsigned char load() {
 		
 		resetGrid();
 		unsigned char n = 0;
+		unsigned char bar = 0;
 		unsigned char value;//Pas bseoin, de sauvegarder premiere ligne et colone
 		unsigned char sizeX = getSizeX()+1;
 		unsigned char sizeY = getSizeY()+1;
 
-		ham_DrawText(1, 2, "CHARGEMENT   /%u", sizeX);
+		
+		float barSize = (float)188 / (sizeX * sizeY);
+		//ham_DrawText(1, 2, "CHARGEMENT   /%u", sizeX);
 
 		unsigned char posY, posX;
 		for (posX = 0; posX < sizeX; posX++) {
@@ -146,14 +177,20 @@ unsigned char load() {
 				ham_LoadRawFromRAM(numbersStr[n], (void*)&value);
 
 				setGridValue(posX, posY, value);
-				
-				ham_DrawText(posX*2+2, posY*2+8, "%u", value);
+				//Barre de chargement
+				do {
+					drawLine(26 + bar, 120, 1, 20, RGB(130, 226, 65));
+					bar++;
+				}
+				while (bar < floor(barSize*(n+1)));
+
+				//ham_DrawText(posX*2+2, posY*2+8, "%u", value);
 
 				n++;
 			}
-			ham_DrawText(12, 2, "%u", posX+1);
+			//ham_DrawText(12, 2, "%u", posX+1);
 		}
-		ham_DrawText(1, 1, "SAUVEGARDER CHARGEE");
+		//ham_DrawText(1, 1, "SAUVEGARDER CHARGEE");
 	}
 	return saveFound;
 }

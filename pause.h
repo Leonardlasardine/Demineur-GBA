@@ -3,6 +3,7 @@
 #include "videoModes.h"
 
 unsigned short checkPixel (int x, int y);
+void drawScreen(const unsigned short screen[38400]);
 
 unsigned char getMines();
 

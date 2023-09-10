@@ -18,15 +18,15 @@ void control(unsigned char newGame) {
 
 	setBitmaps();
 
-	if(newGame) {
-		x = 0;
-		y = 0;
+	if(newGame) {//A remettre bien
+		x = 2;
+		y = 2;
 		drawGrid();
 	} else {
 		drawSave();
 	}
 
-	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
+	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));//Faire *pixelX
 
 	while(alive) {
 		//Directions
@@ -128,21 +128,29 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 		case HAUT :
 			if (*y > 0) {
 				*y -= 1;
+			} else {
+				*y = sizeY - 1;
 			}
 			break;
 		case BAS :
 			if (*y < sizeY - 1) {
 				*y += 1;
+			} else {
+				*y = 0;
 			}
 			break;
 		case GAUCHE :
 			if (*x > 0) {
 				*x -= 1;
+			} else {
+				*x = sizeX - 1;
 			}
 			break;
 		case DROITE :
 			if (*x < sizeX - 1) {
 				*x += 1;
+			} else {
+				*x = 0;
 			}
 			break;
 		default :

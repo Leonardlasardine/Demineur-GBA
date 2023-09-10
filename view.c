@@ -58,19 +58,20 @@ void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
 
-	/*drawLine(x*pixelX, y*pixelY, pixelX, 1, c);
-	drawLine(x*pixelX, y*pixelY, 1, pixelY, c);
-	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX, 1, c);
-	drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY-1, c);*/
-	drawLine(x*pixelX, y*pixelY, pixelX, 1, c);
-	drawLine(x*pixelX, y*pixelY, 1, pixelY, c);
+	//Droite et bas tout le temps pareil
+	drawLine((x*pixelX + pixelX)-1, y*pixelY, 2, pixelY, c);	 //DROITE
+	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 2, c); //BAS
 
-	
-	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX, 1, c);
-	drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY-1, c);
-
-	//drawLine(x*pixelX, y*pixelY + pixelY, pixelX+1, 1, c);
-	//drawLine(x*pixelX + pixelX, y*pixelY, 1, pixelY, c);
+	if (x > 0) {//A droite ligne de l'autre côté
+		drawLine(x*pixelX - 1, y*pixelY, 2, pixelY + 1, c);		//GAUCHE
+	} else if(x == 0) {
+		drawLine(x*pixelX, y*pixelY, 1, pixelY + 1, c);			//GAUCHE
+	}
+	if (y > 0) {
+		drawLine(x*pixelX, y*pixelY - 1, pixelX + 1, 2, c);		//HAUT
+	} else if(y == 0) {
+		drawLine(x*pixelX, y*pixelY, pixelX + 1, 1, c);			//HAUT
+	}
 }
 
 void drawPixel(unsigned char x, unsigned char y, unsigned short c) {
@@ -170,9 +171,7 @@ void drawBitmap(unsigned char x, unsigned char y, const unsigned short bitmap[16
 	unsigned char i, j;
 	for (i = y; i < size + y; i++) {
 		for (j = x; j < size + x; j++) {
-			//if (bitmap[(i - y) * size + (j - x)] != 0x0000) {
-				drawPixel(j, i, bitmap[(i - y) * size + (j - x)]);
-			//}
+			drawPixel(j, i, bitmap[(i - y) * size + (j - x)]);
 		}
 	}
 }
@@ -189,7 +188,7 @@ void drawGrid() {
 	}
 }
 
-//CHANGER TEXTURE DRAPEAU EN CASE PAS REVELEE
+//Enlever + Point d'interrogation ?
 void drawFlag(unsigned char x, unsigned char y) {
 	unsigned char pixelX = 240/getSizeX();
 	unsigned char pixelY = 160/getSizeY();
@@ -276,4 +275,13 @@ void drawEmptyCase(unsigned char x, unsigned char y) {
 		}
 	}
 	cursor(x, y, RGB(115, 115, 115));
+}
+
+void drawScreen(const unsigned short screen[38400]) {
+	unsigned char i, j;
+	for (i = 0; i < 160; i++) {
+		for (j = 0; j < 240; j++) {
+			drawPixel(j, i, screen[i * 240 + j]);
+		}
+	}
 }
