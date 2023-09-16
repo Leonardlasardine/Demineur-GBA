@@ -18,15 +18,15 @@ void control(unsigned char newGame) {
 
 	setBitmaps();
 
-	if(newGame) {//A remettre bien
-		x = 2;
-		y = 2;
+	if(newGame) {
+		x = 0;
+		y = 0;
 		drawGrid();
 	} else {
 		drawSave();
 	}
-
-	cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));//Faire *pixelX
+	
+	cursor(x, y, RGB(0, 0, 150));
 
 	while(alive) {
 		//Directions
@@ -82,7 +82,7 @@ void control(unsigned char newGame) {
 			   //Case pas révélée
 			   if (getGridValue(x+1, y+1) < 10) {
 				   drawFlag(x, y);
-				   //AFAIRE nomnbre max de drapeaux
+				   //AFAIRE nombre max de drapeaux
 				   setMinesLeft(getMinesLeft() - 1);
 			   }
 			   bPressed = 0;
@@ -156,7 +156,10 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 		default :
 			break;
 	}
-	cursor(*x, *y, RGB(*y*10 + *x*10, *y*10, (150 - *x*5)));
+	unsigned char pixelX = 240/sizeX;
+	unsigned char pixelY = 160/sizeY;
+
+	cursor(*x, *y, RGB(*y*pixelY + *x*pixelX, *y*pixelY, (150 - *x*pixelX)));
 }
 
 unsigned char getX() {

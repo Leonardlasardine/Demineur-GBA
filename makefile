@@ -22,6 +22,8 @@ OFILES +=main.o			\
 		pause.o			\
 		save.o			\
 		selectionMenu.o	\
+		keyboard.o		\
+		font.o		\
 		numbersStr.o	\
 		flags.raw.o		\
 		cases.raw.o		\
@@ -29,6 +31,8 @@ OFILES +=main.o			\
 		numbers.raw.o	\
 		save.raw.o		\
 		load.raw.o		\
+		pseudo.raw.o	\
+		font.raw.o		\
 
 #
 # Set a list of libraries you want to link

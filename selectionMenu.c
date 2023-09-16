@@ -129,7 +129,7 @@ void aPressedSelection(unsigned char *l) {
 			break;
 		case 2 :
 			gameMode = 2;
-			//startMenu = 0;
+			chooseMode = 0;
 			break;
 	}
 }

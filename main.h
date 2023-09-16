@@ -1,6 +1,9 @@
+#include <mygba.h>
+
 void control(unsigned char newGame);
 unsigned char menu();
 unsigned char selectionMenu();
+unsigned char *keyboard(unsigned char *pseudo);
 
 //Video buffer
 #define MODE_3 0x3

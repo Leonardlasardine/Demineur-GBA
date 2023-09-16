@@ -30,3 +30,5 @@ const unsigned short numbers_8_Bitmap[512];
 
 const unsigned short save_Bitmap[38400];
 const unsigned short load_Bitmap[38400];
+const unsigned short pseudo_Bitmap[38400];
+const unsigned short font_Bitmap[9216];

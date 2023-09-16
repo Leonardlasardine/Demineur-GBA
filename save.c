@@ -56,6 +56,8 @@ unsigned char initSave() {
 		//ham_LoadRawFromRAM(IDENTIFIER_STRING_MENU, (void*)&MenuBlock);
 		//setDifficulty(MenuBlock.difficulty);
 		//setMines(MenuBlock.mines);
+		setDifficulty(0);
+		setMines(20);	//Pour l'instant
 	}																			//CRASH
 	return exist;
 }

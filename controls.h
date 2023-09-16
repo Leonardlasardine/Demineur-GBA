@@ -1,4 +1,3 @@
-#include <mygba.h>
 #include "mines.h"
 #include "main.h"
 

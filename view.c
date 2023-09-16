@@ -52,7 +52,6 @@ void setCaseBitmap() {
 	}
 }
 
-//Pas assez visible
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	
 	unsigned char pixelX = 240/getSizeX();

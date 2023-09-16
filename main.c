@@ -1,4 +1,3 @@
-#include <mygba.h>
 #include "main.h"
 #include "videoModes.h"
 #include "timers.h"
@@ -15,6 +14,8 @@ int main(void) {
 
 	initSave();
 	endVideoMode0();
+
+	unsigned char pseudo[8] = {39, 39, 39, 39, 39, 39, 39, 39};
 
 	while(1) {
 		//Video Mode 0
@@ -49,7 +50,13 @@ int main(void) {
 				
 				break;
 			case 2:
+				endVideoMode0();
+				setVideoMode3();
 
+				//Pour tester
+				memcpy(pseudo, keyboard(pseudo), sizeof(pseudo));
+				
+				endVideoMode3();
 				break;
 		}
 	}
