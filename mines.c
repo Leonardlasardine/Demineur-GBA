@@ -3,14 +3,14 @@
 #include "menu.h"
 
 //Grille vide
-unsigned char g[30][20];
+unsigned char g[31][21];
 //Le nombre de mines placées moins les drapeaux (même si mals placés)
 unsigned char minesLeft;
 
-void resetGrid() {//Pourrait faire moins
+void resetGrid() {
 	unsigned char posY, posX;
-	for (posX = 0; posX < 30; posX++) {
-		for (posY = 0; posY < 20; posY++) {
+	for (posX = 0; posX < 31; posX++) {
+		for (posY = 0; posY < 21; posY++) {
 			g[posX][posY] = 0;
 		}
 	}

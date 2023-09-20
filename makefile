@@ -23,8 +23,7 @@ OFILES +=main.o			\
 		save.o			\
 		selectionMenu.o	\
 		keyboard.o		\
-		font.o		\
-		numbersStr.o	\
+		font.o			\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
