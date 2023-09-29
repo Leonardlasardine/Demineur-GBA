@@ -6,8 +6,6 @@
 void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned short c);
 void drawScreen(const unsigned short screen[38400]);
 
-//char *numbersStr[600];//Se réduit
-
 unsigned char initSave();
 void saveGrid(unsigned char textX, unsigned char textY);
 void save();

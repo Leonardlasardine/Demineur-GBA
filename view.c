@@ -52,6 +52,7 @@ void setCaseBitmap() {
 	}
 }
 
+//Passe de l'autre côté
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 	
 	unsigned char pixelX = 240/getSizeX();
@@ -102,6 +103,7 @@ void drawCase(unsigned char x, unsigned char y) {
 		} else {
 			drawMine(x*pixelX, y*pixelY);
 			setMinesLeft(0);//PERDU
+			//drawScreen(game_over_Bitmap);
 		}
 	//Révéler case avec drapeau
 	} else if (getGridValue(x+1, y+1) == 21) {

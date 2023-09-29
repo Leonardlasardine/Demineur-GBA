@@ -32,6 +32,7 @@ OFILES +=main.o			\
 		load.raw.o		\
 		pseudo.raw.o	\
 		font.raw.o		\
+		game_over.raw.o	\
 
 #
 # Set a list of libraries you want to link

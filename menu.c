@@ -99,6 +99,10 @@ unsigned char menu() {
 				   if (mines < (getSizeX() * getSizeX())) {
 					   choose = 0;
 					   newGame = 1;
+
+					   
+						ham_DrawText(1, 1, "                  ");
+
 				   } else {
 					   ham_DrawText(7, 18, "TROP DE MINES !"); //MARCHE PLUS
 				   }
@@ -118,9 +122,14 @@ unsigned char menu() {
 	   }
 	}
 
-	timers = REG_TM0D / (65536 / 1000);
-	grid(timers);
+	unsigned int seed = getTimerCount();
+	grid(seed);
+	ham_DrawText(1, 1, "seed : %u", seed);
+
+	setTime(0,0,0);
 	startTimer3();
+	while (getSeconds() < 1);//Afficher seed
+	setTime(0,0,0);
 
 	return newGame;
 }

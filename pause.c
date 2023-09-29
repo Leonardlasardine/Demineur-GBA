@@ -1,6 +1,5 @@
 #include "pause.h"
 #include "mines.h"
-#include "timers.h"
 #include "save.h"
 
 unsigned char pauseMenu;
@@ -173,14 +172,14 @@ void startTimer3() {
 					   (void *)&Timer3Function);     // The adress of a function that should be called when the interrupt is fired
 
 	
-   // Selects the speed of timer3
-   M_TIM3CNT_SPEED_SELECT_SET(10)
+	// Selects the speed of timer3
+	M_TIM3CNT_SPEED_SELECT_SET(10)
 
-   // Enable IRQ for timer3
-   M_TIM3CNT_IRQ_ENABLE
+	// Enable IRQ for timer3
+	M_TIM3CNT_IRQ_ENABLE
 
-   // Start timer3
-   M_TIM3CNT_TIMER_START
+	// Start timer3
+	M_TIM3CNT_TIMER_START
 }
 
 void Timer3Function(void) {
@@ -217,7 +216,6 @@ unsigned char getMinutes() {
 unsigned char getSeconds() {
 	return s_S;
 }
-
 
 void setTime(unsigned char hours, unsigned char minutes, unsigned char seconds) {
 	s_H = hours;

@@ -7,13 +7,13 @@
 
 unsigned char initSave() {
 
-	ham_InitRAM(RAM_TYPE_SRAM_256K);
+	//ham_InitRAM(RAM_TYPE_SRAM_256K);
 
 	//Si pas de sauvegarde, initialiser
 	if (!*saveExist) {
 
 		setDifficulty(0);
-		setMines(20);
+		setMines(20);//MENU plutot
 		setMinesLeft(20);
 		setX(0);
 		setY(0);//Ou les deux en même temps

@@ -28,7 +28,9 @@ const unsigned short numbers_16_Bitmap[2048];
 const unsigned short numbers_10_Bitmap[800];
 const unsigned short numbers_8_Bitmap[512];
 
+//Ecran
 const unsigned short save_Bitmap[38400];
 const unsigned short load_Bitmap[38400];
 const unsigned short pseudo_Bitmap[38400];
 const unsigned short font_Bitmap[9216];
+const unsigned short game_over_Bitmap[38400];
