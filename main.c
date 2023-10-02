@@ -3,8 +3,10 @@
 #include "videoModes.h"
 #include "timers.h"
 #include "save.h"
+#include "password.h"
 
 unsigned int timerCount;
+unsigned int seed;
 
 int main(void) {
 	//Démarage
@@ -19,8 +21,6 @@ int main(void) {
 
 	initSave();
 	endVideoMode0();
-
-	unsigned char pseudo[8] = {39, 39, 39, 39, 39, 39, 39, 39};
 
 	while(1) {
 		//Video Mode 0
@@ -38,10 +38,7 @@ int main(void) {
 				endVideoMode0();
 				setVideoMode0();
 
-
-				//while(1) {
 				unsigned char newGame = menu();
-				//}
 				saveMenu();
 
 				if(newGame) {
@@ -55,16 +52,12 @@ int main(void) {
 				//Sinon retour menu principal
 				break;
 			case 1:
-				
+				endVideoMode0();
+				setVideoMode0();
+				loadMenu();
 				break;
 			case 2:
 				endVideoMode0();
-				setVideoMode3();
-
-				//Pour tester
-				memcpy(pseudo, keyboard(pseudo), sizeof(pseudo));
-				
-				endVideoMode3();
 				break;
 		}
 	}
@@ -111,9 +104,17 @@ void Timer0Function(void) {
    if(timerCount > UINT_MAX - 1) {
 	   timerCount = 0;
    }
-   timerCount++;
+   timerCount += 1;
 }
 
 unsigned int getTimerCount() {
 	return timerCount;
+}
+
+unsigned int getSeed() {
+	return seed;
+}
+
+void setSeed(unsigned int newSeed) {
+	seed = newSeed;
 }

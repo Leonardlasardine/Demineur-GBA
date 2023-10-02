@@ -3,6 +3,8 @@
 void startTimer0();
 void Timer0Function(void);
 unsigned int getTimerCount();
+unsigned int getSeed();
+void setSeed(unsigned int newSeed);
 
 //Timer 3 = Temps d'un niveau
 void startTimer3();

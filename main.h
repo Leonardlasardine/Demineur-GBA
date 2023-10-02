@@ -4,6 +4,7 @@ void control(unsigned char newGame);
 unsigned char menu();
 unsigned char selectionMenu();
 unsigned char *keyboard(unsigned char *pseudo);
+void loadMenu();
 
 //Video buffer
 #define MODE_3 0x3

@@ -1,6 +1,7 @@
 #include "pause.h"
 #include "mines.h"
 #include "save.h"
+#include "password.h"
 
 unsigned char pauseMenu;
 unsigned char quitPlaying;
@@ -68,13 +69,13 @@ unsigned char pauseGame() {
 
 		if (F_CTRLINPUT_START_PRESSED) {
 		   startPause = 1;
-	   } else {
+		} else {
 		   if (startPause) {
 			   line = 0;
 			   aPressedAction(&line);
 			   startPause = 0;
-		   }
-	   }
+			}
+		}
 	}
 
 	return quitPlaying;
@@ -84,9 +85,10 @@ void writePauseText() {
 	ham_DrawText(13, 2, "PAUSE");
 	ham_DrawText(5, 5,  "Temps     :");
 	ham_DrawText(5, 7, "Mines restantes : %u", getMinesLeft());
-	ham_DrawText(10, 12, " CONTINUER");
-	ham_DrawText(10, 14, "SAUVEGARDER");
-	ham_DrawText(10, 16, "  QUITTER");
+	ham_DrawText(10, 11, " CONTINUER");
+	ham_DrawText(10, 13, "SAUVEGARDER");
+	ham_DrawText(10, 15, "  QUITTER");
+	ham_DrawText(10, 17, "MOT DE PASSE");
 	
 	moveLinePause(DROITE, &line);
 }
@@ -95,13 +97,13 @@ unsigned char moveLinePause(Sens sens, unsigned char *l) {
 	switch (sens) {
 		case HAUT :
 			if (*l == 0) {
-				*l = 2;
+				*l = 3;
 			} else {
 				*l -= 1;
 			}
 			break;
 		case BAS :
-			if (*l == 2) {
+			if (*l == 3) {
 				*l = 0;
 			} else {
 				*l += 1;
@@ -111,25 +113,31 @@ unsigned char moveLinePause(Sens sens, unsigned char *l) {
 			break;
 	}
 
-	ham_DrawText(8, 12, " ");
-	ham_DrawText(22, 12, " ");
-	ham_DrawText(8, 14, " ");
-	ham_DrawText(22, 14, " ");
-	ham_DrawText(8, 16, " ");
-	ham_DrawText(22, 16, " ");
+	ham_DrawText(8, 11, " ");
+	ham_DrawText(22, 11, " ");
+	ham_DrawText(8, 13, " ");
+	ham_DrawText(22, 13, " ");
+	ham_DrawText(8, 15, " ");
+	ham_DrawText(22, 15, " ");
+	ham_DrawText(8, 17, " ");
+	ham_DrawText(22, 17, " ");
 
 	switch (*l) {
 		case 0 :
-			ham_DrawText(8, 12, "-");
-			ham_DrawText(22, 12, "-");
+			ham_DrawText(8, 11, "-");
+			ham_DrawText(22, 11, "-");
 			break;
 		case 1 :
-			ham_DrawText(8, 14, "-");
-			ham_DrawText(22, 14, "-");
+			ham_DrawText(8, 13, "-");
+			ham_DrawText(22, 13, "-");
 			break;
 		case 2 :
-			ham_DrawText(8, 16, "-");
-			ham_DrawText(22, 16, "-");
+			ham_DrawText(8, 15, "-");
+			ham_DrawText(22, 15, "-");
+			break;
+		case 3 :
+			ham_DrawText(8, 17, "-");
+			ham_DrawText(22, 17, "-");
 			break;
 	}
 	return *l;
@@ -163,6 +171,43 @@ void aPressedAction(unsigned char *l) {
 			s_S=0;
 			quitPlaying = 1;
 			pauseMenu = 0;
+			break;
+		case 3 :
+			//AFFICHER MOT DE PASSE
+			//Ou alors en quittant
+			endVideoMode0();
+			setVideoMode3();
+
+			writePassword();
+
+			unsigned char aPassword = 0;
+			unsigned char startPassword = 0;
+			unsigned char showPassword = 1;
+
+			while (showPassword) {
+				if (F_CTRLINPUT_A_PRESSED) {
+					aPassword = 1;
+				} else {
+					if (aPassword) {
+						aPassword = 0;
+						showPassword = 0;
+					}
+				}
+				if (F_CTRLINPUT_START_PRESSED) {
+				   startPassword = 1;
+				} else {
+					if (startPassword) {
+						//Comme le bouton A
+						aPassword = 1;
+						startPassword = 0;
+					}
+				}
+			}
+			endVideoMode3();
+			setVideoMode0();
+			writePauseText();
+			//Re afficher le temps
+			Timer3Function();
 			break;
 	}
 }

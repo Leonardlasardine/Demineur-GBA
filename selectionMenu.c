@@ -114,18 +114,8 @@ void aPressedSelection(unsigned char *l) {
 			chooseMode = 0;
 			break;
 		case 1 :
-			if(load()) {
-					/*endVideoMode0();
-					setVideoMode3();*/
-
-
-					control(0);
-
-					endVideoMode3();
-
-					gameMode = 1;
-					chooseMode = 0;
-				}
+			gameMode = 1;
+			chooseMode = 0;
 			break;
 		case 2 :
 			gameMode = 2;

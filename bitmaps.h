@@ -32,5 +32,6 @@ const unsigned short numbers_8_Bitmap[512];
 const unsigned short save_Bitmap[38400];
 const unsigned short load_Bitmap[38400];
 const unsigned short pseudo_Bitmap[38400];
-const unsigned short font_Bitmap[9216];
+const unsigned short font_Bitmap[10240];//Barre sur le ZERO
 const unsigned short game_over_Bitmap[38400];
+const unsigned short password_Bitmap[38400];

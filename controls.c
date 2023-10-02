@@ -32,12 +32,12 @@ void control(unsigned char newGame) {
 		//Directions
 		if(F_CTRLINPUT_UP_PRESSED) {
 		   upPressed = 1;
-	   } else {
+		} else {
 		   if (upPressed) {
 			   move(HAUT, &x, &y);
 			   upPressed = 0;
 		   }
-	   }
+		}
 
 	   if(F_CTRLINPUT_DOWN_PRESSED) {
 		   downPressed = 1;
@@ -75,6 +75,7 @@ void control(unsigned char newGame) {
 			   aPressed = 0;
 		   }
 	   }
+
 	   if(F_CTRLINPUT_B_PRESSED) {
 		   bPressed = 1;
 	   } else {

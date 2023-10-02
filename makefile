@@ -24,6 +24,8 @@ OFILES +=main.o			\
 		selectionMenu.o	\
 		keyboard.o		\
 		font.o			\
+		password.o		\
+		load.o		\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
@@ -33,6 +35,7 @@ OFILES +=main.o			\
 		pseudo.raw.o	\
 		font.raw.o		\
 		game_over.raw.o	\
+		password.raw.o	\
 
 #
 # Set a list of libraries you want to link
