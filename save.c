@@ -4,19 +4,20 @@
 #include "bitmaps.h"
 #include "font.h"
 #include "memoryLocation.h"
+#include "view.h"
+#include "menu.h"
+#include "mines.h"
+#include "pause.h"
+#include "controls.h"
+#include "timers.h"
 
 unsigned char initSave() {
-
-	//ham_InitRAM(RAM_TYPE_SRAM_256K);
-
 	//Si pas de sauvegarde, initialiser
 	if (!*saveExist) {
 
 		setDifficulty(0);
-		setMines(20);//MENU plutot
-		setMinesLeft(20);
-		setX(0);
-		setY(0);//Ou les deux en même temps
+		setMines(10);
+		setPos(0, 0);
 		*saveExist = 1;
 
 		endVideoMode0();
@@ -36,13 +37,13 @@ unsigned char initSave() {
 }
 
 //Video mode 3
-void saveGrid(unsigned char textX, unsigned char textY) {
+void saveGrid() {
 	unsigned short n = 0;
 	unsigned char bar = 0; //TOTAL 188
 	unsigned char sizeX = getSizeX()+1;
 	unsigned char sizeY = getSizeY()+1;
 
-	float barSize = (float)188 / ((sizeX-1) * (sizeY-1));//factoriser
+	float barSize = (float)188 / ((sizeX-1) * (sizeY-1));
 	unsigned char posY, posX;
 	for (posX = 1; posX < sizeX; posX++) {
 		for (posY = 1; posY < sizeY; posY++) {
@@ -73,8 +74,7 @@ void save() {
 	drawScreen(save_Bitmap);
 
 	if(*gameExist) {
-		//ham_DrawText(1, 1, "DEJA UNE SAUVEGARDE");
-		//ham_DrawText(1, 2, "ECRASER");					//Faire oui/non
+		//Faire oui/non
 	}
 
 	*gameExist = 1;
@@ -86,9 +86,10 @@ void save() {
 	*H = getHours();
 	*M = getMinutes();
 	*S = getSeconds();
+	*seed_Save = getSeed();//MARCHE PAS
 
 	//Sauvegarde de la grille
-	saveGrid(12, 3);
+	saveGrid();
 
 	endVideoMode3();
 	setVideoMode0();
@@ -111,9 +112,9 @@ unsigned char load() { //Ralentir ?
 		setDifficulty(*difficulty_Save);
 		setMines(*mines_Save);
 		setMinesLeft(*minesLeft_Save);
-		setX(*cursorX);
-		setY(*cursorY);//Ou les deux en même temps
+		setPos(*cursorX, *cursorY);
 		setTime(*H, *M, *S);
+		setSeed(*seed_Save);
 		
 		//Grille
 		resetGrid();
@@ -123,7 +124,7 @@ unsigned char load() { //Ralentir ?
 		unsigned char sizeX = getSizeX()+1;
 		unsigned char sizeY = getSizeY()+1;
 		
-		float barSize = (float)188 / ((sizeX-1) * (sizeY-1));//factoriser
+		float barSize = (float)188 / ((sizeX-1) * (sizeY-1));
 
 		unsigned char posY, posX;
 		for (posX = 1; posX < sizeX; posX++) {

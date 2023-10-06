@@ -1,9 +1,6 @@
-#include <mygba.h>
 #include "main.h"
 
 unsigned char menu();
-
-void grid(unsigned int seed);
 
 unsigned char moveLine(Sens sens, unsigned char *l);
 void changeValue(Sens sens, unsigned char *l);

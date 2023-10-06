@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "main.h"
 #include "timers.h"
+#include "mines.h"
 
 int timers;
 
@@ -130,7 +131,7 @@ unsigned char menu() {
 
 	setTime(0,0,0);
 	startTimer3();
-	while (getSeconds() < 1);//Afficher seed
+	//while (getSeconds() < 1);//Afficher seed
 	setTime(0,0,0);
 
 	return newGame;

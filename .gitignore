@@ -40,5 +40,5 @@ readme.txt
 *.i
 *.s
 Demineur.sav
-ipch\test-e65bdbda*/
+ipch/*
 *.stackDump

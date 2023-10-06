@@ -1,4 +1,6 @@
 #include "selectionMenu.h"
+#include "videoModes.h"
+#include "save.h"
 
 unsigned char gameMode;
 unsigned char chooseMode;
@@ -44,8 +46,7 @@ unsigned char selectionMenu() {
 		   aMenu = 1;
 	   } else {
 		   if (aMenu) {
-			   aPressedSelection(&line);
-			   //chooseMode = 0;
+			   aPressedSelection(line);
 			   aMenu = 0;
 		   }
 	   }
@@ -107,8 +108,8 @@ unsigned char moveLineSelection(Sens sens, unsigned char *l) {
 	return *l;
 }
 
-void aPressedSelection(unsigned char *l) {
-	switch (*l) {
+void aPressedSelection(unsigned char l) {
+	switch (l) {
 		case 0 :
 			gameMode = 0;
 			chooseMode = 0;

@@ -1,10 +1,10 @@
+#include <math.h>
 #include "password.h"
 #include "bitmaps.h"
 #include "font.h"
 #include "timers.h"
 #include "menu.h"
-#include <math.h>
-
+#include "view.h"
 
 unsigned long long concatenate(unsigned long long a, unsigned long long b) {
 	unsigned long long pow = 10;
@@ -33,7 +33,6 @@ unsigned long long power(unsigned long long base, unsigned char exp) {
 	return result;
  }
 
-//Verifier
 unsigned long long convertToBase10(unsigned char *base39) {
 	unsigned long long number = 0;
 	unsigned char i;

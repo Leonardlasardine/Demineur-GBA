@@ -1,5 +1,9 @@
+#include "mines.h"
+#include "main.h"
 #include "controls.h"
 #include "pause.h"
+#include "view.h"
+#include "gameOver.h"
 
 unsigned char x;
 unsigned char y;
@@ -71,7 +75,19 @@ void control(unsigned char newGame) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
-			   drawCase(x, y);
+			   if (drawCase(x, y) == 9) {
+				   switch (gameOver()) {
+				   case 0 ://Continuer
+					   drawSave();//Ré-afficher à chaque fois ?
+					   break;
+				   case 1 ://Quitter
+					   alive = 0;
+					   break;
+				   case 2://Réveler
+					   reveal();
+					   break;
+				   }
+			   }
 			   aPressed = 0;
 		   }
 	   }
@@ -171,10 +187,7 @@ unsigned char getY() {
 	return y;
 }
 
-void setX(unsigned char newX) {
+void setPos(unsigned char newX, unsigned char newY) {
 	x = newX;
-}
-
-void setY(unsigned char newY) {
 	y = newY;
 }

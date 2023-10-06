@@ -2,8 +2,12 @@
 #include "mines.h"
 #include "menu.h"
 
+unsigned short* videoBuffer = (unsigned short*) 0x6000000;
+
 unsigned char size = 0;
 unsigned short case_Bitmap[1600] = {};
+unsigned char pixelX;
+unsigned char pixelY;
 
 unsigned char getBitmapSize() {
 	switch(getDifficulty()) {
@@ -29,7 +33,8 @@ unsigned char getBitmapSize() {
 void setBitmaps() {
 	size = getBitmapSize();
 	setCaseBitmap();
-	//Set pixelX and Y
+	pixelX = 240/getSizeX();
+	pixelY = 160/getSizeY();
 }
 
 void setCaseBitmap() {
@@ -54,9 +59,6 @@ void setCaseBitmap() {
 
 //Passe de l'autre côté
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
-	
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
 
 	//Droite et bas tout le temps pareil
 	drawLine((x*pixelX + pixelX)-1, y*pixelY, 2, pixelY, c);	 //DROITE
@@ -87,12 +89,21 @@ void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h
 	}
 }
 
-void drawCase(unsigned char x, unsigned char y) {
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
+//Rectangle avec les bords autour de la zone à encadrer
+void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned char e, unsigned short c) {
+	//		Pos X		Pos Y,	Largeur,	Longueur,	Couleur
+	drawLine(x - e,		y - e,	l + e,		e,			c);			//HAUT
+	drawLine(x,			y + h,	l + e,		e,			c);			//BAS
+	drawLine(x + l,		y - e,	e,			h + e,		c);			//DROITE
+	drawLine(x - e,		y,		e,			h + e,		c);			//GAUCHE
+}
+
+unsigned char drawCase(unsigned char x, unsigned char y) {
+
+	unsigned char gridValue = getGridValue(x+1, y+1);
 
 	//Case non révélée
-	if (getGridValue(x+1, y+1) < 10) {
+	if (gridValue < 10) {
 		
 		unsigned char n = checkMines(x+1, y+1);
 	
@@ -105,12 +116,16 @@ void drawCase(unsigned char x, unsigned char y) {
 			setMinesLeft(0);//PERDU
 			//drawScreen(game_over_Bitmap);
 		}
+
+		return n;
+
 	//Révéler case avec drapeau
-	} else if (getGridValue(x+1, y+1) == 21) {
+	} else if (gridValue == 21) {
 		setGridValue(x+1, y+1, 19);
 		drawMine(x*pixelX, y*pixelY);
 		setMinesLeft(0);
-	} else if (getGridValue(x+1, y+1) == 22) {
+		return 9;
+	} else if (gridValue == 22) {
 		unsigned char n = checkMines(x+1, y+1);
 	
 		if (n == 0) {
@@ -120,12 +135,13 @@ void drawCase(unsigned char x, unsigned char y) {
 		}
 
 		setMinesLeft(getMinesLeft() + 1);
+
+		return n;
 	}
+	return gridValue;
 }
 
 void drawCaseFromSave(unsigned char x, unsigned char y) {
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
 
 	//Case révélée
 	if (getGridValue(x+1, y+1) > 9) {
@@ -178,8 +194,6 @@ void drawBitmap(unsigned char x, unsigned char y, const unsigned short bitmap[16
 }
 
 void drawGrid() {
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
 
 	unsigned char i, j;
 	for (i = 0; i < getSizeX(); i++) {
@@ -189,11 +203,12 @@ void drawGrid() {
 	}
 }
 
+void drawUnrevealedCase(unsigned char x, unsigned char y) {
+	drawBitmap(x*pixelX, y*pixelY, case_Bitmap, size);
+}
+
 //Enlever + Point d'interrogation ?
 void drawFlag(unsigned char x, unsigned char y) {
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
-
 
 	switch (getDifficulty()) {
 		case 0 :
@@ -264,9 +279,6 @@ void drawNumber(unsigned char x, unsigned char y, unsigned char n) {
 }
 
 void drawEmptyCase(unsigned char x, unsigned char y) {
-	
-	unsigned char pixelX = 240/getSizeX();
-	unsigned char pixelY = 160/getSizeY();
 
 	unsigned char i, j;
 

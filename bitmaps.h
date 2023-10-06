@@ -35,3 +35,4 @@ const unsigned short pseudo_Bitmap[38400];
 const unsigned short font_Bitmap[10240];//Barre sur le ZERO
 const unsigned short game_over_Bitmap[38400];
 const unsigned short password_Bitmap[38400];
+const unsigned short continue_Bitmap[38400];

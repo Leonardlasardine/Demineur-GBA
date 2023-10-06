@@ -3,6 +3,9 @@
 #include "save.h"
 #include "password.h"
 #include "timers.h"
+#include "mines.h"
+#include "videoModes.h"
+#include "menu.h"
 
 void loadMenu() {
 	//Touches
@@ -53,8 +56,9 @@ void loadMenu() {
 					   wait = 0;
 				   }
 			   } else {
-				   loadFromSave(1);
-				   wait = 0;
+				   if(loadFromSave(1)) {
+					   wait = 0;
+				   }
 			   }
 			   aLoad = 0;
 		   }
@@ -79,11 +83,14 @@ void loadMenu() {
 	}
 }
 
-void loadFromSave(unsigned char saveNumber) {
-	if(load()) {
+unsigned char loadFromSave(unsigned char saveNumber) {
+	unsigned char saveExist = load();
+
+	if(saveExist) {
 		control(0);
 		endVideoMode3();
 	}
+	return saveExist;
 }
 
 unsigned char loadFromPassword() {

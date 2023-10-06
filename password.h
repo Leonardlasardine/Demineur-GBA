@@ -1,5 +1,3 @@
-void drawScreen(const unsigned short screen[38400]);
-
 unsigned long long concatenate(unsigned long long x, unsigned long long y);
 unsigned long long concatenateArray(unsigned char *pseudo);//ne sert plus
 unsigned long long power(unsigned long long base, unsigned char exp);

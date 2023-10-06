@@ -2,6 +2,7 @@
 #include "keyboard.h"
 #include "bitmaps.h"
 #include "font.h"
+#include "view.h"
 
 unsigned char x, y, pos;
 
@@ -155,14 +156,11 @@ void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
 						*x = 3;
 					}
 				}
-			} else {
-				if (*y > 0) {
-					*y -= 1;
-					if (*y != 0) {
-						*x = 11;
-					} else {
-						*x = 10;
-					}
+			} else { //Passage de l'autre côté
+				if ((*y == 0) | (*y == 3)) {
+					*x = 10;
+				} else {
+					*x = 11;
 				}
 			}
 			break;
@@ -170,8 +168,7 @@ void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
 			if (*y == 0) {
 				if (*x < 10) {
 					*x += 1;
-				} else if (*y < 3) {
-					*y += 1;
+				} else {
 					*x = 0;
 				}
 			} else if (*y == 3) {
@@ -181,12 +178,13 @@ void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
 					*x += 5;
 				} else if (*x < 10) {
 					*x += 1;
+				} else {
+					*x = 0;
 				}
 			} else {
 				if (*x < 11) {
 					*x += 1;
-				} else if (*y < 3) {
-					*y += 1;
+				} else {
 					*x = 0;
 				} 
 			}
@@ -212,25 +210,17 @@ void keyCursor(unsigned char x, unsigned char y, unsigned short c) {
 
 	//Touches spéciales
 	if (y == 66 && x == 185) {
-		drawLine(x - 2, y - 2, 2, 16, c);		//GAUCHE
-		drawLine(x + 30, y, 2, 16, c);			//DROITE
-		drawLine(x, y - 2, 32, 2, c);			//HAUT
-		drawLine(x - 2, y + 14, 32, 2, c);		//BAS
+		//Supprimer
+		drawRectangle(x, y, 30, 14, 2, c);
 	} else if (y == 126 && x == 189) {
-		drawLine(x - 2, y - 2, 2, 16, c);		//GAUCHE
-		drawLine(x + 30, y, 2, 16, c);			//DROITE
-		drawLine(x, y - 2, 32, 2, c);			//HAUT
-		drawLine(x - 2, y + 14, 32, 2, c);		//BAS
+		//Valider
+		drawRectangle(x, y, 30, 14, 2, c);
 	} else if (y == 126 && x == 77) {
-		drawLine(x - 2, y - 2, 2, 16, c);		//GAUCHE
-		drawLine(x + 78, y, 2, 16, c);			//DROITE
-		drawLine(x, y - 2, 80, 2, c);			//HAUT
-		drawLine(x - 2, y + 14, 80, 2, c);		//BAS
-	} else { //Cases normales
-		drawLine(x - 2, y - 2, 2, 16, c);		//GAUCHE
-		drawLine(x + 14, y, 2, 16, c);			//DROITE
-		drawLine(x, y - 2, 16, 2, c);			//HAUT
-		drawLine(x - 2, y + 14, 16, 2, c);		//BAS
+		//Espace
+		drawRectangle(x, y, 78, 14, 2, c);
+	} else {
+		//Cases normales
+		drawRectangle(x, y , 14, 14, 2, c);
 	}
 }
 

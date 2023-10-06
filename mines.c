@@ -1,6 +1,7 @@
 #include <mygba.h>
 #include "mines.h"
 #include "menu.h"
+#include "view.h"
 
 //Grille vide
 unsigned char g[31][21];
@@ -92,20 +93,27 @@ void reveal() {
 	unsigned char posY, posX;
 	for (posX = 0; posX < sizeX; posX++) {
 		for (posY = 0; posY < sizeY; posY++) {
-			drawCase(posX, posY);
+			if(getGridValue(posX + 1, posY + 1) < 10) {
+				drawCase(posX, posY);
+			} else {
+				drawCaseFromSave(posX, posY);
+			}
 		}
 	}
 }
 
 void drawSave() {
-	drawGrid();//A CHANGER
 	unsigned char sizeX = getSizeX();
 	unsigned char sizeY = getSizeY();
 
 	unsigned char posY, posX;
 	for (posX = 0; posX < sizeX; posX++) {
 		for (posY = 0; posY < sizeY; posY++) {
-			drawCaseFromSave(posX, posY);
+			if(getGridValue(posX + 1, posY + 1) < 10) {
+				drawUnrevealedCase(posX, posY);
+			} else {
+				drawCaseFromSave(posX, posY);
+			}
 		}
 	}
 }

@@ -2,6 +2,9 @@
 #include "mines.h"
 #include "save.h"
 #include "password.h"
+#include "menu.h"
+#include "timers.h"
+#include "videoModes.h"
 
 unsigned char pauseMenu;
 unsigned char quitPlaying;
