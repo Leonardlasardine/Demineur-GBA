@@ -5,6 +5,8 @@
 #include "timers.h"
 #include "menu.h"
 #include "view.h"
+#include "controls.h"
+#include "videoModes.h"
 
 unsigned long long concatenate(unsigned long long a, unsigned long long b) {
 	unsigned long long pow = 10;
@@ -68,9 +70,25 @@ unsigned char *convertToBase39(unsigned long long base10, unsigned char *newPseu
 //Afficher le mot de passe
 void writePassword() {
 
+	/*endVideoMode3();
+	setVideoMode0();
+
+	unsigned int seed = getSeed();
+	unsigned char d = getDifficulty();
+	unsigned char m = getMines();
+	unsigned char x = getX();
+	unsigned char y = getY();
+	
+	ham_DrawText(1, 1, "%u", seed);
+	ham_DrawText(1, 4, "%u", d);
+	ham_DrawText(1, 7, "%u", m);
+	ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
+
+	while(1);*/
+
 	drawScreen(password_Bitmap);
 
-	//Coller seed + Difficultée + Mines
+	//Coller seed + Difficultée + Mines + Case de départ
 	unsigned char password[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	unsigned long long base10 = concatenate(getSeed(), getDifficulty());
@@ -79,6 +97,14 @@ void writePassword() {
 		base10 = concatenate(base10, 0);
 	}
 	base10 = concatenate(base10, getMines());
+	unsigned short fc = getFirstCase();
+	if (fc < 10) {
+		base10 = concatenate(base10, 0);
+	}
+	if (fc < 100) {
+		base10 = concatenate(base10, 0);
+	}
+	base10 = concatenate(base10, getFirstCase());
 
 	convertToBase39(base10, password);
 
@@ -88,17 +114,22 @@ void writePassword() {
 	}
 }
 
-//	XXXXXXXX___
+//	XXXXXXX______
 unsigned int getPasswordSeed(unsigned long long base10) {
-	return base10 / 1000; //Enlever 3 derniers chiffres
+	return base10 / 1000000; //Enlever 6 derniers chiffres
 }
 
-//	________X__
+//	_______X_____
 unsigned char getPasswordDifficulty(unsigned long long base10) {
-	return (base10 / 100) % 10;
+	return (base10 / 100000) % 10;
 }
 
-//	__________X
+//	________XX___
 unsigned char getPasswordMines(unsigned long long base10) {
-	return base10 % 100;
+	return (base10/1000) % 100;
+}
+
+//	__________XXX
+unsigned short getPasswordFirstCase(unsigned long long base10) {
+	return base10 % 1000;
 }

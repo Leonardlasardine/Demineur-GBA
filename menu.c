@@ -126,7 +126,7 @@ unsigned char menu() {
 
 	unsigned int seed = getTimerCount();
 	setSeed(seed);
-	grid(seed);
+	//grid(seed);
 	ham_DrawText(1, 1, "seed : %u", seed);
 
 	setTime(0,0,0);

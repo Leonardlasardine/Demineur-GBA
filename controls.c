@@ -4,9 +4,11 @@
 #include "pause.h"
 #include "view.h"
 #include "gameOver.h"
+#include "timers.h"
 
 unsigned char x;
 unsigned char y;
+unsigned short fistClick;
 
 void control(unsigned char newGame) {
 	//Touches
@@ -19,15 +21,24 @@ void control(unsigned char newGame) {
 	unsigned char startPressed = 0;
 	
 	unsigned char alive = 1;
+	fistClick = 1;
 
 	setBitmaps();
 
-	if(newGame) {
+	switch (newGame) {
+	case 0://Nouvelle partie
 		x = 0;
 		y = 0;
 		drawGrid();
-	} else {
+		break;
+	case 1 ://Depuis la sauvegarde
 		drawSave();
+		fistClick = 0;//Changer
+		break;
+	case 2 ://Depuis un mot de passe
+		drawGrid();
+		drawCase(x, y); //Afficher première case
+		fistClick = y*(getSizeX()+1) + x;
 	}
 	
 	cursor(x, y, RGB(0, 0, 150));
@@ -75,6 +86,10 @@ void control(unsigned char newGame) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
+			   if (fistClick == 1) { //Générer la grille au premier click
+				   grid(getSeed(), x + 1, y + 1);
+				   fistClick = y*(getSizeX()+1) + x;
+			   }
 			   if (drawCase(x, y) == 9) {
 				   switch (gameOver()) {
 				   case 0 ://Continuer
@@ -190,4 +205,8 @@ unsigned char getY() {
 void setPos(unsigned char newX, unsigned char newY) {
 	x = newX;
 	y = newY;
+}
+
+unsigned short getFirstCase() {
+	return fistClick;
 }

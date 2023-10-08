@@ -7,3 +7,5 @@ void setPos(unsigned char newX, unsigned char newY);
 
 unsigned char getSizeX();
 unsigned char getSizeY();
+
+unsigned short getFirstCase();

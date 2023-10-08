@@ -6,6 +6,8 @@
 #include "mines.h"
 #include "videoModes.h"
 #include "menu.h"
+#include "view.h"
+#include "controls.h"
 
 void loadMenu() {
 	//Touches
@@ -87,7 +89,7 @@ unsigned char loadFromSave(unsigned char saveNumber) {
 	unsigned char saveExist = load();
 
 	if(saveExist) {
-		control(0);
+		control(1);
 		endVideoMode3();
 	}
 	return saveExist;
@@ -117,33 +119,50 @@ unsigned char loadFromPassword() {
 	unsigned int seed = getPasswordSeed(n);
 	unsigned char d = getPasswordDifficulty(n);
 	unsigned char m = getPasswordMines(n);
+	unsigned short fc = getPasswordFirstCase(n);
 
 	//Verifier que le mot de passe est possible
-	if (d > 4 || m > 99) {
+	if (d > 4 || m > 99 || seed > 5352007 || fc > 620) {
 		return succes;
 	} else {
 		succes = 1;
 	}
 
 	setSeed(seed);
-	
 	setDifficulty(d);
 	setMines(m);
 
-	ham_DrawText(1, 1, "%u", seed);
+	/*ham_DrawText(1, 1, "%u", seed);
 	ham_DrawText(1, 4, "%u", d);
-	ham_DrawText(1, 7, "%u", m);
-	//while(1);
+	ham_DrawText(1, 7, "%u", m);*/
 	
+	//Retrouver première case
+	unsigned char x = 0;
+	unsigned char y = 0;
+	unsigned short j;
+	unsigned char sizeX = getSizeX();
+	for (j = 0; j < fc; j++) {
+		x++;
+		if (x > sizeX) {
+			x = 0;
+			y++;
+		}
+	}
+
+	/*ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
+
+	while(1);*/
+
 	endVideoMode0();
 	setVideoMode3();
 
-	grid(seed);
+	grid(seed, x+1, y+1);
 	setTime(0,0,0);
 	startTimer3();
 	
-	control(1);
-	
+	setPos(x ,y);
+	control(2);
+
 	endVideoMode3();
 
 	return succes;

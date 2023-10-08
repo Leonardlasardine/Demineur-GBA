@@ -17,7 +17,7 @@ void resetGrid() {
 	}
 }
 
-void grid(unsigned int seed) {
+void grid(unsigned int seed, unsigned char x, unsigned char y) {
 	unsigned char sizeX = getSizeX() + 1;
 	unsigned char sizeY = getSizeY() + 1;
 	unsigned char mines = getMines();
@@ -36,7 +36,7 @@ void grid(unsigned int seed) {
 		unsigned char mY = 1 + rand() % (sizeY - 1);
 
 		if (g[mX][mY] != 9) {
-			if (mX + mY != 2) { //Pas la première case
+			if (mY*sizeX + mX != y*sizeX + x) { //Pas la première case
 				g[mX][mY] = 9;
 				minesPlaced++;
 			}

@@ -105,7 +105,7 @@ unsigned char load() { //Ralentir ?
 	} else {
 		endVideoMode0();
 		setVideoMode3();
-	
+
 		//Fond
 		drawScreen(load_Bitmap);
 

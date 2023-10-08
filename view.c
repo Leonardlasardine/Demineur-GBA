@@ -6,6 +6,8 @@ unsigned short* videoBuffer = (unsigned short*) 0x6000000;
 
 unsigned char size = 0;
 unsigned short case_Bitmap[1600] = {};
+unsigned char sizeX;
+unsigned char sizeY;
 unsigned char pixelX;
 unsigned char pixelY;
 
@@ -33,8 +35,10 @@ unsigned char getBitmapSize() {
 void setBitmaps() {
 	size = getBitmapSize();
 	setCaseBitmap();
-	pixelX = 240/getSizeX();
-	pixelY = 160/getSizeY();
+	sizeX = getSizeX();
+	sizeY = getSizeY();
+	pixelX = 240/sizeX;
+	pixelY = 160/sizeY;
 }
 
 void setCaseBitmap() {
@@ -57,22 +61,50 @@ void setCaseBitmap() {
 	}
 }
 
-//Passe de l'autre côté
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 
-	//Droite et bas tout le temps pareil
-	drawLine((x*pixelX + pixelX)-1, y*pixelY, 2, pixelY, c);	 //DROITE
-	drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 2, c); //BAS
-
-	if (x > 0) {//A droite ligne de l'autre côté
-		drawLine(x*pixelX - 1, y*pixelY, 2, pixelY + 1, c);		//GAUCHE
-	} else if(x == 0) {
-		drawLine(x*pixelX, y*pixelY, 1, pixelY + 1, c);			//GAUCHE
-	}
-	if (y > 0) {
-		drawLine(x*pixelX, y*pixelY - 1, pixelX + 1, 2, c);		//HAUT
-	} else if(y == 0) {
-		drawLine(x*pixelX, y*pixelY, pixelX + 1, 1, c);			//HAUT
+	if (x == sizeX) { //Côté droit
+		if (y == sizeY) { //Coin en bas à droite
+			drawLine(x*pixelX, y*pixelY - 1, pixelX + 1, 2, c);				//HAUT
+			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);	//BAS
+		} else {
+			if(y == 0) { //Côté en haut à droite
+				drawLine(x*pixelX, 0, pixelX + 1, 1, c);					//HAUT
+			} else { //Côté droit
+				drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 1, 2, c);		//HAUT
+			}
+			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 2, c);	//BAS
+		}
+		drawLine(x*pixelX - 1, y*pixelY, 2, pixelY + 1, c);					//GAUCHE
+		drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY, c);			//DROITE
+	} else if (x == 0) { //Côté gauche
+		if (y == sizeY) { //Coin en bas à gauche
+			drawLine(0, y*pixelY - 1, pixelX + 1, 2, c);				//HAUT
+			drawLine(0, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);		//BAS
+		} else {
+			if(y == 0) { //Côté en haut à gauche
+				drawLine(0, 0, pixelX + 1, 1, c);						//HAUT
+			} else { //Côté gauche
+				drawLine(0, y*pixelY - 1, pixelX + 1, 2, c);			//HAUT
+			}
+			drawLine(0, (y*pixelY + pixelY)-1, pixelX + 1, 2, c);		//BAS
+		}
+		drawLine(0, y*pixelY, 1, pixelY + 1, c);						//GAUCHE
+		drawLine(pixelX - 1, y*pixelY, 2, pixelY, c);					//DROITE
+	} else {
+		if (y == sizeY) { //Côté Bas
+			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);	//BAS
+			drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 2, 2, c);			//HAUT
+		} else {
+			if (y == 0) { //Côté haut
+				drawLine(x*pixelX - 1, y*pixelY, pixelX + 2, 1, c);			//HAUT
+			} else { //Millieu
+				drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 2, 2, c);		//HAUT
+			}
+				drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 2, c);//BAS
+		}
+		drawLine(x*pixelX - 1, y*pixelY, 2, pixelY + 1, c);					//GAUCHE
+		drawLine((x*pixelX + pixelX)-1, y*pixelY, 2, pixelY, c);			//DROITE
 	}
 }
 
@@ -114,7 +146,6 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 		} else {
 			drawMine(x*pixelX, y*pixelY);
 			setMinesLeft(0);//PERDU
-			//drawScreen(game_over_Bitmap);
 		}
 
 		return n;
@@ -196,7 +227,7 @@ void drawBitmap(unsigned char x, unsigned char y, const unsigned short bitmap[16
 void drawGrid() {
 
 	unsigned char i, j;
-	for (i = 0; i < getSizeX(); i++) {
+	for (i = 0; i < sizeX; i++) {
 		for (j = 0; j < getSizeY(); j++) {
 			drawBitmap(i*pixelX, j*pixelY, case_Bitmap, size);
 		}
@@ -282,8 +313,8 @@ void drawEmptyCase(unsigned char x, unsigned char y) {
 
 	unsigned char i, j;
 
-	for(i = y*pixelY; i < y*pixelY + size; i++) {
-		for(j = x*pixelX; j < x*pixelX + size; j++) {
+	for(i = y*pixelY + 1; i < y*pixelY + size - 1; i++) {
+		for(j = x*pixelX + 1; j < x*pixelX + size - 1; j++) {
 			drawPixel(j, i, RGB(192, 192, 192));
 		}
 	}

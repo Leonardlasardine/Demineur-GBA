@@ -45,7 +45,7 @@ int main(void) {
 					endVideoMode0();
 					setVideoMode3();
 
-					control(1);
+					control(0);
 
 					endVideoMode3();
 				}
@@ -100,8 +100,10 @@ void startTimer0() {
 	M_TIM0CNT_TIMER_START
 }
 
+//5 352 008 possibilitées pour que le mot de passe fasse 8 caractères
+//Pourrait utiliser UINT_MAX : 4 294 967 295 mais 11 caractères
 void Timer0Function(void) {
-   if(timerCount > UINT_MAX - 1) {
+   if(timerCount > 5352007) {
 	   timerCount = 0;
    }
    timerCount += 1;
