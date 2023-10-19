@@ -63,9 +63,9 @@ void setCaseBitmap() {
 
 void cursor (unsigned char x, unsigned char y, unsigned short c) {
 
-	if (x == sizeX) { //Côté droit
-		if (y == sizeY) { //Coin en bas à droite
-			drawLine(x*pixelX, y*pixelY - 1, pixelX + 1, 2, c);				//HAUT
+	if (x == sizeX - 1) { //Côté droit
+		if (y == sizeY - 1) { //Coin en bas à droite
+			drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 1, 2, c);			//HAUT
 			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);	//BAS
 		} else {
 			if(y == 0) { //Côté en haut à droite
@@ -73,12 +73,12 @@ void cursor (unsigned char x, unsigned char y, unsigned short c) {
 			} else { //Côté droit
 				drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 1, 2, c);		//HAUT
 			}
-			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 2, c);	//BAS
+			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX, 2, c);	//BAS
 		}
 		drawLine(x*pixelX - 1, y*pixelY, 2, pixelY + 1, c);					//GAUCHE
 		drawLine((x*pixelX + pixelX)-1, y*pixelY, 1, pixelY, c);			//DROITE
 	} else if (x == 0) { //Côté gauche
-		if (y == sizeY) { //Coin en bas à gauche
+		if (y == sizeY - 1) { //Coin en bas à gauche
 			drawLine(0, y*pixelY - 1, pixelX + 1, 2, c);				//HAUT
 			drawLine(0, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);		//BAS
 		} else {
@@ -92,7 +92,7 @@ void cursor (unsigned char x, unsigned char y, unsigned short c) {
 		drawLine(0, y*pixelY, 1, pixelY + 1, c);						//GAUCHE
 		drawLine(pixelX - 1, y*pixelY, 2, pixelY, c);					//DROITE
 	} else {
-		if (y == sizeY) { //Côté Bas
+		if (y == sizeY - 1) { //Côté Bas
 			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);	//BAS
 			drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 2, 2, c);			//HAUT
 		} else {
@@ -138,35 +138,35 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 	if (gridValue < 10) {
 		
 		unsigned char n = checkMines(x+1, y+1);
-	
+
 		if (n == 0) {
 			drawEmptyCase(x, y);
+			countRevealedCase();
 		} else if (n < 9) {
 			drawNumber(x*pixelX, y*pixelY, n);
+			countRevealedCase();
 		} else {
 			drawMine(x*pixelX, y*pixelY);
-			setMinesLeft(0);//PERDU
+			setMinesLeft(0);//PERDU //PROBLEME
 		}
 
 		return n;
 
 	//Révéler case avec drapeau
-	} else if (gridValue == 21) {
+	} else if (gridValue == 29) {
 		setGridValue(x+1, y+1, 19);
 		drawMine(x*pixelX, y*pixelY);
-		setMinesLeft(0);
+		setMinesLeft(99);//PROBLEME
 		return 9;
-	} else if (gridValue == 22) {
+	} else if (gridValue == 20) {
 		unsigned char n = checkMines(x+1, y+1);
-	
+		countRevealedCase();
+		setWrongFlags(getWrongFlags() - 1);
 		if (n == 0) {
 			drawEmptyCase(x, y);
 		} else  {
 			drawNumber(x*pixelX, y*pixelY, n);
 		}
-
-		setMinesLeft(getMinesLeft() + 1);
-
 		return n;
 	}
 	return gridValue;
@@ -185,7 +185,7 @@ void drawCaseFromSave(unsigned char x, unsigned char y) {
 			drawNumber(x*pixelX, y*pixelY, n - 10);
 		} else if (n == 19) {
 			drawMine(x*pixelX, y*pixelY);
-		} else if (n > 20) {
+		} else if (n > 19) {
 			drawFlag(x, y);
 		}
 	}
@@ -238,7 +238,7 @@ void drawUnrevealedCase(unsigned char x, unsigned char y) {
 	drawBitmap(x*pixelX, y*pixelY, case_Bitmap, size);
 }
 
-//Enlever + Point d'interrogation ?
+//+ Point d'interrogation ?
 void drawFlag(unsigned char x, unsigned char y) {
 
 	switch (getDifficulty()) {
@@ -257,12 +257,6 @@ void drawFlag(unsigned char x, unsigned char y) {
 		case 4 :
 			drawBitmap(x*pixelX, y*pixelY, flag_8_Bitmap, 8);
 			break;
-	}
-
-	if (checkMines(x+1, y+1) == 9) {
-		setGridValue(x+1, y+1, 21);
-	} else {
-		setGridValue(x+1, y+1, 22);
 	}
 }
 

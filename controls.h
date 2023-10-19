@@ -9,3 +9,4 @@ unsigned char getSizeX();
 unsigned char getSizeY();
 
 unsigned short getFirstCase();
+void setFirstCase(unsigned short fc);

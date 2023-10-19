@@ -10,6 +10,7 @@
 #include "pause.h"
 #include "controls.h"
 #include "timers.h"
+#include "password.h"
 
 unsigned char initSave() {
 	//Si pas de sauvegarde, initialiser
@@ -86,7 +87,16 @@ void save() {
 	*H = getHours();
 	*M = getMinutes();
 	*S = getSeconds();
-	*seed_Save = getSeed();//MARCHE PAS
+
+	unsigned int seedSave = getSeed();
+	*seed_Save_1 = seedSave % 100;
+	*seed_Save_2 = (seedSave / 100) % 100;
+	*seed_Save_3 = (seedSave / 10000) % 100;
+	*seed_Save_4 = (seedSave / 1000000) % 100;
+
+	unsigned short fc = getFirstCase();
+	*fc_Save_1 = fc % 100;
+	*fc_Save_2 = (fc /100) % 100;
 
 	//Sauvegarde de la grille
 	saveGrid();
@@ -111,10 +121,14 @@ unsigned char load() { //Ralentir ?
 
 		setDifficulty(*difficulty_Save);
 		setMines(*mines_Save);
-		setMinesLeft(*minesLeft_Save);
 		setPos(*cursorX, *cursorY);
 		setTime(*H, *M, *S);
-		setSeed(*seed_Save);
+
+		unsigned int seedSave = concatenate(*seed_Save_4, *seed_Save_3);
+		seedSave = concatenate(seedSave, *seed_Save_2);
+		seedSave = concatenate(seedSave, *seed_Save_1);
+		setSeed(seedSave);
+		setFirstCase(concatenate(*fc_Save_2, *fc_Save_1));
 		
 		//Grille
 		resetGrid();
@@ -146,6 +160,9 @@ unsigned char load() { //Ralentir ?
 				n++;
 			}
 		}
+		setMinesLeft(countCases(9));
+		setUnrevealedCase(countUnrevealed());
+		setWrongFlags(countCases(20));
 	}
 	return saveFound;
 }

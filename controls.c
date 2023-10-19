@@ -6,6 +6,8 @@
 #include "gameOver.h"
 #include "timers.h"
 
+#include "font.h"
+
 unsigned char x;
 unsigned char y;
 unsigned short fistClick;
@@ -103,20 +105,39 @@ void control(unsigned char newGame) {
 					   break;
 				   }
 			   }
+			   checkWon();
 			   aPressed = 0;
 		   }
 	   }
 
+	   //PAS DE DRAPEAUX AVANT DE GENERER LA GRILLE
 	   if(F_CTRLINPUT_B_PRESSED) {
 		   bPressed = 1;
 	   } else {
 		   if (bPressed) {
+			   unsigned char n = getGridValue(x+1, y+1);
+
 			   //Case pas révélée
-			   if (getGridValue(x+1, y+1) < 10) {
+			   if (n < 10) {
+				   if (n == 9) {
+					   setGridValue(x+1, y+1, 29);
+					   setMinesLeft(getMinesLeft() - 1);
+				   } else {
+					   setGridValue(x+1, y+1, 20);
+					   setWrongFlags(getWrongFlags() + 1);
+				   }
 				   drawFlag(x, y);
-				   //AFAIRE nombre max de drapeaux
-				   setMinesLeft(getMinesLeft() - 1);
+			   } else if (n > 19) { //Enlever drapeaux
+				   drawUnrevealedCase(x, y);
+				   setGridValue(x + 1, y + 1, n - 20);
+				   if (n == 20) {
+					   setWrongFlags(getWrongFlags() - 1);
+				   }
+				   if (n == 29) {
+					   setMinesLeft(getMinesLeft() + 1);
+				   }
 			   }
+			   checkWon();
 			   bPressed = 0;
 		   }
 	   }
@@ -209,4 +230,8 @@ void setPos(unsigned char newX, unsigned char newY) {
 
 unsigned short getFirstCase() {
 	return fistClick;
+}
+
+void setFirstCase(unsigned short fc) {
+	fistClick = fc;
 }

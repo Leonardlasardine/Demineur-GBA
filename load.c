@@ -122,7 +122,7 @@ unsigned char loadFromPassword() {
 	unsigned short fc = getPasswordFirstCase(n);
 
 	//Verifier que le mot de passe est possible
-	if (d > 4 || m > 99 || seed > 5352007 || fc > 620) {
+	if (d > 4 || m > 99 || seed > 5352007 || fc > 620) {//AFAIRE FC EN FONCTION DE DIFFICULTEE
 		return succes;
 	} else {
 		succes = 1;

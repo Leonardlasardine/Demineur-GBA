@@ -42,3 +42,5 @@ readme.txt
 Demineur.sav
 ipch/*
 *.stackDump
+timeit.dat
+insight.ini

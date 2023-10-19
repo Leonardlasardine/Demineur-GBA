@@ -8,6 +8,14 @@ void resetGrid();
 
 void reveal();
 void drawSave();
+unsigned short countCases(unsigned char value);
+unsigned short countUnrevealed();
+void checkWon();
 
 void setMinesLeft(unsigned char value);
 unsigned char getMinesLeft();
+signed short getFlagsLeft();
+void countRevealedCase();
+void setUnrevealedCase(unsigned short value);
+void setWrongFlags(unsigned short value);
+unsigned short getWrongFlags();
