@@ -26,6 +26,9 @@ void resetGrid() {
 	}
 }
 
+//La génération de la grille définie seulement deux possiblitées par cases :
+//case sans mine ou case avec mine
+//Le nombre de mines alentours n'est calculé que quand le joueur révèle la case.
 void grid(unsigned int seed, unsigned char x, unsigned char y) {
 	unsigned char sizeX = getSizeX() + 1;
 	unsigned char sizeY = getSizeY() + 1;
@@ -192,11 +195,13 @@ void checkWon() {
 	//Si aucun mauvais drapeaux
 	if (wrongFlags == 0) {
 		//Si tous les drapeaux placés OU toutes les cases révélées
-		if (minesLeft == 0 || unrevealedCase == 0) {
+		if (minesLeft == 0 || unrevealedCase == 0) { //AFAIRE Placer drapeaux si toutes les case vides révélées
 			//GAGNE
 			unsigned char winText [8] = {16, 10, 16, 23, 14, 36, 36, 36};
 			unsigned char pos = 0; //Varaible inutile mais nécessaire
 			writePseudo(winText, &pos);
+			
+			drawScreen(game_won_Bitmap);
 		}
 	}
 }

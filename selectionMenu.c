@@ -21,7 +21,7 @@ unsigned char selectionMenu() {
 	ham_DrawText(12, 10, "CHARGER");
 	ham_DrawText(12, 15, "SCORES");
 	
-	moveLineSelection(DROITE, &line);
+	moveLineSelection(NUL, &line);
 
 	while (chooseMode) {
 		if(F_CTRLINPUT_UP_PRESSED) {

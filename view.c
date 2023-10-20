@@ -147,7 +147,7 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 			countRevealedCase();
 		} else {
 			drawMine(x*pixelX, y*pixelY);
-			setMinesLeft(0);//PERDU //PROBLEME
+			setMinesLeft(99);//PERDU //PROBLEME
 		}
 
 		return n;

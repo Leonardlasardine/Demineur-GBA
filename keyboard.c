@@ -14,6 +14,8 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 	unsigned char rightPressed = 0;
 	unsigned char aPressed = 0;
 	unsigned char bPressed = 0;
+	unsigned char lPressed = 0;
+	unsigned char rPressed = 0;
 	
 	//unsigned char pseudo[8] = {};
 	unsigned char writting = 1;
@@ -63,12 +65,37 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 
+	   //Bouger le curseur
+	   if(F_CTRLINPUT_L_PRESSED) {
+		   lPressed = 1;
+	   } else {
+		   if (lPressed) {
+			   if (pos > 0) {
+				   pos--;
+				   caret(pos);
+			   }
+			   lPressed = 0;
+		   }
+	   }
+
+	   if(F_CTRLINPUT_R_PRESSED) {
+		   rPressed = 1;
+	   } else {
+		   if (rPressed) {
+			   if (pos < 7) {
+				   pos++;
+				   caret(pos);
+			   }
+			   rPressed = 0;
+		   }
+	   }
 	   //ECRIRE
 	   if(F_CTRLINPUT_A_PRESSED) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
 			   unsigned char key = keyPressed(x, y, &pos);
+			   caret(pos);
 			   if (key < 40) {
 				   pseudo[pos-1] = key;
 			   } else if (key == 40){
@@ -88,6 +115,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 			   if (pos > 0) {
 				  remove(&pos);
 				  pseudo[pos] = 39;
+				  caret(pos);
 				}
 			   bPressed = 0;
 		   }
@@ -108,6 +136,7 @@ void drawKeyboard() {
 	drawScreen(pseudo_Bitmap);
 	drawKeys();
 	keyCursor(0, 0, RGB(0, 0, 150));
+	caret(pos);
 }
 
 //Beaucoup d'instructions si/sinon, c'est seulement pour passer
@@ -236,5 +265,19 @@ void writePseudo(unsigned char *pseudo, unsigned char *pos) {
 	}
 	if (exist) {
 		*pos = 8;
+	}
+}
+
+void caret(unsigned char pos) {
+	//Supprimer avant et après
+	if (pos > 0) {
+		drawLine(4 + pos*24, 29, 16, 4, RGB(0, 0, 0));
+	}
+	if (pos < 7) {
+		drawLine(52 + pos*24, 29, 16, 4, RGB(0, 0, 0));
+	}
+	if (pos < 8) {
+		//Dessiner la position de texte
+		drawLine(28 + pos*24, 29, 16, 4, RGB(0, 255, 0));
 	}
 }

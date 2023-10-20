@@ -23,7 +23,7 @@ void loadMenu() {
 	ham_DrawText(3, 7, "MEMOIRE");
 	ham_DrawText(3, 11, "MOT DE PASSE");
 
-	moveLineLoad(DROITE, &lineLoad);
+	moveLineLoad(NUL, &lineLoad);
 	
 	while (wait) {
 		if(F_CTRLINPUT_UP_PRESSED) {
@@ -58,7 +58,7 @@ void loadMenu() {
 					   wait = 0;
 				   }
 			   } else {
-				   if(loadFromSave(1)) {
+				   if(loadFromSave(1) == 7) {
 					   wait = 0;
 				   }
 			   }
@@ -88,7 +88,7 @@ void loadMenu() {
 unsigned char loadFromSave(unsigned char saveNumber) {
 	unsigned char saveExist = load();
 
-	if(saveExist) {
+	if(saveExist == 7) {
 		control(1);
 		endVideoMode3();
 	}

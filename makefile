@@ -38,6 +38,7 @@ OFILES +=main.o			\
 		game_over.raw.o	\
 		password.raw.o	\
 		continue.raw.o	\
+		game_won.raw.o	\
 
 #
 # Set a list of libraries you want to link

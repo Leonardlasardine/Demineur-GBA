@@ -23,7 +23,6 @@ void control(unsigned char newGame) {
 	unsigned char startPressed = 0;
 	
 	unsigned char alive = 1;
-	fistClick = 1;
 
 	setBitmaps();
 
@@ -32,15 +31,16 @@ void control(unsigned char newGame) {
 		x = 0;
 		y = 0;
 		drawGrid();
+		//Jamais généré
+		fistClick = 0;
 		break;
 	case 1 ://Depuis la sauvegarde
 		drawSave();
-		fistClick = 0;//Changer
 		break;
 	case 2 ://Depuis un mot de passe
 		drawGrid();
 		drawCase(x, y); //Afficher première case
-		fistClick = y*(getSizeX()+1) + x;
+		fistClick = y*(getSizeX()+1) + x + 1;
 	}
 	
 	cursor(x, y, RGB(0, 0, 150));
@@ -88,9 +88,9 @@ void control(unsigned char newGame) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
-			   if (fistClick == 1) { //Générer la grille au premier click
+			   if (fistClick == 0) { //Générer la grille au premier click
 				   grid(getSeed(), x + 1, y + 1);
-				   fistClick = y*(getSizeX()+1) + x;
+				   fistClick = y*(getSizeX()+1) + x + 1;
 			   }
 			   if (drawCase(x, y) == 9) {
 				   switch (gameOver()) {
@@ -105,6 +105,7 @@ void control(unsigned char newGame) {
 					   break;
 				   }
 			   }
+			   move(NUL, &x, &y);
 			   checkWon();
 			   aPressed = 0;
 		   }
@@ -138,6 +139,7 @@ void control(unsigned char newGame) {
 				   }
 			   }
 			   checkWon();
+			   drawChar(0, 0, fistClick);
 			   bPressed = 0;
 		   }
 	   }

@@ -14,12 +14,11 @@
 
 unsigned char initSave() {
 	//Si pas de sauvegarde, initialiser
-	if (!*saveExist) {
+	if (*saveExist != 7) {
 
 		setDifficulty(0);
 		setMines(10);
-		setPos(0, 0);
-		*saveExist = 1;
+		saveMenu();
 
 		endVideoMode0();
 		setVideoMode3();
@@ -78,10 +77,9 @@ void save() {
 		//Faire oui/non
 	}
 
-	*gameExist = 1;
+	*gameExist = 7;
 	*difficulty_Save = getDifficulty();
 	*mines_Save = getMines();
-	*minesLeft_Save = getMinesLeft();
 	*cursorX = getX();
 	*cursorY = getY();
 	*H = getHours();
@@ -110,7 +108,7 @@ unsigned char load() { //Ralentir ?
 
 	unsigned char saveFound = *gameExist;
 
-	if(!saveFound) {
+	if(saveFound != 7) {
 		ham_DrawText(3, 10, "Aucune sauvegarde trouvee");
 	} else {
 		endVideoMode0();
@@ -170,5 +168,5 @@ unsigned char load() { //Ralentir ?
 void saveMenu() {
 	*menuDifficulty = getDifficulty();
 	*menuMines = getMines();
-	*saveExist = 1;
+	*saveExist = 7; //Au pif mais une valeur
 }

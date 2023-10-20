@@ -28,11 +28,13 @@ const unsigned short numbers_16_Bitmap[2048];
 const unsigned short numbers_10_Bitmap[800];
 const unsigned short numbers_8_Bitmap[512];
 
+const unsigned short font_Bitmap[10240];//Barre sur le ZERO
+
 //Ecran
 const unsigned short save_Bitmap[38400];
 const unsigned short load_Bitmap[38400];
 const unsigned short pseudo_Bitmap[38400];
-const unsigned short font_Bitmap[10240];//Barre sur le ZERO
 const unsigned short game_over_Bitmap[38400];
 const unsigned short password_Bitmap[38400];
 const unsigned short continue_Bitmap[38400];
+const unsigned short game_won_Bitmap[38400];

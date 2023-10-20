@@ -15,7 +15,7 @@ void loadMenu();
 
 typedef enum Sens Sens;
 enum Sens {
-    HAUT, BAS, GAUCHE, DROITE, SUPER_GAUCHE, SUPER_DROITE
+    HAUT, BAS, GAUCHE, DROITE, SUPER_GAUCHE, SUPER_DROITE, NUL
 };
 
 #endif

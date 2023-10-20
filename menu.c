@@ -30,7 +30,7 @@ unsigned char menu() {
 	
 	changeDifficulty(HAUT);
 	changeMines(HAUT);
-	moveLine(DROITE, &line);
+	moveLine(NUL, &line);
 
 	while (choose) {
 		if(F_CTRLINPUT_UP_PRESSED) {
