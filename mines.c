@@ -39,6 +39,17 @@ void grid(unsigned int seed, unsigned char x, unsigned char y) {
 
 	//Reset
 	resetGrid();
+	//Bordures
+	unsigned char posY, posX;
+	for (posX = 0; posX < sizeX; posX++) {
+		g[posX][0] = 10;
+		g[posX][sizeY] = 10;
+	}
+	for (posY = 0; posY < sizeY; posY++) {
+		g[0][posY] = 10;
+		g[sizeX][posY] = 10;
+	}
+	g[sizeX][sizeY] = 10;
 
 	//Aléatoire
 	srand(seed);
@@ -101,7 +112,7 @@ void reveal() {
 		for (posY = 0; posY < sizeY; posY++) {
 			unsigned char n = getGridValue(posX + 1, posY + 1);
 			if(n < 10) {
-				drawCase(posX, posY);
+				drawCase(posX, posY, 1);
 			} else if (n == 20) {
 				//Bitmap drapeaux faux
 				setGridValue(posX + 1, posY + 1, 18);

@@ -130,7 +130,7 @@ void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned c
 	drawLine(x - e,		y,		e,			h + e,		c);			//GAUCHE
 }
 
-unsigned char drawCase(unsigned char x, unsigned char y) {
+unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
 
 	unsigned char gridValue = getGridValue(x+1, y+1);
 
@@ -142,21 +142,30 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 		if (n == 0) {
 			drawEmptyCase(x, y);
 			countRevealedCase();
+			if (!reveal) {
+				reavealAround(x, y);
+			}
 		} else if (n < 9) {
 			drawNumber(x*pixelX, y*pixelY, n);
 			countRevealedCase();
 		} else {
 			drawMine(x*pixelX, y*pixelY);
-			setMinesLeft(100);//PERDU //PROBLEME
+			setMinesLeft(100);//PERDU
 		}
 
 		return n;
-
+	//Révéler autour d'un nombre si le bon nombre de drapeaux est placé
+	} else if (gridValue < 20) {
+		if (countFlagsAround(x, y) == gridValue - 10) {
+			if (!reveal) {
+				reavealAround(x, y);
+			}
+		}
 	//Révéler case avec drapeau
 	} else if (gridValue == 29) {
 		setGridValue(x+1, y+1, 19);
 		drawMine(x*pixelX, y*pixelY);
-		setMinesLeft(100);//PROBLEME
+		setMinesLeft(100);
 		return 9;
 	} else if (gridValue == 20) {
 		unsigned char n = checkMines(x+1, y+1);
@@ -170,6 +179,33 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 		return n;
 	}
 	return gridValue;
+}
+
+//ATTENTION FAIT PLANTER QUAND REVELE TROP DE CASES !
+void reavealAround (unsigned char x, unsigned char y) {
+	unsigned char i, j;
+	for (i = x; i < x + 3; i++) {
+		for (j = y; j < y + 3; j++) {
+			if (getGridValue(i, j) < 10) {
+				drawCase(i - 1, j - 1, 0);
+			}
+		}
+	}
+}
+
+//Compte le nombre de drapeaux autour d'une case
+unsigned char countFlagsAround(unsigned char x, unsigned char y) {
+	unsigned char n = 0;
+	unsigned char i, j;
+	for (i = x; i < x + 3; i++) {
+		for (j = y; j < y + 3; j++) {
+			unsigned char gd = getGridValue(i, j);
+			if (gd == 20 || gd == 29) {
+				n++;
+			}
+		}
+	}
+	return n;
 }
 
 void drawCaseFromSave(unsigned char x, unsigned char y) {

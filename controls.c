@@ -39,7 +39,7 @@ void control(unsigned char newGame) {
 		break;
 	case 2 ://Depuis un mot de passe
 		drawGrid();
-		drawCase(x, y); //Afficher première case
+		drawCase(x, y, 0); //Afficher première case
 		fistClick = y*(getSizeX()+1) + x + 1;
 	}
 	
@@ -92,7 +92,7 @@ void control(unsigned char newGame) {
 				   grid(getSeed(), x + 1, y + 1);
 				   fistClick = y*(getSizeX()+1) + x + 1;
 			   }
-			   if (drawCase(x, y) == 9) {
+			   if (drawCase(x, y, 0) == 9) {
 				   switch (gameOver()) {
 				   case 0 ://Continuer
 					   drawSave();//Ré-afficher à chaque fois ?

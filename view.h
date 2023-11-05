@@ -7,7 +7,9 @@ void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned c
 void drawScreen(const unsigned short screen[38400]);
 
 void drawGrid();
-unsigned char drawCase(unsigned char x, unsigned char y);
+unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal);
+void reavealAround (unsigned char x, unsigned char y);
+unsigned char countFlagsAround(unsigned char x, unsigned char y);
 void drawCaseFromSave(unsigned char x, unsigned char y);
 
 void drawMine(unsigned char x, unsigned char y);
