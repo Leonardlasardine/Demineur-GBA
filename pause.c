@@ -87,8 +87,12 @@ unsigned char pauseGame() {
 void writePauseText() {
 	ham_DrawText(13, 2, "PAUSE");
 	ham_DrawText(5, 5,  "Temps     :");
-	ham_DrawText(4, 7, "Drapeaux restants : %d / %u", getFlagsLeft(), getMines());
-	ham_DrawText(4, 8, "Mines restantes : %u / %u", getMinesLeft(), getMines());
+	if (getMinesLeft() != 100) {
+		ham_DrawText(2, 7, "Drapeaux restants : %d / %u", getFlagsLeft(), getMines());
+	} else {
+		ham_DrawText(9, 7, "Partie perdue");
+	}
+	//ham_DrawText(4, 8, "Mines restantes : %u / %u", getMinesLeft(), getMines());
 	ham_DrawText(10, 11, " CONTINUER");
 	ham_DrawText(10, 13, "SAUVEGARDER");
 	ham_DrawText(10, 15, "  QUITTER");

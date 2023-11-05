@@ -120,3 +120,18 @@ unsigned int getSeed() {
 void setSeed(unsigned int newSeed) {
 	seed = newSeed;
 }
+
+//Attends qu'une touche soit relachée
+void wait() {
+	unsigned char spectate = 1;
+	unsigned char keyPressed = 0;
+	while (spectate) {
+		if(F_CTRLINPUT_A_PRESSED) {
+			keyPressed = 1;
+		} else {
+			if (keyPressed) {
+				spectate = 0;
+			}
+		}
+	}
+}

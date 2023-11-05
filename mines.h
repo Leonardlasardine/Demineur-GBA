@@ -10,7 +10,7 @@ void reveal();
 void drawSave();
 unsigned short countCases(unsigned char value);
 unsigned short countUnrevealed();
-void checkWon();
+unsigned char checkWon();
 
 void setMinesLeft(unsigned char value);
 unsigned char getMinesLeft();

@@ -6,6 +6,8 @@ unsigned char selectionMenu();
 unsigned char *keyboard(unsigned char *pseudo);
 void loadMenu();
 
+void wait();
+
 //Video buffer
 #define MODE_3 0x3
 #define BG2_ENABLE 0x400

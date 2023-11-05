@@ -147,7 +147,7 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 			countRevealedCase();
 		} else {
 			drawMine(x*pixelX, y*pixelY);
-			setMinesLeft(99);//PERDU //PROBLEME
+			setMinesLeft(100);//PERDU //PROBLEME
 		}
 
 		return n;
@@ -156,7 +156,7 @@ unsigned char drawCase(unsigned char x, unsigned char y) {
 	} else if (gridValue == 29) {
 		setGridValue(x+1, y+1, 19);
 		drawMine(x*pixelX, y*pixelY);
-		setMinesLeft(99);//PROBLEME
+		setMinesLeft(100);//PROBLEME
 		return 9;
 	} else if (gridValue == 20) {
 		unsigned char n = checkMines(x+1, y+1);

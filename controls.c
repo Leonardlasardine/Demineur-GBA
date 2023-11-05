@@ -96,17 +96,24 @@ void control(unsigned char newGame) {
 				   switch (gameOver()) {
 				   case 0 ://Continuer
 					   drawSave();//Ré-afficher à chaque fois ?
+					   move(NUL, &x, &y);
 					   break;
 				   case 1 ://Quitter
 					   alive = 0;
 					   break;
 				   case 2://Réveler
 					   reveal();
+					   //Regarder sans bouger
+					   wait();
+					   alive = 0;
 					   break;
 				   }
+			   } else {
+				   move(NUL, &x, &y);
+				   if (checkWon()) {
+					   alive = 0;
+				   }
 			   }
-			   move(NUL, &x, &y);
-			   checkWon();
 			   aPressed = 0;
 		   }
 	   }
@@ -119,7 +126,7 @@ void control(unsigned char newGame) {
 			   unsigned char n = getGridValue(x+1, y+1);
 
 			   //Case pas révélée
-			   if (n < 10) {
+			   if (n < 10 && getMinesLeft() != 100) { //Partie perdue
 				   if (n == 9) {
 					   setGridValue(x+1, y+1, 29);
 					   setMinesLeft(getMinesLeft() - 1);
@@ -138,8 +145,9 @@ void control(unsigned char newGame) {
 					   setMinesLeft(getMinesLeft() + 1);
 				   }
 			   }
-			   checkWon();
-			   drawChar(0, 0, fistClick);
+			   if (checkWon()) {
+				   alive = 0;
+			   }
 			   bPressed = 0;
 		   }
 	   }

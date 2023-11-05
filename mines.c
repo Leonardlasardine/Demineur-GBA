@@ -166,44 +166,19 @@ unsigned short countUnrevealed() {
 }
 
 //Vérifier si la partie est gagnée
-void checkWon() {
-
-	//Affichage temporaire
-	/*unsigned char m = getMinesLeft();
-	if (m != 0) {
-		m -= 1;
-	} else {
-		m = 9;
-	}
-	//Mines restantes
-	drawChar(0, 0, 39);
-	drawChar(0, 0, m);
-
-	//Cases restantes
-	drawChar(0, 36, 39);
-	drawChar(0, 36, countCases(0));
-	
-	//PAs reveles
-	drawChar(0, 75, 39);
-	drawChar(0, 75, unrevealedCase);
-
-	
-	//erreurs
-	drawChar(0, 96, 39);
-	drawChar(0, 96, wrongFlags);*/
-
+unsigned char checkWon() {
 	//Si aucun mauvais drapeaux
 	if (wrongFlags == 0) {
 		//Si tous les drapeaux placés OU toutes les cases révélées
-		if (minesLeft == 0 || unrevealedCase == 0) { //AFAIRE Placer drapeaux si toutes les case vides révélées
+		if (minesLeft == 0 || (unrevealedCase == 0 && minesLeft != 100)) { //AFAIRE Placer drapeaux si toutes les case vides révélées
 			//GAGNE
-			unsigned char winText [8] = {16, 10, 16, 23, 14, 36, 36, 36};
-			unsigned char pos = 0; //Varaible inutile mais nécessaire
-			writePseudo(winText, &pos);
-			
 			drawScreen(game_won_Bitmap);
+			wait();
+			//Puis RÉVÉLER ou QUITTER (et demmander pseudo si meilleur score)
+			return 1;
 		}
 	}
+	return 0;
 }
 
 void setGridValue(unsigned char x, unsigned char y, unsigned char value) {
