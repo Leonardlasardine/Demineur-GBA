@@ -122,19 +122,41 @@ unsigned char loadFromPassword() {
 	unsigned short fc = getPasswordFirstCase(n);
 
 	//Verifier que le mot de passe est possible
-	if (d > 4 || m > 99 || seed > 5352007 || fc > 620) {//AFAIRE FC EN FONCTION DE DIFFICULTEE
+	if (d > 4 || m > 99 || seed > 5352007) {
 		return succes;
 	} else {
 		succes = 1;
+	}
+
+	unsigned short maxFc = 0;
+	switch (d) {
+	case 0 :
+		maxFc = 26;
+		break;
+	case 1 :
+		maxFc = 102;
+		break;
+	case 2 :
+		maxFc = 158;
+		break;
+	case 3 :
+		maxFc = 398;
+		break;
+	case 4 :
+		maxFc = 618;
+		break;
+	}
+	if (fc > maxFc) {
+		return succes;
 	}
 
 	setSeed(seed);
 	setDifficulty(d);
 	setMines(m);
 
-	/*ham_DrawText(1, 1, "%u", seed);
+	ham_DrawText(1, 1, "%u", seed);
 	ham_DrawText(1, 4, "%u", d);
-	ham_DrawText(1, 7, "%u", m);*/
+	ham_DrawText(1, 7, "%u", m);
 	
 	//Retrouver première case
 	unsigned char x = 0;
@@ -149,9 +171,9 @@ unsigned char loadFromPassword() {
 		}
 	}
 
-	/*ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
+	ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
 
-	while(1);*/
+	wait();
 
 	endVideoMode0();
 	setVideoMode3();

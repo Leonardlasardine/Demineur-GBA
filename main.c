@@ -122,6 +122,7 @@ void setSeed(unsigned int newSeed) {
 }
 
 //Attends qu'une touche soit relachée
+//AFAIRE toutes les touches
 void wait() {
 	unsigned char spectate = 1;
 	unsigned char keyPressed = 0;
@@ -130,6 +131,7 @@ void wait() {
 			keyPressed = 1;
 		} else {
 			if (keyPressed) {
+				keyPressed = 0;
 				spectate = 0;
 			}
 		}

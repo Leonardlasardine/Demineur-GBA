@@ -187,30 +187,8 @@ void aPressedAction(unsigned char *l) {
 			setVideoMode3();
 
 			writePassword();
+			wait();
 
-			unsigned char aPassword = 0;
-			unsigned char startPassword = 0;
-			unsigned char showPassword = 1;
-
-			while (showPassword) {
-				if (F_CTRLINPUT_A_PRESSED) {
-					aPassword = 1;
-				} else {
-					if (aPassword) {
-						aPassword = 0;
-						showPassword = 0;
-					}
-				}
-				if (F_CTRLINPUT_START_PRESSED) {
-				   startPassword = 1;
-				} else {
-					if (startPassword) {
-						//Comme le bouton A
-						aPassword = 1;
-						startPassword = 0;
-					}
-				}
-			}
 			endVideoMode3();
 			setVideoMode0();
 			writePauseText();

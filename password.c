@@ -84,7 +84,7 @@ void writePassword() {
 	ham_DrawText(1, 7, "%u", m);
 	ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
 
-	while(1);*/
+	//while(1);*/
 
 	drawScreen(password_Bitmap);
 
@@ -105,6 +105,10 @@ void writePassword() {
 		base10 = concatenate(base10, 0);
 	}
 	base10 = concatenate(base10, getFirstCase());
+	
+	/*ham_DrawText(1, 7, "%u", fc);
+	wait();
+	setVideoMode3();*/
 
 	convertToBase39(base10, password);
 

@@ -60,6 +60,7 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 	} else if (y == 3 && x == 3) {
 		//ESPACE
 		if (*pos < 8) {
+			emptySquare(*pos + 1);
 			*pos += 1;
 		} else {
 			remove(pos);
@@ -83,6 +84,8 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 
 		if (*pos == 8) {
 			remove(pos);
+		} else {
+			emptySquare(*pos + 1);
 		}
 
 		drawChar(28 + *pos*24, 14, key);
@@ -93,6 +96,21 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 
 //SUPPRIMER
 void remove(unsigned char *pos) {
-	drawChar(28 + (*pos - 1)*24, 14, 39);//Lettre vide
+	emptySquare(*pos);
 	*pos -= 1;
+}
+
+void emptySquare(unsigned char pos) {
+	//Carré vide 14*14
+	unsigned short square[1600];
+	unsigned char i, j;
+	unsigned char posStart = 28 + (pos - 1)*24;
+	unsigned short n = 0;
+	for (i = 14; i < 28; i++) {
+		for (j = posStart; j < posStart + 14; j++) {
+			square[n] = pseudo_Bitmap[i * 240 + j];
+			n++;
+		}
+	}
+	drawBitmap(posStart, 14, square, 14);
 }

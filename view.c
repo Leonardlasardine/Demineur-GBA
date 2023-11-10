@@ -69,7 +69,7 @@ void cursor (unsigned char x, unsigned char y, unsigned short c) {
 			drawLine(x*pixelX, (y*pixelY + pixelY)-1, pixelX + 1, 1, c);	//BAS
 		} else {
 			if(y == 0) { //Côté en haut à droite
-				drawLine(x*pixelX, 0, pixelX + 1, 1, c);					//HAUT
+				drawLine(x*pixelX, 0, pixelX, 1, c);					//HAUT
 			} else { //Côté droit
 				drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 1, 2, c);		//HAUT
 			}
@@ -158,7 +158,9 @@ unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
 	} else if (gridValue < 20) {
 		if (countFlagsAround(x, y) == gridValue - 10) {
 			if (!reveal) {
-				reavealAround(x, y);
+				if (reavealAround(x, y) == 9) {
+					return 9;
+				}
 			}
 		}
 	//Révéler case avec drapeau
@@ -182,15 +184,19 @@ unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
 }
 
 //ATTENTION FAIT PLANTER QUAND REVELE TROP DE CASES !
-void reavealAround (unsigned char x, unsigned char y) {
+unsigned char reavealAround (unsigned char x, unsigned char y) {
+	unsigned char m = 0;//Compter si mine révélée autour
 	unsigned char i, j;
 	for (i = x; i < x + 3; i++) {
 		for (j = y; j < y + 3; j++) {
 			if (getGridValue(i, j) < 10) {
-				drawCase(i - 1, j - 1, 0);
+				if (drawCase(i - 1, j - 1, 0) == 9) {
+					m = 9;
+				}
 			}
 		}
 	}
+	return m;
 }
 
 //Compte le nombre de drapeaux autour d'une case

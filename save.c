@@ -122,11 +122,28 @@ unsigned char load() { //Ralentir ?
 		setPos(*cursorX, *cursorY);
 		setTime(*H, *M, *S);
 
-		unsigned int seedSave = concatenate(*seed_Save_4, *seed_Save_3);
+		unsigned int seedSave = *seed_Save_4;
+		//Ne pas oublier les 0
+		if (*seed_Save_3 < 10) {
+			seedSave = concatenate(seedSave, 0);
+		}
+		seedSave = concatenate(seedSave, *seed_Save_3);
+		if (*seed_Save_2 < 10) {
+			seedSave = concatenate(seedSave, 0);
+		}
 		seedSave = concatenate(seedSave, *seed_Save_2);
+		if (*seed_Save_1 < 10) {
+			seedSave = concatenate(seedSave, 0);
+		}
 		seedSave = concatenate(seedSave, *seed_Save_1);
 		setSeed(seedSave);
-		setFirstCase(concatenate(*fc_Save_2, *fc_Save_1));
+
+		unsigned short fcSave = *fc_Save_2;
+		if (*fc_Save_1 < 10) {
+			fcSave = concatenate(fcSave, 0);
+		}
+		fcSave = concatenate(fcSave, *fc_Save_1);
+		setFirstCase(fcSave);
 		
 		//Grille
 		resetGrid();

@@ -32,7 +32,7 @@ void control(unsigned char newGame) {
 		y = 0;
 		drawGrid();
 		//Jamais généré
-		fistClick = 0;
+		fistClick = 1000;
 		break;
 	case 1 ://Depuis la sauvegarde
 		drawSave();
@@ -40,7 +40,7 @@ void control(unsigned char newGame) {
 	case 2 ://Depuis un mot de passe
 		drawGrid();
 		drawCase(x, y, 0); //Afficher première case
-		fistClick = y*(getSizeX()+1) + x + 1;
+		fistClick = y*(getSizeX()+1) + x;
 	}
 	
 	cursor(x, y, RGB(0, 0, 150));
@@ -88,9 +88,9 @@ void control(unsigned char newGame) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
-			   if (fistClick == 0) { //Générer la grille au premier click
+			   if (fistClick == 1000) { //Générer la grille au premier click
 				   grid(getSeed(), x + 1, y + 1);
-				   fistClick = y*(getSizeX()+1) + x + 1;
+				   fistClick = y*(getSizeX()+1) + x;
 			   }
 			   if (drawCase(x, y, 0) == 9) {
 				   switch (gameOver()) {
@@ -145,6 +145,7 @@ void control(unsigned char newGame) {
 					   setMinesLeft(getMinesLeft() + 1);
 				   }
 			   }
+			   move(NUL, &x, &y);
 			   if (checkWon()) {
 				   alive = 0;
 			   }

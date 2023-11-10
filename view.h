@@ -1,14 +1,14 @@
 #include "bitmaps.h"
 
 void drawPixel(unsigned char x, unsigned char y, unsigned short c);
-unsigned short checkPixel (int x, int y);
+unsigned short checkPixel(int x, int y);
 void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned short c);
 void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned char e, unsigned short c);
 void drawScreen(const unsigned short screen[38400]);
 
 void drawGrid();
 unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal);
-void reavealAround (unsigned char x, unsigned char y);
+unsigned char reavealAround (unsigned char x, unsigned char y);
 unsigned char countFlagsAround(unsigned char x, unsigned char y);
 void drawCaseFromSave(unsigned char x, unsigned char y);
 
