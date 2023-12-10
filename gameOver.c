@@ -1,3 +1,4 @@
+#include <math.h>
 #include "main.h"
 #include "gameOver.h"
 #include "bitmaps.h"
@@ -9,7 +10,7 @@ unsigned char gameOver() {
 
 	unsigned char time = getSeconds();
 	unsigned char aGameOver = 0;
-	unsigned char gameOverPicture = 1;
+	/*unsigned char gameOverPicture = 1;
 
 	while(gameOverPicture) {
 		//attendrre 3 secondes
@@ -26,7 +27,11 @@ unsigned char gameOver() {
 			   aGameOver = 0;
 		   }
 		}
-	}
+	}*/
+	stopTimer3();
+	waitTime(20000);
+	transition();
+	//wait();
 	return continueMenu();
 }
 
@@ -123,4 +128,73 @@ unsigned char moveLineContinue(Sens sens, unsigned char *l) {
 			break;
 	}
 	return *l;
+}
+
+/*
+ * Longueur max = 50
+ * Largeur max = 10
+ * Décalage max = 8
+*/
+void transition() {//AFAIRE interrupt pour quiiter l'animation
+	unsigned short repetition = 350 + rand() % 300;
+	unsigned short i;
+	unsigned short rectangle[500];
+	unsigned char x, y;
+	signed char l, h, d;
+
+	for (i = 0; i < repetition; i++) {
+		//Position
+		x = rand() % 240;
+		y = rand() % 160;
+		//Longueur
+		l = 20 + rand() % 3;
+		if (x + l > 240) {
+			l = -l;
+		}
+		//Hauteur
+		h = 2 + rand() % 8;
+		if (y + h > 160) {
+			h = -h;
+		}
+		//Direction : Négatif = vers la gauche
+		d = 1 + rand() % 7;
+		if (x + l + d > 240) {
+			d = -d;
+		}
+		if (x + l + d > 40) {
+			if (rand() % 2) {
+				d = -d;
+			}
+		}
+
+		//Rectangle de Pixel
+		unsigned char j, k;
+		unsigned char n = 0;
+		for (j = y; j < y + h; j++) {
+			for (k = x; k < x + l; k++) {
+				rectangle[n] = checkPixel(k, j);
+				n++;
+			}
+		}
+
+		//Le décaler
+		unsigned char f, g;
+		n = 0;
+		for (f = y; f < y + h; f++) {
+			for (g = x + d; g < x + l + d; g++) {
+				drawPixel(g, f, rectangle[n]);
+				n++;
+			}
+		}
+
+		//Attendre
+		if (i < 15) {
+			waitTime(function(i)*10);
+		}
+	}
+}
+
+unsigned short function(unsigned char x) {
+	//return floor(exp(-x + 9));
+	return -2*x*x+400;//Changer de courbe
 }

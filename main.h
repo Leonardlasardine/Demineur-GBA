@@ -1,3 +1,4 @@
+#include "libham.h"
 #include <mygba.h>
 
 void control(unsigned char newGame);

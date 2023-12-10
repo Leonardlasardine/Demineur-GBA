@@ -27,6 +27,7 @@ OFILES +=main.o			\
 		password.o		\
 		load.o			\
 		gameOver.o		\
+		timers.o		\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\

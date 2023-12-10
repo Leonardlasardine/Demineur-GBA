@@ -1,0 +1,1 @@
+#define HAM_WITH_LIBHAM

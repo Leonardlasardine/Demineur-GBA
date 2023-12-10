@@ -160,7 +160,7 @@ void aPressedAction(unsigned char *l) {
 
 			drawSave();
 			//drawCursor
-			restartTimer3();
+			startTimer3();
 
 			quitPlaying = 0;
 			pauseMenu = 0;
@@ -198,7 +198,7 @@ void aPressedAction(unsigned char *l) {
 	}
 }
 
-void startTimer3() {
+void initTimer3() {
 	ham_StartIntHandler(INT_TYPE_TIM3,               // The Interrupts ID you want to start.
 					   (void *)&Timer3Function);     // The adress of a function that should be called when the interrupt is fired
 
@@ -208,9 +208,6 @@ void startTimer3() {
 
 	// Enable IRQ for timer3
 	M_TIM3CNT_IRQ_ENABLE
-
-	// Start timer3
-	M_TIM3CNT_TIMER_START
 }
 
 void Timer3Function(void) {
@@ -232,7 +229,7 @@ void stopTimer3() {
 	M_TIM3CNT_TIMER_STOP
 }
 
-void restartTimer3() {
+void startTimer3() {
 	M_TIM3CNT_TIMER_START
 }
 

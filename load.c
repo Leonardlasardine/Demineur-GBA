@@ -124,8 +124,6 @@ unsigned char loadFromPassword() {
 	//Verifier que le mot de passe est possible
 	if (d > 4 || m > 99 || seed > 5352007) {
 		return succes;
-	} else {
-		succes = 1;
 	}
 
 	unsigned short maxFc = 0;
@@ -148,6 +146,8 @@ unsigned char loadFromPassword() {
 	}
 	if (fc > maxFc) {
 		return succes;
+	} else {
+		succes = 1;
 	}
 
 	setSeed(seed);

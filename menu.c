@@ -123,16 +123,16 @@ unsigned char menu() {
 	   }
 	}
 
+	if (newGame) {
+		unsigned int seed = getTimerCount();
+		setSeed(seed);
+		ham_DrawText(1, 1, "seed : %u", seed);
 
-	unsigned int seed = getTimerCount();
-	setSeed(seed);
-	//grid(seed);
-	ham_DrawText(1, 1, "seed : %u", seed);
-
-	setTime(0,0,0);
-	startTimer3();
-	//while (getSeconds() < 1);//Afficher seed
-	setTime(0,0,0);
+		setTime(0,0,0);
+		startTimer3();
+		//while (getSeconds() < 1);//Afficher seed
+		setTime(0,0,0);
+	}
 
 	return newGame;
 }
