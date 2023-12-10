@@ -7,36 +7,36 @@ unsigned int seed;
 unsigned short delayCount;
 
 //Timer nombre alétoire
-void startTimer0() {
-	ham_StartIntHandler(INT_TYPE_TIM0,               // The Interrupts ID you want to start.
-					   (void *)&Timer0Function);     // The adress of a function that should be called when the interrupt is fired
+void startTimer2() {
+	ham_StartIntHandler(INT_TYPE_TIM2,               // The Interrupts ID you want to start.
+					   (void *)&Timer2Function);     // The adress of a function that should be called when the interrupt is fired
 
 	
-	// Selects the speed of timer0
-	M_TIM0CNT_SPEED_SELECT_SET(TIMER_FREQUENCY_SYSTEM)
+	// Selects the speed of timer2
+	M_TIM2CNT_SPEED_SELECT_SET(TIMER_FREQUENCY_SYSTEM)
 
-	// Enable IRQ for timer0
-	M_TIM0CNT_IRQ_ENABLE
+	// Enable IRQ for timer2
+	M_TIM2CNT_IRQ_ENABLE
 
-	// Start timer0
-	M_TIM0CNT_TIMER_START
+	// Start timer2
+	M_TIM2CNT_TIMER_START
 }
 
 //5 352 008 possibilitées pour que le mot de passe fasse 8 caractères
 //Pourrait utiliser UINT_MAX : 4 294 967 295 mais 11 caractères
-void Timer0Function(void) {
+void Timer2Function(void) {
    if(timerCount > 5352007) {
 	   timerCount = 0;
    }
    timerCount += 1;
 }
 
-void stopTimer0() {
-	M_TIM0CNT_TIMER_STOP
+void stopTimer2() {
+	M_TIM2CNT_TIMER_STOP
 }
 
-void restartTimer0() {
-	M_TIM0CNT_TIMER_START
+void restartTimer2() {
+	M_TIM2CNT_TIMER_START
 }
 
 unsigned int getTimerCount() {

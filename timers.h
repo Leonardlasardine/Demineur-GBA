@@ -1,14 +1,14 @@
-//Timer 0 utilisé pour les nombres aléatoires
+//Timer 2 utilisé pour les nombres aléatoires
 //dans le menu principal puis pour attendre
 //des délais courts le reste du jeu.
 
-//Timer 0 = Nombre aléatoire
+//Timer 2 = Nombre aléatoire
 #define TIMER_FREQUENCY_SYSTEM 0x0
 
-void startTimer0();
-void stopTimer0();
-void restartTimer0();
-void Timer0Function(void);
+void startTimer2();
+void stopTimer2();
+void restartTimer2();
+void Timer2Function(void);
 
 unsigned int getTimerCount();
 void setTimerCount(unsigned int v);

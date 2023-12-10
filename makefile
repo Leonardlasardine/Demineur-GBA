@@ -28,6 +28,7 @@ OFILES +=main.o			\
 		load.o			\
 		gameOver.o		\
 		timers.o		\
+		music.o			\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
@@ -50,9 +51,9 @@ ADD_LIBS +=
 # Compile using Krawall software (set to yes or no) ?
 # Also specify if Krawall is registered (yes or no)
 #
-USE_KRAWALL=no
+USE_KRAWALL=yes
 KRAWALL_IS_REGISTERED=no
-KRAWALL_FILES=
+KRAWALL_FILES=aqua.s3m ctgoblin.s3m
 
 ##########################################################################################
 # Standard Makefile targets start here

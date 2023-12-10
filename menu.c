@@ -130,7 +130,7 @@ unsigned char menu() {
 
 		setTime(0,0,0);
 		startTimer3();
-		//while (getSeconds() < 1);//Afficher seed
+		while (getSeconds() < 1);//Afficher seed
 		setTime(0,0,0);
 	}
 

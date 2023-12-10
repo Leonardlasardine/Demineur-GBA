@@ -3,6 +3,7 @@
 #include "timers.h"
 #include "save.h"
 #include "password.h"
+#include "music.h"
 
 int main(void) {
 	//Démarage
@@ -13,11 +14,14 @@ int main(void) {
 
 	//Timer
 	setTimerCount(0);
-	startTimer0();
+	startTimer2();
 	initTimer3();
 
 	initSave();
 	endVideoMode0();
+
+	//Music
+	initMusic();
 
 	while(1) {
 		//Video Mode 0
@@ -28,7 +32,14 @@ int main(void) {
 		 * 1	==>		Charger
 		 * 2	==>		Scores
 		*/
+		
+		//Musique de fond en boucle
+		krapPlay(&mod_aqua,KRAP_MODE_LOOP,0);
+
 		unsigned char gamemode = selectionMenu();
+		
+		//Clic au choix d'un menu
+		krapPlay(&mod_ctgoblin,KRAP_MODE_JINGLE,1);
 
 		switch (gamemode) {
 			case 0:

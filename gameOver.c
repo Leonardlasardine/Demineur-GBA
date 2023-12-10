@@ -29,7 +29,7 @@ unsigned char gameOver() {
 		}
 	}*/
 	stopTimer3();
-	waitTime(20000);
+	waitTime(200);
 	transition();
 	//wait();
 	return continueMenu();
@@ -189,7 +189,7 @@ void transition() {//AFAIRE interrupt pour quiiter l'animation
 
 		//Attendre
 		if (i < 15) {
-			waitTime(function(i)*10);
+			waitTime(function(i)*0.1);
 		}
 	}
 }
