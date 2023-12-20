@@ -11,6 +11,7 @@
 #include "controls.h"
 #include "timers.h"
 #include "password.h"
+#include "settings.h"
 
 unsigned char initSave() {
 	//Si pas de sauvegarde, initialiser
@@ -20,6 +21,9 @@ unsigned char initSave() {
 		setMines(10);
 		saveMenu();
 
+		setVolume(4);
+		saveSettings(4);
+
 		endVideoMode0();
 		setVideoMode3();
 	
@@ -28,10 +32,13 @@ unsigned char initSave() {
 
 		endVideoMode3();
 		setVideoMode0();
-	} else {//Charger les valeurs du menu
-
+	} else {
+		//Charger les valeurs du menu
 		setDifficulty(*menuDifficulty);
 		setMines(*menuMines);
+
+		//Régler les paramètres
+		setVolume(*volume_Save);
 	}
 	return *saveExist;
 }
@@ -186,4 +193,17 @@ void saveMenu() {
 	*menuDifficulty = getDifficulty();
 	*menuMines = getMines();
 	*saveExist = 7; //Au pif mais une valeur
+}
+
+void saveSettings(unsigned char volume) {
+	*volume_Save = volume;
+}
+
+//Demander confirmation
+void deleteSave() {
+	unsigned char i;
+	for (i = 9; i += 9; i < 5580) {
+		unsigned char *p = (unsigned char *)MEM_SRAM + i;
+		*p = 0;
+	}
 }

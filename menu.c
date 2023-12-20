@@ -55,7 +55,7 @@ unsigned char menu() {
 		   leftMenu = 1;
 	   } else {
 		   if (leftMenu) {
-			   changeValue(GAUCHE, &line);
+			   changeValue(GAUCHE, line);
 			   leftMenu = 0;
 		   }
 	   }
@@ -64,7 +64,7 @@ unsigned char menu() {
 		   rightMenu = 1;
 	   } else {
 		   if (rightMenu) {
-			   changeValue(DROITE, &line);
+			   changeValue(DROITE, line);
 			   rightMenu = 0;
 		   }
 	   }
@@ -78,7 +78,7 @@ unsigned char menu() {
 		   }
 	   } else {
 		   if (LMenu) {
-			   changeValue(SUPER_GAUCHE, &line);
+			   changeValue(SUPER_GAUCHE, line);
 			   LMenu = 0;
 		   }
 	   }
@@ -87,7 +87,7 @@ unsigned char menu() {
 		   RMenu = 1;
 	   } else {
 		   if (RMenu) {
-			   changeValue(SUPER_DROITE, &line);
+			   changeValue(SUPER_DROITE, line);
 			   RMenu = 0;
 		   }
 	   }
@@ -238,8 +238,8 @@ unsigned char moveLine(Sens sens, unsigned char *l) {
 	return *l;
 }
 
-void changeValue(Sens sens, unsigned char *l) {
-	switch (*l) {
+void changeValue(Sens sens, unsigned char l) {
+	switch (l) {
 		case 0 :
 			changeDifficulty(sens);
 			break;

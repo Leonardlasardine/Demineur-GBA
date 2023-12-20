@@ -4,6 +4,7 @@
 #include "save.h"
 #include "password.h"
 #include "music.h"
+#include "settings.h"
 
 int main(void) {
 	//Démarage
@@ -22,6 +23,7 @@ int main(void) {
 
 	//Music
 	initMusic();
+	krapSetMusicVol(getVolume(1), 0);
 
 	while(1) {
 		//Video Mode 0
@@ -34,12 +36,12 @@ int main(void) {
 		*/
 		
 		//Musique de fond en boucle
-		krapPlay(&mod_aqua,KRAP_MODE_LOOP,0);
+		krapPlay(&mod_rois_mages,KRAP_MODE_LOOP, 0);
 
 		unsigned char gamemode = selectionMenu();
 		
 		//Clic au choix d'un menu
-		krapPlay(&mod_ctgoblin,KRAP_MODE_JINGLE,1);
+		krapPlay(&mod_aqua,KRAP_MODE_JINGLE, 0);
 
 		switch (gamemode) {
 			case 0:
@@ -53,6 +55,8 @@ int main(void) {
 					endVideoMode0();
 					setVideoMode3();
 					
+					
+					krapPlay(&mod_adagio,KRAP_MODE_LOOP,0);
 					control(0);
 
 					endVideoMode3();
@@ -66,6 +70,11 @@ int main(void) {
 				break;
 			case 2:
 				endVideoMode0();
+				break;
+			case 3:
+				endVideoMode0();
+				setVideoMode0();
+				settingsMenu();
 				break;
 		}
 	}

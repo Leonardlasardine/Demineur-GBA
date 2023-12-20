@@ -3,7 +3,7 @@
 unsigned char menu();
 
 unsigned char moveLine(Sens sens, unsigned char *l);
-void changeValue(Sens sens, unsigned char *l);
+void changeValue(Sens sens, unsigned char l);
 void changeDifficulty(Sens sens);
 void changeMines(Sens sens);
 

@@ -3,6 +3,8 @@ void saveGrid();
 void save();
 unsigned char load();
 void saveMenu();
+void saveSettings(unsigned char volume);
+void deleteSave();
 
 //SCORES D'UN NIVEAU
 typedef struct SRAM_SCORE {

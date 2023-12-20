@@ -29,6 +29,7 @@ OFILES +=main.o			\
 		gameOver.o		\
 		timers.o		\
 		music.o			\
+		settings.o		\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
@@ -53,7 +54,7 @@ ADD_LIBS +=
 #
 USE_KRAWALL=yes
 KRAWALL_IS_REGISTERED=no
-KRAWALL_FILES=aqua.s3m ctgoblin.s3m
+KRAWALL_FILES=aqua.s3m adagio.s3m rois_mages.s3m
 
 ##########################################################################################
 # Standard Makefile targets start here

@@ -4,6 +4,7 @@
 #include "mtypes.h"
 
 extern const Module mod_aqua;
-extern const Module mod_ctgoblin;
+extern const Module mod_adagio;
+extern const Module mod_rois_mages;
 
 #endif

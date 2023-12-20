@@ -10,6 +10,7 @@ void vbl() {
 
 void initMusic() {
 	kragInit(KRAG_INIT_STEREO);
+	kramQualityMode(KRAM_QM_HQ);
 
     ham_StartIntHandler(INT_TYPE_TIM1,&kradInterrupt);
     ham_StartIntHandler(INT_TYPE_VBL,&vbl);

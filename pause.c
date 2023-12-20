@@ -17,6 +17,7 @@ unsigned char pauseGame() {
 	setVideoMode0();
 
 	stopTimer3();
+	krapPause(1);
 	
 	pauseMenu = 1;
 	quitPlaying = 1;
@@ -81,6 +82,7 @@ unsigned char pauseGame() {
 		}
 	}
 
+	krapUnpause();
 	return quitPlaying;
 }
 
