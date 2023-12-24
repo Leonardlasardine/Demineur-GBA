@@ -357,11 +357,47 @@ void drawEmptyCase(unsigned char x, unsigned char y) {
 	cursor(x, y, RGB(115, 115, 115));
 }
 
-void drawScreen(const unsigned short screen[38400]) {
+//Vertical
+void drawScreenV(const unsigned short screen[38400]) {
 	unsigned char i, j;
 	for (i = 0; i < 160; i++) {
 		for (j = 0; j < 240; j++) {
 			drawPixel(j, i, screen[i * 240 + j]);
+		}
+	}
+}
+
+//Horizontal
+void drawScreenH(const unsigned short screen[38400]) {
+	unsigned char i, j;
+	for (j = 0; j < 240; j++) {
+		for (i = 0; i < 160; i++) {
+			drawPixel(j, i, screen[i * 240 + j]);
+		}
+	}
+}
+
+//Aller-retour
+void screenHalf(const unsigned short screen[38400]) {
+	unsigned char i, j;
+	for (j = 0; j < 240; j++) {
+		for (i = 0; i < 160; i++) {
+			if (j % 2) {
+				drawPixel(j, i, screen[i * 240 + j]);
+			} else {
+				drawPixel(240 - j, i, screen[i * 240 + (240 - j)]);
+			}
+		}
+	}
+}
+
+//Par la gauche et la droite
+void screenDoor(const unsigned short screen[38400]) {
+	unsigned char i, j;
+	for (j = 0; j < 121; j++) {
+		for (i = 0; i < 160; i++) {
+			drawPixel(j, i, screen[i * 240 + j]);
+			drawPixel(240 - j, i, screen[i * 240 + (240 - j)]);
 		}
 	}
 }

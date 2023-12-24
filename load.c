@@ -8,6 +8,8 @@
 #include "menu.h"
 #include "view.h"
 #include "controls.h"
+#include "music.h"
+#include "keyboard.h"
 
 void loadMenu() {
 	//Touches
@@ -89,6 +91,7 @@ unsigned char loadFromSave(unsigned char saveNumber) {
 	unsigned char saveExist = load();
 
 	if(saveExist == 7) {
+		krapPlay(&mod_adagio,KRAP_MODE_LOOP,0);
 		control(1);
 		endVideoMode3();
 	}

@@ -28,7 +28,7 @@ unsigned char initSave() {
 		setVideoMode3();
 	
 		//Fond
-		drawScreen(load_Bitmap);//Changer
+		drawScreenV(load_Bitmap);//Changer
 
 		endVideoMode3();
 		setVideoMode0();
@@ -47,13 +47,13 @@ unsigned char initSave() {
 void saveGrid() {
 	unsigned short n = 0;
 	unsigned char bar = 0; //TOTAL 188
-	unsigned char sizeX = getSizeX()+1;
-	unsigned char sizeY = getSizeY()+1;
+	unsigned char sizeX = getSizeX()+2;
+	unsigned char sizeY = getSizeY()+2;
 
-	float barSize = (float)188 / ((sizeX-1) * (sizeY-1));
+	float barSize = (float)188 / (sizeX * sizeY);
 	unsigned char posY, posX;
-	for (posX = 1; posX < sizeX; posX++) {
-		for (posY = 1; posY < sizeY; posY++) {
+	for (posX = 0; posX < sizeX; posX++) {
+		for (posY = 0; posY < sizeY; posY++) {
 			unsigned char value = getGridValue(posX, posY);
 
 			//Pointeur emplacement mémoire de sauvegarde
@@ -78,7 +78,7 @@ void save() {
 	setVideoMode3();
 	
 	//Fond
-	drawScreen(save_Bitmap);
+	drawScreenV(save_Bitmap);
 
 	if(*gameExist) {
 		//Faire oui/non
@@ -122,7 +122,7 @@ unsigned char load() { //Ralentir ?
 		setVideoMode3();
 
 		//Fond
-		drawScreen(load_Bitmap);
+		drawScreenV(load_Bitmap);
 
 		setDifficulty(*difficulty_Save);
 		setMines(*mines_Save);
@@ -157,14 +157,14 @@ unsigned char load() { //Ralentir ?
 		unsigned short n = 0;
 		unsigned char bar = 0;
 		unsigned char value;
-		unsigned char sizeX = getSizeX()+1;
-		unsigned char sizeY = getSizeY()+1;
+		unsigned char sizeX = getSizeX()+2;
+		unsigned char sizeY = getSizeY()+2;
 		
-		float barSize = (float)188 / ((sizeX-1) * (sizeY-1));
+		float barSize = (float)188 / (sizeX * sizeY);
 
 		unsigned char posY, posX;
-		for (posX = 1; posX < sizeX; posX++) {
-			for (posY = 1; posY < sizeY; posY++) {
+		for (posX = 0; posX < sizeX; posX++) {
+			for (posY = 0; posY < sizeY; posY++) {
 
 				unsigned char *p = (unsigned char *)MEM_SRAM + 9*n + GRID_LOCATION;
 				value = *p;
@@ -201,8 +201,8 @@ void saveSettings(unsigned char volume) {
 
 //Demander confirmation
 void deleteSave() {
-	unsigned char i;
-	for (i = 9; i += 9; i < 5580) {
+	unsigned short i;
+	for (i = 9; i += 9; i < 6516) {
 		unsigned char *p = (unsigned char *)MEM_SRAM + i;
 		*p = 0;
 	}

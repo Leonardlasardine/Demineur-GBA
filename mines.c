@@ -183,7 +183,7 @@ unsigned char checkWon() {
 		//Si tous les drapeaux placés OU toutes les cases révélées
 		if (minesLeft == 0 || (unrevealedCase == 0 && minesLeft != 100)) { //AFAIRE Placer drapeaux si toutes les case vides révélées
 			//GAGNE
-			drawScreen(game_won_Bitmap);
+			drawScreenV(game_won_Bitmap);
 			wait();
 			//Puis RÉVÉLER ou QUITTER (et demmander pseudo si meilleur score)
 			return 1;

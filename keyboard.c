@@ -17,7 +17,6 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 	unsigned char lPressed = 0;
 	unsigned char rPressed = 0;
 	
-	//unsigned char pseudo[8] = {};
 	unsigned char writting = 1;
 	x = 0;
 	y = 0;
@@ -133,7 +132,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 void drawKeyboard() {
 	
 	//Fond
-	drawScreen(pseudo_Bitmap);
+	drawScreenV(pseudo_Bitmap);
 	drawKeys();
 	keyCursor(0, 0, RGB(0, 0, 150));
 	caret(pos);

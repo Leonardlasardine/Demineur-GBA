@@ -97,7 +97,7 @@ unsigned char menu() {
 	   } else {
 		   if (aMenu) {
 			   if (line == 2) {
-				   if (mines < (getSizeX() * getSizeX())) {
+				   if (mines < (getSizeX() * getSizeY() - 1)) {
 					   choose = 0;
 					   newGame = 1;
 
@@ -130,7 +130,7 @@ unsigned char menu() {
 
 		setTime(0,0,0);
 		startTimer3();
-		while (getSeconds() < 1);//Afficher seed
+		//while (getSeconds() < 1);//Afficher seed
 		setTime(0,0,0);
 	}
 
@@ -276,7 +276,7 @@ void changeDifficulty(Sens sens) {
 void changeMines(Sens sens) {
 	switch (sens) {
 		case GAUCHE :
-			if (mines == 0) {
+			if (mines == 1) {
 				mines = 99;
 			} else {
 				mines -= 1;
@@ -290,7 +290,7 @@ void changeMines(Sens sens) {
 			}
 			break;
 		case SUPER_GAUCHE :
-			if (mines < 5) {
+			if (mines < 6) {
 				mines = 99;
 			} else {
 				mines -= 5;

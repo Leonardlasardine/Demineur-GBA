@@ -86,7 +86,7 @@ void writePassword() {
 
 	//while(1);*/
 
-	drawScreen(password_Bitmap);
+	drawScreenV(password_Bitmap);
 
 	//Coller seed + Difficultée + Mines + Case de départ
 	unsigned char password[8] = {0, 0, 0, 0, 0, 0, 0, 0};

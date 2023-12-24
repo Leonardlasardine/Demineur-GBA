@@ -6,11 +6,11 @@
 #include "timers.h"
 
 unsigned char gameOver() {
-	drawScreen(game_over_Bitmap);
+	screenDoor(game_over_Bitmap);
 
-	unsigned char time = getSeconds();
+	/*unsigned char time = getSeconds();
 	unsigned char aGameOver = 0;
-	/*unsigned char gameOverPicture = 1;
+	unsigned char gameOverPicture = 1;
 
 	while(gameOverPicture) {
 		//attendrre 3 secondes
@@ -38,7 +38,8 @@ unsigned char gameOver() {
 //temps score....
 unsigned char continueMenu() {
 	//Continuer ou quitter ou voir la grille
-	drawScreen(continue_Bitmap);
+	//drawScreen(continue_Bitmap);
+	screenHalf(continue_Bitmap);
 
 	//Touches
 	unsigned char leftContinue = 0;
@@ -135,7 +136,7 @@ unsigned char moveLineContinue(Sens sens, unsigned char *l) {
  * Largeur max = 10
  * Décalage max = 8
 */
-void transition() {//AFAIRE interrupt pour quiiter l'animation
+void transition() {//AFAIRE interrupt pour quitter l'animation
 	unsigned short repetition = 350 + rand() % 300;
 	unsigned short i;
 	unsigned short rectangle[500];

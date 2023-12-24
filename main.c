@@ -58,6 +58,7 @@ int main(void) {
 					
 					krapPlay(&mod_adagio,KRAP_MODE_LOOP,0);
 					control(0);
+					krapStop();
 
 					endVideoMode3();
 				}

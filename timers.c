@@ -11,7 +11,6 @@ void startTimer2() {
 	ham_StartIntHandler(INT_TYPE_TIM2,               // The Interrupts ID you want to start.
 					   (void *)&Timer2Function);     // The adress of a function that should be called when the interrupt is fired
 
-	
 	// Selects the speed of timer2
 	M_TIM2CNT_SPEED_SELECT_SET(TIMER_FREQUENCY_SYSTEM)
 
