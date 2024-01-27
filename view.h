@@ -4,10 +4,12 @@ void drawPixel(unsigned char x, unsigned char y, unsigned short c);
 unsigned short checkPixel(int x, int y);
 void drawLine(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned short c);
 void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned char h, unsigned char e, unsigned short c);
+void fillColor(unsigned short c);
 
 void drawGrid();
-unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal);
-unsigned char reavealAround (unsigned char x, unsigned char y);
+unsigned char drawCase(unsigned char x, unsigned char y, unsigned char noReveal);
+unsigned char reavealAround(unsigned char x, unsigned char y);
+void resetAroundCounter();
 unsigned char countFlagsAround(unsigned char x, unsigned char y);
 void drawCaseFromSave(unsigned char x, unsigned char y);
 
@@ -22,7 +24,7 @@ unsigned char getBitmapSize();
 void setCaseBitmap();
 void setBitmaps();
 
-void cursor (unsigned char x, unsigned char y, unsigned short c);
+void cursor(unsigned char x, unsigned char y, unsigned short c);
 
 void drawScreenV(const unsigned short screen[38400]);
 void drawScreenH(const unsigned short screen[38400]);

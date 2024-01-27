@@ -53,7 +53,7 @@ unsigned char continueMenu() {
 	moveLineContinue(HAUT, &lineContinue);
 
 	while(continueMenu) {
-	   if(F_CTRLINPUT_LEFT_PRESSED) {
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftContinue = 1;
 	   } else {
 		   if (leftContinue) {
@@ -62,7 +62,7 @@ unsigned char continueMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_RIGHT_PRESSED) {
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
 		   rightContinue = 1;
 	   } else {
 		   if (rightContinue) {
@@ -71,7 +71,7 @@ unsigned char continueMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aContinue = 1;
 	   } else {
 		   if (aContinue) {

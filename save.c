@@ -11,22 +11,21 @@
 #include "controls.h"
 #include "timers.h"
 #include "password.h"
-#include "settings.h"
 
 unsigned char initSave() {
 	//Si pas de sauvegarde, initialiser
 	if (*saveExist != 7) {
-
 		setDifficulty(0);
 		setMines(10);
 		saveMenu();
 
 		setVolume(4);
-		saveSettings(4);
+		setColor(RGB(255, 0, 100));
+		saveSettings(4, RGB(255, 0, 100));
 
 		endVideoMode0();
 		setVideoMode3();
-	
+
 		//Fond
 		drawScreenV(load_Bitmap);//Changer
 
@@ -39,6 +38,17 @@ unsigned char initSave() {
 
 		//Régler les paramètres
 		setVolume(*volume_Save);
+		//Ne pas oublier les 0
+		unsigned short colorSave = *color_Save_3;
+		if (*color_Save_2 < 10) {
+			colorSave = concatenate(colorSave, 0);
+		}
+		colorSave = concatenate(colorSave, *seed_Save_2);
+		if (*color_Save_1 < 10) {
+			colorSave = concatenate(colorSave, 0);
+		}
+		colorSave = concatenate(colorSave, *seed_Save_1);
+		setColor(colorSave);
 	}
 	return *saveExist;
 }
@@ -112,7 +122,6 @@ void save() {
 }
 
 unsigned char load() { //Ralentir ?
-
 	unsigned char saveFound = *gameExist;
 
 	if(saveFound != 7) {
@@ -195,15 +204,70 @@ void saveMenu() {
 	*saveExist = 7; //Au pif mais une valeur
 }
 
-void saveSettings(unsigned char volume) {
+void saveSettings(unsigned char volume, unsigned short color) {
 	*volume_Save = volume;
+
+	unsigned int colorSave = getColor();
+	*color_Save_1 = colorSave % 100;
+	*color_Save_2 = (colorSave / 100) % 100;
+	*color_Save_3 = (colorSave / 10000) % 100;
 }
 
 //Demander confirmation
 void deleteSave() {
 	unsigned short i;
-	for (i = 9; i += 9; i < 6516) {
+	for (i = 9; i += 9; i < 29691) {
 		unsigned char *p = (unsigned char *)MEM_SRAM + i;
 		*p = 0;
 	}
+}
+
+//Obtenir le score
+//Lignes de 0 à 4
+unsigned char *getScorePseudo(unsigned char difficulty, unsigned char line, unsigned char *pseudo) {
+	unsigned char i;
+	for (i = 0; i < 8; i++) {
+		unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 +i*9;
+		pseudo[i] = *p;
+	}
+	return pseudo;
+}
+
+unsigned char getScoreH(unsigned char difficulty, unsigned char line) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 72;
+	return *p;
+}
+
+unsigned char getScoreM(unsigned char difficulty, unsigned char line) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 81;
+	return *p;
+}
+
+unsigned char getScoreS(unsigned char difficulty, unsigned char line) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 90;
+	return *p;
+}
+
+//Ecrire le score
+void setScorePseudo(unsigned char difficulty, unsigned char line, unsigned char *pseudo) {
+	unsigned char i;
+	for (i = 0; i < 8; i++) {
+		unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + i*9;
+		*p = pseudo[i];
+	}
+}
+
+void setScoreH(unsigned char difficulty, unsigned char line, unsigned char value) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 72;
+	*p = value;
+}
+
+void setScoreM(unsigned char difficulty, unsigned char line, unsigned char value) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 81;
+	*p = value;
+}
+
+void setScoreS(unsigned char difficulty, unsigned char line, unsigned char value) {
+	unsigned char *p = (unsigned char *)MEM_SRAM + SCORE_LOCATION + difficulty*495 + line*99 + 90;
+	*p = value;
 }

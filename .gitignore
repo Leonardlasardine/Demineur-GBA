@@ -44,3 +44,5 @@ ipch/*
 *.stackDump
 timeit.dat
 insight.ini
+Demineur.sln.vlconfig
+Demineur_vs100_Debug_Win32.lnt

@@ -2,6 +2,8 @@
 #include "mines.h"
 #include "menu.h"
 
+unsigned char aroundIteration;
+
 unsigned short* videoBuffer = (unsigned short*) 0x6000000;
 
 unsigned char size = 0;
@@ -61,8 +63,7 @@ void setCaseBitmap() {
 	}
 }
 
-void cursor (unsigned char x, unsigned char y, unsigned short c) {
-
+void cursor(unsigned char x, unsigned char y, unsigned short c) {
 	if (x == sizeX - 1) { //Côté droit
 		if (y == sizeY - 1) { //Coin en bas à droite
 			drawLine(x*pixelX - 1, y*pixelY - 1, pixelX + 1, 2, c);			//HAUT
@@ -130,20 +131,31 @@ void drawRectangle(unsigned char x, unsigned char y, unsigned char l, unsigned c
 	drawLine(x - e,		y,		e,			h + e,		c);			//GAUCHE
 }
 
-unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
+void fillColor(unsigned short c) {
+	unsigned char i, j;
+	for (i = 0; i < 160; i++) {
+		for (j = 0; j < 240; j++) {
+			drawPixel(j, i, c);
+		}
+	}
+}
 
+unsigned char drawCase(unsigned char x, unsigned char y, unsigned char noReveal) {
 	unsigned char gridValue = getGridValue(x+1, y+1);
-
 	//Case non révélée
 	if (gridValue < 10) {
-		
 		unsigned char n = checkMines(x+1, y+1);
 
 		if (n == 0) {
 			drawEmptyCase(x, y);
 			countRevealedCase();
-			if (!reveal) {
-				reavealAround(x, y);
+			if (!noReveal) {
+				aroundIteration++;
+				if (aroundIteration < 123) {//Pas parfait
+					reavealAround(x, y);
+				} else {
+					return 0;
+				}
 			}
 		} else if (n < 9) {
 			drawNumber(x*pixelX, y*pixelY, n);
@@ -157,7 +169,7 @@ unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
 	//Révéler autour d'un nombre si le bon nombre de drapeaux est placé
 	} else if (gridValue < 20) {
 		if (countFlagsAround(x, y) == gridValue - 10) {
-			if (!reveal) {
+			if (!noReveal) {
 				if (reavealAround(x, y) == 9) {
 					return 9;
 				}
@@ -184,7 +196,8 @@ unsigned char drawCase(unsigned char x, unsigned char y, unsigned char reveal) {
 }
 
 //ATTENTION FAIT PLANTER QUAND REVELE TROP DE CASES !
-unsigned char reavealAround (unsigned char x, unsigned char y) {
+//Moins de 124 fois !
+unsigned char reavealAround(unsigned char x, unsigned char y) {
 	unsigned char m = 0;//Compter si mine révélée autour
 	unsigned char i, j;
 	for (i = x; i < x + 3; i++) {
@@ -197,6 +210,11 @@ unsigned char reavealAround (unsigned char x, unsigned char y) {
 		}
 	}
 	return m;
+}
+
+//A chaque clique remis à zéro
+void resetAroundCounter() {
+	aroundIteration = 0;
 }
 
 //Compte le nombre de drapeaux autour d'une case
@@ -215,10 +233,8 @@ unsigned char countFlagsAround(unsigned char x, unsigned char y) {
 }
 
 void drawCaseFromSave(unsigned char x, unsigned char y) {
-
 	//Case révélée
 	if (getGridValue(x+1, y+1) > 9) {
-
 		unsigned char n = getGridValue(x+1, y+1);
 	
 		if (n == 10) {
@@ -267,7 +283,6 @@ void drawBitmap(unsigned char x, unsigned char y, const unsigned short bitmap[16
 }
 
 void drawGrid() {
-
 	unsigned char i, j;
 	for (i = 0; i < sizeX; i++) {
 		for (j = 0; j < getSizeY(); j++) {
@@ -282,7 +297,6 @@ void drawUnrevealedCase(unsigned char x, unsigned char y) {
 
 //+ Point d'interrogation ?
 void drawFlag(unsigned char x, unsigned char y) {
-
 	switch (getDifficulty()) {
 		case 0 :
 			drawBitmap(x*pixelX, y*pixelY, flag_40_Bitmap, 40);
@@ -303,7 +317,6 @@ void drawFlag(unsigned char x, unsigned char y) {
 }
 
 void drawNumber(unsigned char x, unsigned char y, unsigned char n) {
-
 	unsigned char i, j;
 
 	switch (getDifficulty()) {
@@ -346,7 +359,6 @@ void drawNumber(unsigned char x, unsigned char y, unsigned char n) {
 }
 
 void drawEmptyCase(unsigned char x, unsigned char y) {
-
 	unsigned char i, j;
 
 	for(i = y*pixelY + 1; i < y*pixelY + size - 1; i++) {

@@ -30,6 +30,7 @@ OFILES +=main.o			\
 		timers.o		\
 		music.o			\
 		settings.o		\
+		score.o			\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\

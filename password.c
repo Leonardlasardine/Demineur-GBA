@@ -33,7 +33,7 @@ unsigned long long power(unsigned long long base, unsigned char exp) {
 		result *= base;
 	}
 	return result;
- }
+}
 
 unsigned long long convertToBase10(unsigned char *base39) {
 	unsigned long long number = 0;
@@ -69,7 +69,6 @@ unsigned char *convertToBase39(unsigned long long base10, unsigned char *newPseu
 
 //Afficher le mot de passe
 void writePassword() {
-
 	/*endVideoMode3();
 	setVideoMode0();
 
@@ -114,7 +113,7 @@ void writePassword() {
 
 	unsigned char i;
 	for (i = 0; i < 8; i++) {
-		drawChar(105 + i*14, 40, password[i]);
+		drawChar(105 + i*14, 40, password[i], getColor());
 	}
 }
 

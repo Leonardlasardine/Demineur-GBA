@@ -3,8 +3,6 @@
 #include "timers.h"
 #include "mines.h"
 
-int timers;
-
 unsigned char difficulty;
 unsigned char mines;
 
@@ -33,7 +31,7 @@ unsigned char menu() {
 	moveLine(NUL, &line);
 
 	while (choose) {
-		if(F_CTRLINPUT_UP_PRESSED) {
+		if (F_CTRLINPUT_UP_PRESSED) {
 		   upMenu = 1;
 	   } else {
 		   if (upMenu) {
@@ -42,7 +40,7 @@ unsigned char menu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downMenu = 1;
 	   } else {
 		   if (downMenu) {
@@ -51,7 +49,7 @@ unsigned char menu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_LEFT_PRESSED) {
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftMenu = 1;
 	   } else {
 		   if (leftMenu) {
@@ -60,7 +58,7 @@ unsigned char menu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_RIGHT_PRESSED) {
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
 		   rightMenu = 1;
 	   } else {
 		   if (rightMenu) {
@@ -92,7 +90,7 @@ unsigned char menu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aMenu = 1;
 	   } else {
 		   if (aMenu) {
@@ -100,12 +98,9 @@ unsigned char menu() {
 				   if (mines < (getSizeX() * getSizeY() - 1)) {
 					   choose = 0;
 					   newGame = 1;
-
-					   
-						ham_DrawText(1, 1, "                  ");
-
+					   ham_DrawText(1, 1, "                  ");//pour la seed
 				   } else {
-					   ham_DrawText(7, 18, "TROP DE MINES !"); //MARCHE PLUS
+					   ham_DrawText(7, 18, "TROP DE MINES !");
 				   }
 			   }
 			   aMenu = 0;
@@ -128,10 +123,10 @@ unsigned char menu() {
 		setSeed(seed);
 		ham_DrawText(1, 1, "seed : %u", seed);
 
-		setTime(0,0,0);
+		setTime(0, 0, 0);
 		startTimer3();
 		//while (getSeconds() < 1);//Afficher seed
-		setTime(0,0,0);
+		setTime(0, 0, 0);
 	}
 
 	return newGame;
@@ -307,7 +302,7 @@ void changeMines(Sens sens) {
 			break;
 	}
 
-	if (mines < 10 ) {
+	if (mines < 10) {
 		ham_DrawText(21, 11, " ", mines);
 		ham_DrawText(22, 11, "%u", mines);
 	} else {

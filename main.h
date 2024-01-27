@@ -5,6 +5,8 @@ void control(unsigned char newGame);
 unsigned char menu();
 unsigned char selectionMenu();
 void loadMenu();
+void drawScoreBackground();
+unsigned char scoreMenu();
 
 void wait();
 

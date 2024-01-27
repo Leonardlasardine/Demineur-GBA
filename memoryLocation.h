@@ -3,7 +3,7 @@
 //Pointeurs emplacement mémoire de sauvegarde
 //Taille 9 octets par variable
 
-#define GRID_LOCATION 180 //Après toutes las autres variables
+#define GRID_LOCATION 2682 //Après toutes les autres variables
 
 //PARTIE
 unsigned char *gameExist = (unsigned char *)MEM_SRAM + 18;
@@ -32,4 +32,9 @@ unsigned char *saveExist = (unsigned char *)MEM_SRAM + 162;
 
 //OPTIONS
 unsigned char *volume_Save = (unsigned char *)MEM_SRAM + 171;
-//Couleur
+unsigned char *color_Save_1 = (unsigned char *)MEM_SRAM + 180;
+unsigned char *color_Save_2 = (unsigned char *)MEM_SRAM + 189;
+unsigned char *color_Save_3 = (unsigned char *)MEM_SRAM + 198;
+
+//SCORES
+#define SCORE_LOCATION 207

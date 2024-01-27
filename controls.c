@@ -47,7 +47,7 @@ void control(unsigned char newGame) {
 
 	while(alive) {
 		//Directions
-		if(F_CTRLINPUT_UP_PRESSED) {
+		if (F_CTRLINPUT_UP_PRESSED) {
 		   upPressed = 1;
 		} else {
 		   if (upPressed) {
@@ -56,7 +56,7 @@ void control(unsigned char newGame) {
 		   }
 		}
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downPressed = 1;
 	   } else {
 		   if (downPressed) {
@@ -65,7 +65,7 @@ void control(unsigned char newGame) {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_LEFT_PRESSED) {
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftPressed = 1;
 	   } else {
 		   if (leftPressed) {
@@ -74,7 +74,7 @@ void control(unsigned char newGame) {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_RIGHT_PRESSED) {
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
 		   rightPressed = 1;
 	   } else {
 		   if (rightPressed) {
@@ -84,10 +84,11 @@ void control(unsigned char newGame) {
 	   }
 
 	   //Révéler
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
+			   resetAroundCounter();
 			   if (fistClick == 1000) { //Générer la grille au premier click
 				   grid(getSeed(), x + 1, y + 1);
 				   fistClick = y*(getSizeX()+1) + x;
@@ -119,7 +120,7 @@ void control(unsigned char newGame) {
 	   }
 
 	   //PAS DE DRAPEAUX AVANT DE GENERER LA GRILLE
-	   if(F_CTRLINPUT_B_PRESSED) {
+	   if (F_CTRLINPUT_B_PRESSED) {
 		   bPressed = 1;
 	   } else {
 		   if (bPressed) {
@@ -158,16 +159,16 @@ void control(unsigned char newGame) {
 		   if (F_CTRLINPUT_R_PRESSED) {
 			   alive = 0;
 		   }
-		   if(F_CTRLINPUT_B_PRESSED) {
+		   if (F_CTRLINPUT_B_PRESSED) {
 			   drawSave();
 		   }
-		   if(F_CTRLINPUT_A_PRESSED) {
+		   if (F_CTRLINPUT_A_PRESSED) {
 			   reveal();
 		   }
 	   }
 
 	   //Pause
-	   if(F_CTRLINPUT_START_PRESSED) {
+	   if (F_CTRLINPUT_START_PRESSED) {
 		   startPressed = 1;
 	   } else {
 		   if (startPressed) {
@@ -179,11 +180,10 @@ void control(unsigned char newGame) {
 			   startPressed = 0;
 		   }
 	   }
-   }
+    }
 }
 
 void move(Sens sens, unsigned char *x, unsigned char *y) {
-	
 	unsigned char sizeX = getSizeX();
 	unsigned char sizeY = getSizeY();
 	

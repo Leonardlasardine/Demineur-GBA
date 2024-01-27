@@ -32,7 +32,7 @@ unsigned char selectionMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downMenu = 1;
 	   } else {
 		   if (downMenu) {
@@ -41,7 +41,7 @@ unsigned char selectionMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aMenu = 1;
 	   } else {
 		   if (aMenu) {

@@ -36,12 +36,12 @@ int main(void) {
 		*/
 		
 		//Musique de fond en boucle
-		krapPlay(&mod_rois_mages,KRAP_MODE_LOOP, 0);
+		krapPlay(&mod_rois_mages, KRAP_MODE_LOOP, 0);
 
 		unsigned char gamemode = selectionMenu();
 		
 		//Clic au choix d'un menu
-		krapPlay(&mod_aqua,KRAP_MODE_JINGLE, 0);
+		krapPlay(&mod_aqua, KRAP_MODE_JINGLE, 0);
 
 		switch (gamemode) {
 			case 0:
@@ -56,7 +56,7 @@ int main(void) {
 					setVideoMode3();
 					
 					
-					krapPlay(&mod_adagio,KRAP_MODE_LOOP,0);
+					krapPlay(&mod_adagio, KRAP_MODE_LOOP, 0);
 					control(0);
 					krapStop();
 
@@ -71,6 +71,11 @@ int main(void) {
 				break;
 			case 2:
 				endVideoMode0();
+				setVideoMode3();
+				drawScoreBackground();
+				while(scoreMenu() == 2);
+				endVideoMode3();
+				setVideoMode0();
 				break;
 			case 3:
 				endVideoMode0();
@@ -79,10 +84,10 @@ int main(void) {
 				break;
 		}
 	}
-   return 0;
+	return 0;
 }
 
-//Videos modes
+//Modes vidéos
 void setVideoMode0() {
 	ham_SetBgMode(0);
 	ham_InitText(0);

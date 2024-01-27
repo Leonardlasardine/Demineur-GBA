@@ -28,7 +28,7 @@ void loadMenu() {
 	moveLineLoad(NUL, &lineLoad);
 	
 	while (wait) {
-		if(F_CTRLINPUT_UP_PRESSED) {
+		if (F_CTRLINPUT_UP_PRESSED) {
 		   upLoad = 1;
 	   } else {
 		   if (upLoad) {
@@ -37,7 +37,7 @@ void loadMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downLoad = 1;
 	   } else {
 		   if (downLoad) {
@@ -46,7 +46,7 @@ void loadMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aLoad = 1;
 	   } else {
 		   if (aLoad) {
@@ -55,12 +55,12 @@ void loadMenu() {
 						ham_DrawText(8, 3, "CHARGER PARTIE");
 						ham_DrawText(3, 7, "MEMOIRE");
 						ham_DrawText(3, 11, "MOT DE PASSE");
-					   ham_DrawText(6, 15, "Mot de passe incorecte");
+						ham_DrawText(6, 15, "Mot de passe incorecte");
 				   } else {
 					   wait = 0;
 				   }
 			   } else {
-				   if(loadFromSave(1) == 7) {
+				   if (loadFromSave(1) == 7) {
 					   wait = 0;
 				   }
 			   }
@@ -91,7 +91,7 @@ unsigned char loadFromSave(unsigned char saveNumber) {
 	unsigned char saveExist = load();
 
 	if(saveExist == 7) {
-		krapPlay(&mod_adagio,KRAP_MODE_LOOP,0);
+		krapPlay(&mod_adagio, KRAP_MODE_LOOP, 0);
 		control(1);
 		endVideoMode3();
 	}
@@ -106,7 +106,7 @@ unsigned char loadFromPassword() {
 	
 	unsigned char password[8] = {39, 39, 39, 39, 39, 39, 39, 39};
 	keyboard(password);
-
+	
 	endVideoMode3();
 	setVideoMode0();
 	
@@ -157,9 +157,9 @@ unsigned char loadFromPassword() {
 	setDifficulty(d);
 	setMines(m);
 
-	ham_DrawText(1, 1, "%u", seed);
+	/*ham_DrawText(1, 1, "%u", seed);
 	ham_DrawText(1, 4, "%u", d);
-	ham_DrawText(1, 7, "%u", m);
+	ham_DrawText(1, 7, "%u", m);*/
 	
 	//Retrouver première case
 	unsigned char x = 0;
@@ -174,21 +174,22 @@ unsigned char loadFromPassword() {
 		}
 	}
 
-	ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
+	/*ham_DrawText(1, 13, "X:%d  Y:%d", x, y);
 
-	wait();
+	wait();*/
 
 	endVideoMode0();
 	setVideoMode3();
 
 	grid(seed, x+1, y+1);
-	setTime(0,0,0);
+	setTime(0, 0, 0);
 	startTimer3();
 	
-	setPos(x ,y);
+	setPos(x, y);
 	control(2);
 
 	endVideoMode3();
+	setVideoMode0();
 
 	return succes;
 }

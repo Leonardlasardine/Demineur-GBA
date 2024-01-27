@@ -5,6 +5,7 @@ unsigned char line;
 unsigned char settings;
 unsigned char currentVolume;
 unsigned char volumeDecimal[7] = {0, 28, 50, 72, 96, 112, 128};
+unsigned short color;
 
 void settingsMenu() {
 	//Touches
@@ -28,6 +29,7 @@ void settingsMenu() {
 
 	moveLineSettings(NUL, &line);
 	changeVolume(NUL);
+	//color = RGB(255, 0, 100);//ATTENTION CHANGER AVANT
 
 	while (settings) {
 		if(F_CTRLINPUT_UP_PRESSED) {
@@ -39,7 +41,7 @@ void settingsMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downSettings = 1;
 	   } else {
 		   if (downSettings) {
@@ -48,7 +50,7 @@ void settingsMenu() {
 		   }
 	   }
 	   
-	   if(F_CTRLINPUT_LEFT_PRESSED) {
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftSettings = 1;
 	   } else {
 		   if (leftSettings) {
@@ -57,7 +59,7 @@ void settingsMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_RIGHT_PRESSED) {
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
 		   rightSettings = 1;
 	   } else {
 		   if (rightSettings) {
@@ -66,7 +68,7 @@ void settingsMenu() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aSettings = 1;
 	   } else {
 		   if (aSettings) {
@@ -105,7 +107,7 @@ void settingsMenu() {
 		   }
 	   }
 	}
-	saveSettings(currentVolume);
+	saveSettings(currentVolume, color);
 }
 
 unsigned char moveLineSettings(Sens sens, unsigned char *l) {
@@ -202,4 +204,12 @@ unsigned char getVolume(unsigned char  decimal) {
 	} else {
 		return currentVolume;
 	}
+}
+
+unsigned short getColor() {
+	return color;
+}
+
+void setColor(unsigned short c) {
+	color = c;
 }

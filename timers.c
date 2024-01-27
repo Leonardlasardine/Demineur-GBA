@@ -24,10 +24,10 @@ void startTimer2() {
 //5 352 008 possibilitées pour que le mot de passe fasse 8 caractères
 //Pourrait utiliser UINT_MAX : 4 294 967 295 mais 11 caractères
 void Timer2Function(void) {
-   if(timerCount > 5352007) {
-	   timerCount = 0;
-   }
-   timerCount += 1;
+	if (timerCount > 5352007) {
+		timerCount = 0;
+	}
+	timerCount += 1;
 }
 
 void stopTimer2() {

@@ -10,7 +10,7 @@ unsigned char pauseMenu;
 unsigned char quitPlaying;
 unsigned char line;
 
-unsigned char s_H=0, s_M=0, s_S=0;
+unsigned char s_H = 0, s_M = 0, s_S = 0;
 
 unsigned char pauseGame() {
 	endVideoMode3();
@@ -42,7 +42,7 @@ unsigned char pauseGame() {
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downPause = 1;
 	   } else {
 		   if (downPause) {
@@ -176,9 +176,9 @@ void aPressedAction(unsigned char *l) {
 			break;
 		case 2 :
 			//Quitter
-			s_H=0;
-			s_M=0;
-			s_S=0;
+			s_H = 0;
+			s_M = 0;
+			s_S = 0;
 			quitPlaying = 1;
 			pauseMenu = 0;
 			break;
@@ -213,18 +213,18 @@ void initTimer3() {
 }
 
 void Timer3Function(void) {
-   if(++s_S > 59) {
-	  if(++s_M > 59)  {
-		 if(++s_H > 11)  {
-			s_H=0;
-		 }
-		 s_M=0;
-	  }
-	  s_S = 0;
-   }
-   if (pauseMenu && quitPlaying) {
-	   ham_DrawText(17, 5, "%.2d:%.2d:%.2d ", s_H, s_M, s_S);
-   }
+	if(++s_S > 59) {
+		if(++s_M > 59)  {
+			if(++s_H > 11)  {
+				s_H = 0;
+			}
+			s_M = 0;
+		}
+		s_S = 0;
+	}
+	if (pauseMenu && quitPlaying) {
+		ham_DrawText(17, 5, "%.2d:%.2d:%.2d ", s_H, s_M, s_S);
+	}
 }
 
 void stopTimer3() {

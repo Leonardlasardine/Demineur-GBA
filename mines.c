@@ -6,6 +6,7 @@
 
 #include "font.h"
 #include "keyboard.h"
+#include "score.h"
 
 //Grille vide
 unsigned char g[31][21];
@@ -84,9 +85,7 @@ unsigned char checkMines(unsigned char x, unsigned char y) {
 	if (g[x][y] == 9 || g[x][y] == 29) {
 		n = 9;
 		g[x][y] = 19;
-	}
-	
-	else {
+	} else {
 		unsigned char i, j;
 
 		for (i = x - 1; i < x + 2; i++) {
@@ -150,7 +149,7 @@ unsigned short countCases(unsigned char value) {
 	for (i = 0; i < sizeX; i++) {
 		for (j = 0; j < sizeY; j++) {
 			if (getGridValue(i + 1, j + 1) == value) {
-				n ++;
+				n++;
 			}
 		}
 	}
@@ -169,7 +168,7 @@ unsigned short countUnrevealed() {
 		for (j = 0; j < sizeY; j++) {
 			v = getGridValue(i + 1, j + 1);
 			if (v > 9 && v < 20) {
-				n ++;
+				n++;
 			}
 		}
 	}
@@ -186,6 +185,7 @@ unsigned char checkWon() {
 			drawScreenV(game_won_Bitmap);
 			wait();
 			//Puis RÉVÉLER ou QUITTER (et demmander pseudo si meilleur score)
+			newScore();
 			return 1;
 		}
 	}

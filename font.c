@@ -5,15 +5,23 @@
 //Mot stocké sous forme d'entiers de 0 à 38 et non sous forme de texte
 //Caractères dans l'ordre du fichier font.bmp
 
-void drawChar(unsigned char x, unsigned char y, unsigned char character) {
-
+void drawChar(unsigned char x, unsigned char y, unsigned char character, unsigned short color) {
 	unsigned char i, j;
 	for (i = y; i < 16 + y; i++) {
 		for (j = x; j < 16 + x; j++) {
 			unsigned short pixel = font_Bitmap[(i - y) * 16 + (j - x)+character*256];
 			if (pixel != 0x0000) {
-				drawPixel(j, i, pixel);
+				drawPixel(j, i, color);
 			}
+		}
+	}
+}
+
+void write(unsigned char *text, unsigned char length, unsigned char x, unsigned char y, signed char gap, unsigned short color) {//COULEUR
+	unsigned char i;
+	for (i = 0; i < length; i++) {
+		if (text[i] < 39) {
+			drawChar(x + i*(16+gap), y, text[i], color);
 		}
 	}
 }
@@ -25,7 +33,7 @@ void drawKeys() {
 	firstLine = 32;
 	for (i = 65; i < 125; i+=20) {//Hauteur
 		for (j = 24; j < 216 - firstLine; j+=16) {//Longueur
-			drawChar(j + decal, i, n);
+			drawChar(j + decal, i, n, getColor());
 			n++;
 		}
 		firstLine = 0;
@@ -40,13 +48,12 @@ void drawKeys() {
 		if (j == 76) {
 			j += 80;
 		}
-		drawChar(j, i, n);
+		drawChar(j, i, n, getColor());
 		n++;
 	}
 }
 
 unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
-
 	unsigned char key = 39;	//Aucune
 	unsigned char decal = 0;
 
@@ -73,10 +80,10 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 
 	//LETTRES
 	else {
-		if (y > 0 ){
+		if (y > 0) {
 			decal += 2;
 		}
-		if (y == 3 && x > 7){
+		if (y == 3 && x > 7) {
 			decal += 5;
 		}
 
@@ -88,7 +95,7 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 			emptySquare(*pos + 1);
 		}
 
-		drawChar(28 + *pos*24, 14, key);
+		drawChar(28 + *pos*24, 14, key, getColor());
 		*pos += 1;
 	}
 	return key;
@@ -113,4 +120,15 @@ void emptySquare(unsigned char pos) {
 		}
 	}
 	drawBitmap(posStart, 14, square, 14);
+}
+
+unsigned char numberToChar(unsigned char number) {
+	if (number < 10) {
+		if (number == 0) {
+			number = 9;
+		} else {
+			number--;
+		}
+	}
+	return number;
 }

@@ -28,7 +28,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 	writePseudo(pseudo, &pos);
 
 	while(writting) {
-		if(F_CTRLINPUT_UP_PRESSED) {
+		if (F_CTRLINPUT_UP_PRESSED) {
 		   upPressed = 1;
 		} else {
 		   if (upPressed) {
@@ -37,7 +37,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 
-	   if(F_CTRLINPUT_DOWN_PRESSED) {
+	   if (F_CTRLINPUT_DOWN_PRESSED) {
 		   downPressed = 1;
 	   } else {
 		   if (downPressed) {
@@ -46,7 +46,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 
-	   if(F_CTRLINPUT_LEFT_PRESSED) {
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftPressed = 1;
 	   } else {
 		   if (leftPressed) {
@@ -55,7 +55,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 
-	   if(F_CTRLINPUT_RIGHT_PRESSED) {
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
 		   rightPressed = 1;
 	   } else {
 		   if (rightPressed) {
@@ -65,7 +65,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 	   }
 
 	   //Bouger le curseur
-	   if(F_CTRLINPUT_L_PRESSED) {
+	   if (F_CTRLINPUT_L_PRESSED) {
 		   lPressed = 1;
 	   } else {
 		   if (lPressed) {
@@ -77,7 +77,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 
-	   if(F_CTRLINPUT_R_PRESSED) {
+	   if (F_CTRLINPUT_R_PRESSED) {
 		   rPressed = 1;
 	   } else {
 		   if (rPressed) {
@@ -89,7 +89,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 		   }
 	   }
 	   //ECRIRE
-	   if(F_CTRLINPUT_A_PRESSED) {
+	   if (F_CTRLINPUT_A_PRESSED) {
 		   aPressed = 1;
 	   } else {
 		   if (aPressed) {
@@ -97,7 +97,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 			   caret(pos);
 			   if (key < 40) {
 				   pseudo[pos-1] = key;
-			   } else if (key == 40){
+			   } else if (key == 40) {
 				   pseudo[pos] = 39;
 			   } else {
 				   writting = 0;
@@ -107,7 +107,7 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 	   }
 
 	   //SUPPRIMER
-	   if(F_CTRLINPUT_B_PRESSED) {
+	   if (F_CTRLINPUT_B_PRESSED) {
 		   bPressed = 1;
 	   } else {
 		   if (bPressed) { 
@@ -119,8 +119,8 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 			   bPressed = 0;
 		   }
 	   }
-	   if(F_CTRLINPUT_L_PRESSED) {
-		   if(F_CTRLINPUT_R_PRESSED) {
+	   if (F_CTRLINPUT_L_PRESSED) {
+		   if (F_CTRLINPUT_R_PRESSED) {
 			   writting = 0;
 		   }
 	   }
@@ -130,7 +130,6 @@ unsigned char *keyboard(unsigned char *pseudo) { //Tableau
 }
 
 void drawKeyboard() {
-	
 	//Fond
 	drawScreenV(pseudo_Bitmap);
 	drawKeys();
@@ -141,7 +140,6 @@ void drawKeyboard() {
 //Beaucoup d'instructions si/sinon, c'est seulement pour passer
 //d'une ligne à l'autre du clavier et la barre espace
 void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
-	
 	keyCursor(*x, *y, RGB(0, 0, 0));
 
 	switch (sens) {
@@ -200,7 +198,7 @@ void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
 					*x = 0;
 				}
 			} else if (*y == 3) {
-				if (*x < 3 ) {
+				if (*x < 3) {
 					*x += 1;
 				} else if (*x == 3) {
 					*x += 5;
@@ -224,7 +222,6 @@ void moveKey(Sens sens, unsigned char *x, unsigned char *y) {
 }
 
 void keyCursor(unsigned char x, unsigned char y, unsigned short c) {
-
 	x *= 16;
 
 	if (y == 0 || y == 2) { //Décalage d'une ligne sur l'autre
@@ -253,12 +250,12 @@ void keyCursor(unsigned char x, unsigned char y, unsigned short c) {
 }
 
 //Ecrire dernier pseudo si il existe
-void writePseudo(unsigned char *pseudo, unsigned char *pos) {
+void writePseudo(unsigned char *pseudo, unsigned char *pos) {//Utiliser fonction write
 	unsigned char exist = 0;
 	unsigned char i;
 	for (i = 0; i < 8; i++) {
 		if (pseudo[i] != 39) {
-			drawChar(28 + i*24, 14, pseudo[i]);
+			drawChar(28 + i*24, 14, pseudo[i], getColor());
 			exist = 1;
 		}
 	}
