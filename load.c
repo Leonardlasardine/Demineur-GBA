@@ -15,14 +15,17 @@ void loadMenu() {
 	//Touches
 	unsigned char upLoad = 0;
 	unsigned char downLoad = 0;
+	unsigned char leftLoad = 0;
+	unsigned char rightLoad = 0;
 	unsigned char aLoad = 0;
 	unsigned char startLoad = 0;
+	unsigned char slot = 0;
 
 	unsigned char wait = 1;
 	unsigned char lineLoad = 0;
 
 	ham_DrawText(8, 3, "CHARGER PARTIE");
-	ham_DrawText(3, 7, "MEMOIRE");
+	ham_DrawText(3, 7, "MEMOIRE 1");
 	ham_DrawText(3, 11, "MOT DE PASSE");
 
 	moveLineLoad(NUL, &lineLoad);
@@ -46,6 +49,32 @@ void loadMenu() {
 		   }
 	   }
 
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
+		   leftLoad = 1;
+	   } else {
+		   if (leftLoad) {
+			   if (slot > 0) {
+				   slot--;
+				   ham_DrawText(11, 7, " ");
+				   ham_DrawText(11, 7, "%u", slot + 1);
+			   }
+			   leftLoad = 0;
+		   }
+	   }
+
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
+		   rightLoad = 1;
+	   } else {
+		   if (rightLoad) {
+			   if (slot < 4) {
+				   slot++;
+				   ham_DrawText(11, 7, " ");
+				   ham_DrawText(11, 7, "%u", slot + 1);
+			   }
+			   rightLoad = 0;
+		   }
+	   }
+
 	   if (F_CTRLINPUT_A_PRESSED) {
 		   aLoad = 1;
 	   } else {
@@ -60,7 +89,7 @@ void loadMenu() {
 					   wait = 0;
 				   }
 			   } else {
-				   if (loadFromSave(1) == 7) {
+				   if (loadFromSave(slot)/* == 7*/) {
 					   wait = 0;
 				   }
 			   }
@@ -88,9 +117,9 @@ void loadMenu() {
 }
 
 unsigned char loadFromSave(unsigned char saveNumber) {
-	unsigned char saveExist = load();
+	unsigned char saveExist = load(saveNumber);
 
-	if(saveExist == 7) {
+	if(saveExist/* == 7*/) {
 		krapPlay(&mod_adagio, KRAP_MODE_LOOP, 0);
 		control(1);
 		endVideoMode3();

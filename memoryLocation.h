@@ -3,10 +3,8 @@
 //Pointeurs emplacement mémoire de sauvegarde
 //Taille 9 octets par variable
 
-#define GRID_LOCATION 2682 //Après toutes les autres variables
-
 //PARTIE
-unsigned char *gameExist = (unsigned char *)MEM_SRAM + 18;
+unsigned char *gameExist = (unsigned char *)MEM_SRAM + 18; //Contient si les parties de 1 à 5 existent
 unsigned char *difficulty_Save = (unsigned char *)MEM_SRAM + 27;
 unsigned char *mines_Save = (unsigned char *)MEM_SRAM + 36;
 //Curseur
@@ -25,16 +23,26 @@ unsigned char *seed_Save_4 = (unsigned char *)MEM_SRAM + 117;
 unsigned char *fc_Save_1 = (unsigned char *)MEM_SRAM + 126;
 unsigned char *fc_Save_2 = (unsigned char *)MEM_SRAM + 135;
 
+			//TOTAL 126 par emplacement (sans la grille)
+			//5 emplacements de sauvegarde
+			//Donc 630
+
 //MENU
-unsigned char *menuDifficulty = (unsigned char *)MEM_SRAM + 144;
-unsigned char *menuMines = (unsigned char *)MEM_SRAM + 153;
-unsigned char *saveExist = (unsigned char *)MEM_SRAM + 162;
+unsigned char *menuDifficulty = (unsigned char *)MEM_SRAM + 648;
+unsigned char *menuMines = (unsigned char *)MEM_SRAM + 657;
+unsigned char *saveExist = (unsigned char *)MEM_SRAM + 666;
 
 //OPTIONS
-unsigned char *volume_Save = (unsigned char *)MEM_SRAM + 171;
-unsigned char *color_Save_1 = (unsigned char *)MEM_SRAM + 180;
-unsigned char *color_Save_2 = (unsigned char *)MEM_SRAM + 189;
-unsigned char *color_Save_3 = (unsigned char *)MEM_SRAM + 198;
+unsigned char *volume_Save = (unsigned char *)MEM_SRAM + 675;
+unsigned char *color_Save_1 = (unsigned char *)MEM_SRAM + 684;
+unsigned char *color_Save_2 = (unsigned char *)MEM_SRAM + 693;
+unsigned char *color_Save_3 = (unsigned char *)MEM_SRAM + 702;
 
 //SCORES
-#define SCORE_LOCATION 207
+#define SCORE_LOCATION 711
+			//TOTAL ?
+
+#define GRID_LOCATION 3186 //Après toutes les autres variables
+			//Par grille max de 32*22 ==> 6336
+
+//Total tient sur 31ko

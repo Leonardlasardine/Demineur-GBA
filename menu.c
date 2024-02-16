@@ -237,6 +237,7 @@ void changeValue(Sens sens, unsigned char l) {
 	switch (l) {
 		case 0 :
 			changeDifficulty(sens);
+			setStandardMines();
 			break;
 		case 1 :
 			changeMines(sens);
@@ -302,6 +303,33 @@ void changeMines(Sens sens) {
 			break;
 	}
 
+	if (mines < 10) {
+		ham_DrawText(21, 11, " ", mines);
+		ham_DrawText(22, 11, "%u", mines);
+	} else {
+		ham_DrawText(21, 11, "%u", mines);
+	}
+}
+
+//Mines par défaut pour le niveau
+void setStandardMines() {
+	switch (difficulty) {
+		case 0:
+			mines = 3;
+			break;
+		case 1:
+			mines = 12;
+			break;
+		case 2:
+			mines = 24;
+			break;
+		case 3:
+			mines = 80;
+			break;
+		case 4:
+			mines = 99; //normalement 140
+			break;
+	}
 	if (mines < 10) {
 		ham_DrawText(21, 11, " ", mines);
 		ham_DrawText(22, 11, "%u", mines);

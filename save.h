@@ -1,7 +1,7 @@
 unsigned char initSave();
-void saveGrid();
-void save();
-unsigned char load();
+void saveGrid(unsigned char saveNumber);
+void save(unsigned char saveNumber);
+unsigned char load(unsigned char saveNumber);
 void saveMenu();
 void saveSettings(unsigned char volume, unsigned short color);
 void deleteSave();

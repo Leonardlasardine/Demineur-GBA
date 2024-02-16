@@ -111,15 +111,15 @@ void emptySquare(unsigned char pos) {
 	//Carré vide 14*14
 	unsigned short square[1600];
 	unsigned char i, j;
-	unsigned char posStart = 28 + (pos - 1)*24;
+	unsigned char posStart = 29 + (pos - 1)*24;
 	unsigned short n = 0;
-	for (i = 14; i < 28; i++) {
+	for (i = 15; i < 29; i++) {
 		for (j = posStart; j < posStart + 14; j++) {
 			square[n] = pseudo_Bitmap[i * 240 + j];
 			n++;
 		}
 	}
-	drawBitmap(posStart, 14, square, 14);
+	drawBitmap(posStart, 15, square, 14);
 }
 
 unsigned char numberToChar(unsigned char number) {

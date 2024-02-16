@@ -9,6 +9,7 @@
 unsigned char pauseMenu;
 unsigned char quitPlaying;
 unsigned char line;
+unsigned char slot;
 
 unsigned char s_H = 0, s_M = 0, s_S = 0;
 
@@ -22,9 +23,12 @@ unsigned char pauseGame() {
 	pauseMenu = 1;
 	quitPlaying = 1;
 	line = 0;
+	slot = 0;
 
 	unsigned char upPause = 0;
 	unsigned char downPause = 0;
+	unsigned char leftPause = 0;
+	unsigned char rightPause = 0;
 	unsigned char aPause = 0;
 	unsigned char bPause = 0;
 	unsigned char startPause = 0;
@@ -48,6 +52,32 @@ unsigned char pauseGame() {
 		   if (downPause) {
 			   line = moveLinePause(BAS, &line);
 			   downPause = 0;
+		   }
+	   }
+	   
+	   if (F_CTRLINPUT_LEFT_PRESSED) {
+		   leftPause = 1;
+	   } else {
+		   if (leftPause) {
+			   if (slot > 0) {
+				   slot--;
+				   ham_DrawText(21, 13, " ");
+				   ham_DrawText(21, 13, "%u", slot + 1);
+			   }
+			   leftPause = 0;
+		   }
+	   }
+
+	   if (F_CTRLINPUT_RIGHT_PRESSED) {
+		   rightPause = 1;
+	   } else {
+		   if (rightPause) {
+			   if (slot < 4) {
+				   slot++;
+				   ham_DrawText(21, 13, " ");
+				   ham_DrawText(21, 13, "%u", slot + 1);
+			   }
+			   rightPause = 0;
 		   }
 	   }
 
@@ -95,10 +125,10 @@ void writePauseText() {
 		ham_DrawText(9, 7, "Partie perdue");
 	}
 	//ham_DrawText(4, 8, "Mines restantes : %u / %u", getMinesLeft(), getMines());
-	ham_DrawText(10, 11, " CONTINUER");
-	ham_DrawText(10, 13, "SAUVEGARDER");
-	ham_DrawText(10, 15, "  QUITTER");
-	ham_DrawText(10, 17, "MOT DE PASSE");
+	ham_DrawText(9, 11, "  CONTINUER");
+	ham_DrawText(9, 13, "SAUVEGARDER 1");
+	ham_DrawText(9, 15, "   QUITTER");
+	ham_DrawText(9, 17, " MOT DE PASSE");
 	
 	moveLinePause(DROITE, &line);
 }
@@ -123,31 +153,31 @@ unsigned char moveLinePause(Sens sens, unsigned char *l) {
 			break;
 	}
 
-	ham_DrawText(8, 11, " ");
-	ham_DrawText(22, 11, " ");
-	ham_DrawText(8, 13, " ");
-	ham_DrawText(22, 13, " ");
-	ham_DrawText(8, 15, " ");
-	ham_DrawText(22, 15, " ");
-	ham_DrawText(8, 17, " ");
-	ham_DrawText(22, 17, " ");
+	ham_DrawText(7, 11, " ");
+	ham_DrawText(23, 11, " ");
+	ham_DrawText(7, 13, " ");
+	ham_DrawText(23, 13, " ");
+	ham_DrawText(7, 15, " ");
+	ham_DrawText(23, 15, " ");
+	ham_DrawText(7, 17, " ");
+	ham_DrawText(23, 17, " ");
 
 	switch (*l) {
 		case 0 :
-			ham_DrawText(8, 11, "-");
-			ham_DrawText(22, 11, "-");
+			ham_DrawText(7, 11, "-");
+			ham_DrawText(23, 11, "-");
 			break;
 		case 1 :
-			ham_DrawText(8, 13, "-");
-			ham_DrawText(22, 13, "-");
+			ham_DrawText(7, 13, "-");
+			ham_DrawText(23, 13, "-");
 			break;
 		case 2 :
-			ham_DrawText(8, 15, "-");
-			ham_DrawText(22, 15, "-");
+			ham_DrawText(7, 15, "-");
+			ham_DrawText(23, 15, "-");
 			break;
 		case 3 :
-			ham_DrawText(8, 17, "-");
-			ham_DrawText(22, 17, "-");
+			ham_DrawText(7, 17, "-");
+			ham_DrawText(23, 17, "-");
 			break;
 	}
 	return *l;
@@ -169,7 +199,7 @@ void aPressedAction(unsigned char *l) {
 			break;
 		case 1 :
 			//Sauvegarder
-			save();
+			save(slot);
 			ham_DrawText(6, 14, "PARTIE SAUVEGARDEE");
 			//Re afficher le temps
 			Timer3Function();

@@ -29,7 +29,6 @@ void settingsMenu() {
 
 	moveLineSettings(NUL, &line);
 	changeVolume(NUL);
-	//color = RGB(255, 0, 100);//ATTENTION CHANGER AVANT
 
 	while (settings) {
 		if(F_CTRLINPUT_UP_PRESSED) {

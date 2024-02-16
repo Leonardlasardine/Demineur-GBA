@@ -23,22 +23,26 @@ unsigned char scoreMenu() {
 	unsigned char timeM = 0;
 	unsigned char timeS = 0;
 
-	//unsigned char i;
+	//Ecrire les scores
 	for (i = 0; i < 5; i++) {
 		drawChar(6, i*18 + 53, i, scoresColor);
-		drawChar(16, i*18 + 53, 38, scoresColor);//tiret
-		write(getScorePseudo(d, i, score), 
-			8, 30, i*18 + 53, -2, scoresColor);
+		drawChar(16, i*18 + 53, 38, scoresColor); //tiret
 
 		timeH = getScoreH(d, i);
 		timeM = getScoreM(d, i);
 		timeS = getScoreS(d, i);
-		drawChar(160, i*18 + 53, numberToChar(timeH/10), scoresColor);//Dizaines
-		drawChar(170, i*18 + 53, numberToChar(timeH%10), scoresColor);//Unités
-		drawChar(180, i*18 + 53, numberToChar(timeM/10), scoresColor);
-		drawChar(190, i*18 + 53, numberToChar(timeM%10), scoresColor);
-		drawChar(200, i*18 + 53, numberToChar(timeS/10), scoresColor);
-		drawChar(210, i*18 + 53, numberToChar(timeS%10), scoresColor);
+		if (timeH*3600 + timeM*60 + timeS != 0) { //Si le score existe
+			write(getScorePseudo(d, i, score),
+				8, 30, i*18 + 53, -2, scoresColor);
+			drawChar(160, i*18 + 53, numberToChar(timeH/10), scoresColor);//Dizaines
+			drawChar(168, i*18 + 53, numberToChar(timeH%10), scoresColor);//Unités
+			drawChar(176, i*18 + 53, 39, scoresColor);//Deux points
+			drawChar(184, i*18 + 53, numberToChar(timeM/10), scoresColor);
+			drawChar(192, i*18 + 53, numberToChar(timeM%10), scoresColor);
+			drawChar(200, i*18 + 53, 39, scoresColor);
+			drawChar(208, i*18 + 53, numberToChar(timeS/10), scoresColor);
+			drawChar(216, i*18 + 53, numberToChar(timeS%10), scoresColor);
+		}
 	}
 
 	//Controles
@@ -49,6 +53,7 @@ unsigned char scoreMenu() {
 	unsigned char rightScore = 0;
 	unsigned char LScore = 0;
 	unsigned char RScore = 0;
+	unsigned char aScore = 0;
 	unsigned char bScore = 0;
 	unsigned char startScore = 0;
 
@@ -116,6 +121,15 @@ unsigned char scoreMenu() {
 			   //Comme le bouton droite
 			   rightScore = 1;
 			   RScore = 0;
+		   }
+	   }
+	   
+	   if (F_CTRLINPUT_A_PRESSED) {
+		   aScore = 1;
+	   } else {
+		   if (aScore) {//Quitter
+			   showScore = 0;
+			   aScore = 0;
 		   }
 	   }
 
