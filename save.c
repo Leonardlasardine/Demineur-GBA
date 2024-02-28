@@ -1,7 +1,6 @@
 #include <math.h>
 #include "save.h"
 #include "videoModes.h"
-#include "bitmaps.h"
 #include "font.h"
 #include "memoryLocation.h"
 #include "view.h"
@@ -15,13 +14,16 @@
 unsigned char initSave() {
 	//Si pas de sauvegarde, initialiser
 	if (*saveExist != 7) {
+		//Tout mettre à zéro
+		//deleteSave();
+
 		setDifficulty(0);
 		setMines(2);
 		saveMenu();
 
 		setVolume(4);
-		setColor(RGB(255, 0, 100));
-		saveSettings(4, RGB(255, 0, 100));
+		setColor(RGB(252, 0, 100));
+		saveSettings(4, RGB(252, 0, 100));
 
 		endVideoMode0();
 		setVideoMode3();

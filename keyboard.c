@@ -1,6 +1,5 @@
 #include "main.h"
 #include "keyboard.h"
-#include "bitmaps.h"
 #include "font.h"
 #include "view.h"
 

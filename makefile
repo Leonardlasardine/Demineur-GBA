@@ -31,6 +31,7 @@ OFILES +=main.o			\
 		music.o			\
 		settings.o		\
 		score.o			\
+		color.o			\
 		flags.raw.o		\
 		cases.raw.o		\
 		mines.raw.o		\
@@ -43,6 +44,7 @@ OFILES +=main.o			\
 		password.raw.o	\
 		continue.raw.o	\
 		game_won.raw.o	\
+		color.raw.o		\
 
 #
 # Set a list of libraries you want to link

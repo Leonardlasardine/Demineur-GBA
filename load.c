@@ -19,7 +19,7 @@ void loadMenu() {
 	unsigned char rightLoad = 0;
 	unsigned char aLoad = 0;
 	unsigned char startLoad = 0;
-	unsigned char slot = 0;
+	unsigned char slot = 1;
 
 	unsigned char wait = 1;
 	unsigned char lineLoad = 0;
@@ -53,10 +53,10 @@ void loadMenu() {
 		   leftLoad = 1;
 	   } else {
 		   if (leftLoad) {
-			   if (slot > 0) {
+			   if (slot > 1) {
 				   slot--;
 				   ham_DrawText(11, 7, " ");
-				   ham_DrawText(11, 7, "%u", slot + 1);
+				   ham_DrawText(11, 7, "%u", slot);
 			   }
 			   leftLoad = 0;
 		   }
@@ -66,10 +66,10 @@ void loadMenu() {
 		   rightLoad = 1;
 	   } else {
 		   if (rightLoad) {
-			   if (slot < 4) {
+			   if (slot < 5) {
 				   slot++;
 				   ham_DrawText(11, 7, " ");
-				   ham_DrawText(11, 7, "%u", slot + 1);
+				   ham_DrawText(11, 7, "%u", slot);
 			   }
 			   rightLoad = 0;
 		   }
@@ -119,7 +119,7 @@ void loadMenu() {
 unsigned char loadFromSave(unsigned char saveNumber) {
 	unsigned char saveExist = load(saveNumber);
 
-	if(saveExist/* == 7*/) {
+	if(saveExist) {
 		krapPlay(&mod_adagio, KRAP_MODE_LOOP, 0);
 		control(1);
 		endVideoMode3();

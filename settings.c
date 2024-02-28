@@ -1,5 +1,6 @@
 #include "settings.h"
 #include "save.h"
+#include "color.h"
 
 unsigned char line;
 unsigned char settings;
@@ -53,7 +54,9 @@ void settingsMenu() {
 		   leftSettings = 1;
 	   } else {
 		   if (leftSettings) {
-			   changeSettings(GAUCHE, line);
+			   if (line == 0) {
+				   changeVolume(GAUCHE);
+			   }
 			   leftSettings = 0;
 		   }
 	   }
@@ -62,7 +65,9 @@ void settingsMenu() {
 		   rightSettings = 1;
 	   } else {
 		   if (rightSettings) {
-			   changeSettings(DROITE, line);
+			   if (line == 0) {
+				   changeVolume(DROITE);
+			   }
 			   rightSettings = 0;
 		   }
 	   }
@@ -73,7 +78,17 @@ void settingsMenu() {
 		   if (aSettings) {
 			   switch (line) {
 			   case 1 :
-				   //Couleur
+				   color = colorMenu();
+				   //Reafficher le menu
+				   ham_DrawText(8, 2, "Volume ");
+					ham_DrawText(20, 2, "/ 6");
+					ham_DrawText(8, 3, "musique");
+					ham_DrawText(8, 8, "Couleur");
+					ham_DrawText(8, 13, "Supprimer la");
+					ham_DrawText(8, 14, "sauvegarde");
+					ham_DrawText(21, 16, "quitter");
+					moveLineSettings(NUL, &line);
+					changeVolume(NUL);
 				   break;
 			   case 2 :
 				   deleteSave();
@@ -157,18 +172,6 @@ unsigned char moveLineSettings(Sens sens, unsigned char *l) {
 			break;
 	}
 	return *l;
-}
-
-void changeSettings(Sens sens, unsigned char l) {
-	switch (l) {
-		case 0 :
-			changeVolume(sens);
-			break;
-		case 1 :
-			break;
-		default :
-			break;
-	}
 }
 
 void changeVolume(Sens sens) {

@@ -1,5 +1,4 @@
 #include "font.h"
-#include "bitmaps.h"
 #include "view.h"
 
 //Mot stocké sous forme d'entiers de 0 à 38 et non sous forme de texte

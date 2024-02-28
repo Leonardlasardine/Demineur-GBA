@@ -23,7 +23,7 @@ unsigned char pauseGame() {
 	pauseMenu = 1;
 	quitPlaying = 1;
 	line = 0;
-	slot = 0;
+	slot = 1;
 
 	unsigned char upPause = 0;
 	unsigned char downPause = 0;
@@ -59,10 +59,10 @@ unsigned char pauseGame() {
 		   leftPause = 1;
 	   } else {
 		   if (leftPause) {
-			   if (slot > 0) {
+			   if (slot > 1) {
 				   slot--;
 				   ham_DrawText(21, 13, " ");
-				   ham_DrawText(21, 13, "%u", slot + 1);
+				   ham_DrawText(21, 13, "%u", slot);
 			   }
 			   leftPause = 0;
 		   }
@@ -72,10 +72,10 @@ unsigned char pauseGame() {
 		   rightPause = 1;
 	   } else {
 		   if (rightPause) {
-			   if (slot < 4) {
+			   if (slot < 5) {
 				   slot++;
 				   ham_DrawText(21, 13, " ");
-				   ham_DrawText(21, 13, "%u", slot + 1);
+				   ham_DrawText(21, 13, "%u", slot);
 			   }
 			   rightPause = 0;
 		   }

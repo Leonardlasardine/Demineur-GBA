@@ -38,3 +38,4 @@ const unsigned short game_over_Bitmap[38400];
 const unsigned short password_Bitmap[38400];
 const unsigned short continue_Bitmap[38400];
 const unsigned short game_won_Bitmap[38400];
+const unsigned short color_Bitmap[38400];

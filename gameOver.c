@@ -1,7 +1,6 @@
 #include <math.h>
 #include "main.h"
 #include "gameOver.h"
-#include "bitmaps.h"
 #include "view.h"
 #include "timers.h"
 
@@ -38,7 +37,6 @@ unsigned char gameOver() {
 //temps score....
 unsigned char continueMenu() {
 	//Continuer ou quitter ou voir la grille
-	//drawScreen(continue_Bitmap);
 	screenHalf(continue_Bitmap);
 
 	//Touches

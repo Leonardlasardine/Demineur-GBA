@@ -1,6 +1,5 @@
 #include <math.h>
 #include "password.h"
-#include "bitmaps.h"
 #include "font.h"
 #include "timers.h"
 #include "menu.h"

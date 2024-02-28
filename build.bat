@@ -6,8 +6,3 @@ echo #>libham.h
 "D:\Program Files (x86)\Windows Resource Kits\Tools\timeit" -a make
 echo #define HAM_WITH_LIBHAM>libham.h
 make fixheader
-make runvba
-exit /B 0
-
-::make gdb
-::make emu
