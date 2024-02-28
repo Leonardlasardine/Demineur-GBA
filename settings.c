@@ -208,8 +208,17 @@ unsigned char getVolume(unsigned char  decimal) {
 	}
 }
 
-unsigned short getColor() {
-	return color;
+//Si 32768 ==> aléatoire
+//Si pour la sauvegarde ne pas renvoyer une couleur aléaotire mais 32768
+unsigned short getColor(unsigned char forSaving) {
+	if (color < 32768) {
+		return color;
+	} else if (forSaving) {
+		return 32768;
+	} else {
+		//Attention pas de srand
+		return RGB(rand() % 256, rand() % 256, rand() % 256);
+	}
 }
 
 void setColor(unsigned short c) {

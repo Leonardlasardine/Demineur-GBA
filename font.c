@@ -32,7 +32,7 @@ void drawKeys() {
 	firstLine = 32;
 	for (i = 65; i < 125; i+=20) {//Hauteur
 		for (j = 24; j < 216 - firstLine; j+=16) {//Longueur
-			drawChar(j + decal, i, n, getColor());
+			drawChar(j + decal, i, n, getColor(0));
 			n++;
 		}
 		firstLine = 0;
@@ -47,7 +47,7 @@ void drawKeys() {
 		if (j == 76) {
 			j += 80;
 		}
-		drawChar(j, i, n, getColor());
+		drawChar(j, i, n, getColor(0));
 		n++;
 	}
 }
@@ -94,7 +94,7 @@ unsigned char keyPressed(unsigned char x, unsigned char y, unsigned char *pos) {
 			emptySquare(*pos + 1);
 		}
 
-		drawChar(28 + *pos*24, 14, key, getColor());
+		drawChar(28 + *pos*24, 14, key, getColor(0));
 		*pos += 1;
 	}
 	return key;

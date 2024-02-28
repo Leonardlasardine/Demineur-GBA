@@ -82,14 +82,14 @@ void loadMenu() {
 			   if (lineLoad) {
 				   if (!loadFromPassword()) {
 						ham_DrawText(8, 3, "CHARGER PARTIE");
-						ham_DrawText(3, 7, "MEMOIRE");
+						ham_DrawText(3, 7, "MEMOIRE %u", slot);
 						ham_DrawText(3, 11, "MOT DE PASSE");
 						ham_DrawText(6, 15, "Mot de passe incorecte");
 				   } else {
 					   wait = 0;
 				   }
 			   } else {
-				   if (loadFromSave(slot)/* == 7*/) {
+				   if (loadFromSave(slot)) {
 					   wait = 0;
 				   }
 			   }

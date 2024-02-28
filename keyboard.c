@@ -254,7 +254,7 @@ void writePseudo(unsigned char *pseudo, unsigned char *pos) {//Utiliser fonction
 	unsigned char i;
 	for (i = 0; i < 8; i++) {
 		if (pseudo[i] != 39) {
-			drawChar(28 + i*24, 14, pseudo[i], getColor());
+			drawChar(28 + i*24, 14, pseudo[i], getColor(0));
 			exist = 1;
 		}
 	}

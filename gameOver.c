@@ -46,7 +46,7 @@ unsigned char continueMenu() {
 	unsigned char startContinue = 0;
 
 	unsigned char continueMenu = 1;
-	unsigned char lineContinue = 0;
+	unsigned char lineContinue = 1;
 
 	moveLineContinue(HAUT, &lineContinue);
 
@@ -92,38 +92,17 @@ unsigned char continueMenu() {
 }
 
 unsigned char moveLineContinue(Sens sens, unsigned char *l) {
-	switch (sens) {
-		case GAUCHE :
-			if (*l == 0) {
-				*l = 2;
-			} else {
-				*l -= 1;
-			}
-			break;
-		case DROITE :
-			if (*l == 2) {
-				*l = 0;
-			} else {
-				*l += 1;
-			}
-			break;
-		default :
-			break;
-	}
+	*l = !*l;
 	
 	drawRectangle(5, 135, 40, 15, 2, RGB(255, 255, 255));
-	drawRectangle(52, 135, 83, 15, 2, RGB(255, 255, 255));
-	drawRectangle(142, 135, 90, 15, 2, RGB(255, 255, 255));
+	drawRectangle(52, 135, 180, 15, 2, RGB(255, 255, 255));
 
 	switch (*l) {
 		case 0 :
 			drawRectangle(5, 135, 40, 15, 2, RGB(255, 0, 0));
 			break;
 		case 1 :
-			drawRectangle(52, 135, 83, 15, 2, RGB(255, 0, 0));
-			break;
-		case 2 :
-			drawRectangle(142, 135, 90, 15, 2, RGB(255, 0, 0));
+			drawRectangle(52, 135, 180, 15, 2, RGB(255, 0, 0));
 			break;
 	}
 	return *l;

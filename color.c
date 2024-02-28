@@ -11,14 +11,16 @@ unsigned short colorMenu() {
 	//Touches
 	unsigned char leftColor = 0;
 	unsigned char rightColor = 0;
+	unsigned char selectColor = 0;
 	unsigned char aColor = 0;
 	unsigned char startColor = 0;
 
 	unsigned char ColorMenu = 1;
+	unsigned char random;
 	unsigned char lineColor = 0;
 
 	unsigned char colors [3];
-	unsigned short rgb = getColor();
+	unsigned short rgb = getColor(0);
 	colors[0] = RGB_GET_R_VALUE(rgb) / 4;
 	colors[1] = RGB_GET_G_VALUE(rgb) / 4;
 	colors[2] = RGB_GET_B_VALUE(rgb) / 4;
@@ -30,8 +32,16 @@ unsigned short colorMenu() {
 	//Afficher la couleur finale
 	drawLine(12, 28, 100, 100, RGB(colors[0]*4, colors[1]*4, colors[2]*4));
 
-	moveLineColor(HAUT, &lineColor);
+	//Vérifier si aléatoire ou non
+	if (getColor(1) == 32768) {
+		random = 1;
+		drawLine(120, 60, 15, 15, RGB(200, 0, 200));
+	} else {
+		random = 0;
+	}
 
+	moveLineColor(NUL, &lineColor);
+	
 	while(ColorMenu) {
 	   if (F_CTRLINPUT_LEFT_PRESSED) {
 		   leftColor = 1;
@@ -65,6 +75,21 @@ unsigned short colorMenu() {
 		   //Afficher la couleur finale
 		   drawLine(12, 28, 100, 100, RGB(colors[0]*4, colors[1]*4, colors[2]*4));
 	   }
+	   
+	   if (F_CTRLINPUT_SELECT_PRESSED) {
+		   selectColor = 1;
+	   } else {
+		   if (selectColor) {
+			   //Booleen alétoire ou pas
+			   random = !random;
+			   if (random) {
+				   drawLine(120, 60, 15, 15, RGB(200, 0, 200));
+			   } else {
+				   drawLine(120, 60, 15, 15, RGB(255, 131, 43));
+			   }
+			   selectColor = 0;
+		   }
+	   }
 
 	   if (F_CTRLINPUT_A_PRESSED) {
 		   aColor = 1;
@@ -88,7 +113,11 @@ unsigned short colorMenu() {
 	endVideoMode3();
 	setVideoMode0();
 
-	return RGB(colors[0]*4, colors[1]*4, colors[2]*4);
+	if (random) {
+		return 32768;
+	} else {
+		return RGB(colors[0]*4, colors[1]*4, colors[2]*4);
+	}
 }
 
 //Change rouge vert ou bleu
@@ -156,21 +185,21 @@ void updateCursors(Sens sens, unsigned char l, unsigned char intensity) {
 		case 0 :
 			if (sens == BAS) {
 				//Ligne blanche
-				drawLine(124, 152 - intensity - 1, 32, 1, RGB(255, 255, 255));
+				drawLine(124, 151 - intensity, 32, 1, RGB(255, 255, 255));
 			} else {
 				drawLine(124, 152 - intensity, 32, 1, RGB(255, 0, 0));
 			}
 			break;
 		case 1 :
 			if (sens == BAS) {
-				drawLine(164, 152 - intensity - 1, 32, 1, RGB(255, 255, 255));
+				drawLine(164, 151 - intensity, 32, 1, RGB(255, 255, 255));
 			} else {
 				drawLine(164, 152 - intensity, 32, 1, RGB(0, 255, 0));
 			}
 			break;
 		case 2 :
 			if (sens == BAS) {
-				drawLine(204, 152 - intensity - 1, 32, 1, RGB(255, 255, 255));
+				drawLine(204, 151 - intensity, 32, 1, RGB(255, 255, 255));
 			} else {
 				drawLine(204, 152 - intensity, 32, 1, RGB(0, 0, 255));
 			}

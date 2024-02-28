@@ -215,7 +215,7 @@ void saveMenu() {
 void saveSettings(unsigned char volume, unsigned short color) {
 	*volume_Save = volume;
 
-	unsigned int colorSave = getColor();
+	unsigned int colorSave = getColor(1);
 	*color_Save_1 = colorSave % 100;
 	*color_Save_2 = (colorSave / 100) % 100;
 	*color_Save_3 = (colorSave / 10000) % 100;

@@ -112,7 +112,7 @@ void writePassword() {
 
 	unsigned char i;
 	for (i = 0; i < 8; i++) {
-		drawChar(105 + i*14, 40, password[i], getColor());
+		drawChar(105 + i*14, 40, password[i], getColor(0));
 	}
 }
 

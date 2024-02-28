@@ -43,7 +43,7 @@ void control(unsigned char newGame) {
 		fistClick = y*(getSizeX()+1) + x;
 	}
 	
-	cursor(x, y, RGB(0, 0, 150));
+	cursor(x, y, getColor(0));
 
 	while(alive) {
 		//Directions
@@ -99,10 +99,7 @@ void control(unsigned char newGame) {
 					   drawSave();//Ré-afficher à chaque fois ?
 					   move(NUL, &x, &y);
 					   break;
-				   case 1 ://Quitter
-					   alive = 0;
-					   break;
-				   case 2://Réveler
+				   case 1://Réveler
 					   reveal();
 					   //Regarder sans bouger
 					   wait();
@@ -176,7 +173,8 @@ void control(unsigned char newGame) {
 			   if (quitGame) {
 				   alive = 0;
 			   }
-			   cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
+			   //cursor(x, y, RGB(y*10 + x*10, y*10, (150 - x*5)));
+			   cursor(x, y, getColor(0));
 			   startPressed = 0;
 		   }
 	   }
@@ -220,10 +218,11 @@ void move(Sens sens, unsigned char *x, unsigned char *y) {
 		default :
 			break;
 	}
-	unsigned char pixelX = 240/sizeX;
-	unsigned char pixelY = 160/sizeY;
+	/*unsigned char pixelX = 240/sizeX;
+	unsigned char pixelY = 160/sizeY;*/
 
-	cursor(*x, *y, RGB(*y*pixelY + *x*pixelX, *y*pixelY, (150 - *x*pixelX)));
+	//cursor(*x, *y, RGB(*y*pixelY + *x*pixelX, *y*pixelY, (150 - *x*pixelX)));
+	cursor(*x, *y, getColor(0));
 }
 
 unsigned char getX() {

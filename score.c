@@ -13,7 +13,7 @@ unsigned char scoreMenu() {
 		drawLine(7, 54 + 18*i, 225, 16, RGB(0, 0, 0));
 	}
 	//Niveau
-	drawLine(210, 5, 16, 16, RGB(20, 20, 0));
+	drawLine(210, 5, 16, 16, RGB(20, 70, 20));
 	drawChar(210, 5, getDifficulty(), RGB(130, 130, 0));
 
 	unsigned short scoresColor = RGB(255, 138, 41);
@@ -160,7 +160,7 @@ unsigned char scoreMenu() {
 
 void drawScoreBackground() {
 	//Fond
-	fillColor(RGB(20, 20, 0));
+	fillColor(RGB(20, 70, 20));
 	
 	//Titres
 	unsigned short titleColor = RGB(130, 130, 0);
